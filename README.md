@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.com/ArturBa/)]()
+[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=develop)](https://travis-ci.com/ArturBa/AlmostAgricola)
 
 # Almost Agricola
-now available on your PC and Linux 
+now available on your Linux 
 
 # What is this?
 This is a game based on Agricola 
