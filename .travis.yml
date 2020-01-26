@@ -11,11 +11,10 @@ env:
     - RUN_TESTS=true
     - COVERAGE=false
 
-matrix:
+jobs:
   include:
     - os: linux
       dist: trusty
-      sudo: true
       compiler: gcc
       addons:
         apt:
@@ -44,7 +43,8 @@ install:
   - echo ${CXX}
   - ${CXX} --version
   - ${CXX} -v
-  - pip install codecov
+  - sudo pip install --upgrade pip
+  - sudo pip install codecov
 
   # Download and install recent cmake
   - |
