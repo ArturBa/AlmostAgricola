@@ -44,7 +44,7 @@ install:
   - echo ${CXX}
   - ${CXX} --version
   - ${CXX} -v
-  - sudo pip install codecov
+  - pip install codecov
 
   # Download and install recent cmake
   - |
@@ -63,7 +63,7 @@ script:
   - cd build
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
   - make
-  - make project1_coverage
+  - make AlmostAgricola_coverage
   - ctest
 
 
