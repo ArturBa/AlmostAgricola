@@ -3,7 +3,7 @@ language: cpp
 env:
   global:
     # Ubuntu version
-    - LINUX_DIST=trusty
+    - LINUX_DIST=bionic
     - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     # Global build options and C++ flags
     - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
@@ -43,8 +43,8 @@ install:
   - echo ${CXX}
   - ${CXX} --version
   - ${CXX} -v
-  - sudo pip install --upgrade pip
-  - sudo pip install codecov
+  - sudo pip3 install --upgrade pip3
+  - sudo pip3 install codecov
 
   # Download and install recent cmake
   - |
