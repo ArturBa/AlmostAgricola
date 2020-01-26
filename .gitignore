@@ -1,0 +1,9 @@
+#Ignore vim files
+*.vim
+*.swp
+
+#Ignore build files
+*build*/*
+
+#Ignore CLion files
+.idea
