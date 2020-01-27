@@ -67,6 +67,7 @@ script:
   - make
   - make AlmostAgricola_coverage
   - ctest
+  - codecov
 
 
 after_success:
