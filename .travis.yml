@@ -27,6 +27,8 @@ jobs:
             - python-yaml
             - lcov
             - libopencv-dev
+            - x11
+            - x11-xcb
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
