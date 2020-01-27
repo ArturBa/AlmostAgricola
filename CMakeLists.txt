@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 # Make PROJECT_SOURCE_DIR, PROJECT_BINARY_DIR, and PROJECT_NAME available.
 set(PROJECT_NAME AlmostAgricola)
-project(${PROJECT_NAME})
+project(${PROJECT_NAME}
+        VERSION 0.10)
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
@@ -11,6 +12,7 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 # include_directories(${COMMON_INCLUDES}) in other CMakeLists.txt files.
 # set(COMMON_INCLUDES ${PROJECT_SOURCE_DIR}/include)
 
+add_subdirectory(ext)
 #----------------------------------------------------------------------------
 # Define project sources and includes
 #----------------------------------------------------------------------------
