@@ -4,7 +4,7 @@
 
 
 # Almost Agricola
-now available on your Linux 
+now available on your Linux and PC
 
 # What is this?
 This is a game based on Agricola 
@@ -16,14 +16,10 @@ This is a game based on Agricola
 
 # Project structure
 - `docs/` is where documentation is
-- `build/` is where code is built - like where executables are.  
 - `ext/` includes gtest and project dependencies
 - `inlude/` is where the header files are located
 - `src/` is where the source files are located
 - `test/` is where the test source files are located
-
-Rest of code in root:  
--`CMakeLists.txt` must be in each subdirectory of the project  
 
 
 # Project building 
@@ -39,3 +35,6 @@ In the project root:
 Then you can do ./executable for the generated executable:
 
     ./AlmostAgricola
+    
+## Windows
+Will be added later
