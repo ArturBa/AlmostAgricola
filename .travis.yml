@@ -9,18 +9,13 @@ env:
     - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
     # Misc
     - RUN_TESTS=true
-    - COVERAGE=false
+    - COVERAGE=true
 
 jobs:
   include:
     - os: linux
       dist: bionic
       compiler: gcc
-    - os: linux
-      dist: xenial
-      compiler:
-        - gcc
-        - clang
 
 addons:
   apt:
