@@ -27,7 +27,10 @@ jobs:
             - python-yaml
             - lcov
             - libopencv-dev
-            - libx11
+            - libx11-dev
+            - xorg-dev
+            - freeglut3-dev
+            - libudev-dev
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.7
