@@ -27,9 +27,14 @@ set(CMAKE_CXX_STANDARD 20)
 ################################
 # Normal Libraries & Executables
 ################################
+
 add_library(AlmostAgricola_lib ${SRC_FILES})
 add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
-target_link_libraries(AlmostAgricola AlmostAgricola_lib)
+SET(LIBRARIES
+        AlmostAgricola_lib
+        ImGui-SFML::ImGui-SFML
+        )
+target_link_libraries(AlmostAgricola ${LIBRARIES})
 # Key idea: SEPARATE OUT your main() function into its own file so it can be its
 # own executable. Separating out main() means you can add this library to be
 # used elsewhere (e.g linking to the test executable).
@@ -62,7 +67,7 @@ if (BUILD_TESTS)
   target_link_libraries(runUnitTests gtest gtest_main)
 
   # Extra linking for the project.
-  target_link_libraries(runUnitTests AlmostAgricola_lib)
+  target_link_libraries(runUnitTests ${LIBRARIES})
 
   # This is so you can do 'make test' to see all your tests run, instead of
   # manually running the executable runUnitTests to see those specific tests.
