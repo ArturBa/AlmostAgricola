@@ -45,12 +45,12 @@ install:
   - sudo pip install --upgrade pip
   - sudo pip install codecov
 
-    # Download and install recent cmake
-    git clone -b v3.16.3 https://cmake.org/cmake.git cmake
-    cd cmake
-    ./bootstrap --system-curl
-    make
-    sudo make install
+  # Download and install recent cmake
+  - git clone -b v3.16.3 https://cmake.org/cmake.git cmake
+  - cd cmake
+  - ./bootstrap --system-curl
+  - make
+  - sudo make install
 
 script:
   ############################################################################
