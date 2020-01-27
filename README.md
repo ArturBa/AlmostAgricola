@@ -17,7 +17,7 @@ This is a game based on Agricola
 # Project structure
 - `docs/` is where documentation is
 - `build/` is where code is built - like where executables are.  
-- `ext/` includes gtest
+- `ext/` includes gtest and project dependencies
 - `inlude/` is where the header files are located
 - `src/` is where the source files are located
 - `test/` is where the test source files are located
