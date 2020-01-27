@@ -51,6 +51,7 @@ install:
   - ./bootstrap --system-curl
   - make
   - sudo make install
+  - cd ..
 
 script:
   ############################################################################
