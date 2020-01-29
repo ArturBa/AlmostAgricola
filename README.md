@@ -14,6 +14,7 @@ This is a game based on Agricola
 1. [Project structure](#project-structure)
 1. [Project dependencies](#project-dependencies)
 1. [Project building](#project-building)
+1. [Game show](#game-show)
 
 # Project structure
 - [`docs/`](./docs) is where documentation is
@@ -44,3 +45,7 @@ Then you can do ./executable for the generated executable:
     
 ## Windows
 Will be added later
+
+# Game show
+### Main menu
+![main menu](docs/screenshots/mainMenu.png)
