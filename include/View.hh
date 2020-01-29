@@ -36,7 +36,8 @@ private:
     sf::Sprite sprite;
     sf::Image image;
     sf::Texture texture;
-    float color[3] = {0};
+    sf::Color bgColor;
+    sf::Font font;
     ViewEnum actualView;
     GameViewEnum gameView;
 
@@ -45,6 +46,8 @@ private:
     void display();
 
     void displayMenuPhoto();
+
+    void displayMenuLogo();
 
     void displayMenu();
 
