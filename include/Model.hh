@@ -10,7 +10,6 @@
 
 class Model {
 private:
-    sf::Color bgColor;
     unsigned char *image;
     unsigned int width{}, height{};
 
