@@ -5,6 +5,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Save.hh"
 
 
 class Model {
@@ -28,4 +29,12 @@ public:
     unsigned int getWidth();
 
     unsigned int getHeight();
+
+    void setSettings() {};
+
+    void preLoadSaves() {};
+
+    void getSaves() {};
+
+    void loadSave() {};
 };

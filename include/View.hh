@@ -8,15 +8,25 @@
 #include "Model.hh"
 #include "imgui-SFML.h"
 #include "imgui.h"
+#include <imgui_internal.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
 enum class ViewEnum {
-    main_menu,
-    new_game,
-    load_game,
-    credits
+    mainMenu,
+    newGame,
+    loadGame,
+    settings,
+    credits,
+    game
+};
+
+enum class GameViewEnum {
+    actions,
+    week,
+    farm,
+    ranking
 };
 
 class View {
@@ -28,6 +38,7 @@ private:
     sf::Texture texture;
     float color[3] = {0};
     ViewEnum actualView;
+    GameViewEnum gameView;
 
     Model *model;
 
@@ -38,6 +49,12 @@ private:
     void displayMenu();
 
     void displayCredits();
+
+    void displayNewGame();
+
+    void displayLoadGame();
+
+    void displaySettings();
 
     void displayGame();
 
