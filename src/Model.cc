@@ -13,3 +13,40 @@ void Model::setBgColor(const float *color) {
 sf::Color Model::getBgColor() {
     return bgColor;
 }
+
+bool Model::loadImage(const std::string &fileName) {
+    sf::Image img;
+    if (!img.loadFromFile(fileName)) {
+        return false;
+    }
+    width = img.getSize().x;
+    height = img.getSize().y;
+    int size = 4 * width * height;
+    image = new unsigned char[size];
+
+    const unsigned char *pixptr;
+    pixptr = img.getPixelsPtr();
+
+    for (unsigned int i = 0; i < size; i++) {
+        image[i] = *pixptr++;
+    }
+    return true;
+}
+
+unsigned char *Model::getImage() {
+    return image;
+}
+
+Model::Model() :
+        image(nullptr) {
+    ;
+}
+
+unsigned int Model::getWidth() {
+    return width;
+}
+
+unsigned int Model::getHeight() {
+    return height;
+}
+
