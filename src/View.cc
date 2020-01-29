@@ -8,12 +8,18 @@
 #define WINDOW_HEIGHT 600
 
 View::View(Model *m) :
-        actualView(ViewEnum::main_menu) {
+        actualView(ViewEnum::mainMenu),
+        gameView(GameViewEnum::actions),
+        bgColor({206, 186, 162}) {
     model = m;
 
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Almost Agricola", sf::Style::Close);
     window->setVerticalSyncEnabled(true);
     ImGui::SFML::Init(*window);
+    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, {0, 0, 0, 255});
+    font.loadFromFile("../res/font/Lato-Black.ttf");
     model->loadImage("../res/img/menu_sheep.jpg");
 }
 
@@ -38,13 +44,30 @@ void View::processEvents() {
 void View::display() {
     ImGui::SFML::Update(*window, deltaClock.restart());
 
-    window->clear(model->getBgColor());
+    window->clear(bgColor);
+    if (actualView != ViewEnum::game) {
+        displayMenuPhoto();
+        displayMenuLogo();
+    }
+
     switch (actualView) {
-        case ViewEnum::main_menu:
+        case ViewEnum::mainMenu:
             displayMenu();
             break;
         case ViewEnum::credits:
             displayCredits();
+            break;
+        case ViewEnum::newGame:
+            displayNewGame();
+            break;
+        case ViewEnum::loadGame:
+            displayLoadGame();
+            break;
+        case ViewEnum::settings:
+            displaySettings();
+            break;
+        case ViewEnum::game:
+            displayGame();
             break;
     }
     ImGui::SFML::Render(*window);
@@ -53,7 +76,6 @@ void View::display() {
 
 
 void View::displayMenu() {
-    displayMenuPhoto();
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -62,22 +84,23 @@ void View::displayMenu() {
     }
     ImGui::PushItemWidth(235);
     if (ImGui::Button("New Game", buttonSize)) {
-        color[0] = 1, color[1] = 0, color[2] = 0;
-        model->setBgColor(color);
+        actualView = ViewEnum::newGame;
     }
     ImGui::Dummy(buttonSpace);
     if (ImGui::Button("Load Game", buttonSize)) {
-        color[0] = 0, color[1] = 1, color[2] = 0;
-        model->setBgColor(color);
+        actualView = ViewEnum::loadGame;
     }
     ImGui::Dummy(buttonSpace);
     if (ImGui::Button("Settings", buttonSize)) {
-        color[0] = 0, color[1] = 0, color[2] = 1;
-        model->setBgColor(color);
+        actualView = ViewEnum::settings;
     }
     ImGui::Dummy(buttonSpace);
     if (ImGui::Button("Credits", buttonSize)) {
         actualView = ViewEnum::credits;
+    }
+    ImGui::Dummy(buttonSpace);
+    if (ImGui::Button("Exit", buttonSize)) {
+        window->close();
     }
 
     ImGui::End();
@@ -85,7 +108,17 @@ void View::displayMenu() {
 
 
 void View::displayGame() {
-
+    switch (gameView) {
+        case GameViewEnum::actions:
+            displayGameActions();
+            break;
+        case GameViewEnum::week:
+            break;
+        case GameViewEnum::farm:
+            break;
+        case GameViewEnum::ranking:
+            break;
+    }
 }
 
 
@@ -101,7 +134,6 @@ void View::displayCredits() {
         ImGui::End();
         return;
     }
-    displayMenuPhoto();
     ImGui::PushItemWidth(235);
     ImGui::TextWrapped("All credits go here. Lorem ipsum. What if there is even more text?");
     ImGui::TextWrapped(
@@ -111,8 +143,8 @@ void View::displayCredits() {
 
     ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
-    if (ImGui::Button("Back", {235, 20})) {
-        actualView = ViewEnum::main_menu;
+    if (ImGui::Button("Back###credits", {235, 30})) {
+        actualView = ViewEnum::mainMenu;
     }
 
     ImGui::End();
@@ -144,4 +176,90 @@ float View::calculateScale(unsigned int width, unsigned int height) {
     } else {
         return (float) (window->getSize().x - 250) / (float) width;
     }
+}
+
+void View::displaySettings() {
+    if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::PushItemWidth(235);
+    ImGui::Text("Resolution");
+    const char *res[] = {"800x600", "1366x766", "1920x1080"};
+    static int selRes = 0;
+    ImGui::Combo("Resolution", &selRes, res, IM_ARRAYSIZE(res));
+
+    ImGui::Dummy({0, 20});
+    if (ImGui::Button("Apply", {235, 30})) {
+        model->setSettings();
+    }
+    ImGui::Dummy({0, 20});
+    if (ImGui::Button("Back###settings", {235, 30})) {
+        actualView = ViewEnum::mainMenu;
+    }
+
+    ImGui::End();
+
+}
+
+void View::displayLoadGame() {
+    if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+        ImGui::End();
+        return;
+    }
+    model->preLoadSaves();
+    model->getSaves();
+    static int selectedSave = 0;
+    // TODO replace this char arrays with model data
+    const char *saveNames[] = {"save0", "save1", "save2"};
+    const char *savePlayer[] = {"John", "Joanna", "Gerald"};
+
+    ImGui::ListBox("Save", &selectedSave, saveNames, IM_ARRAYSIZE(saveNames));
+    ImGui::Text("Player: %s", savePlayer[selectedSave]);
+
+    ImGui::Dummy({0, 20});
+    if (ImGui::Button("Load game", {235, 30})) {
+        model->loadSave();
+    }
+    if (ImGui::Button("Back###loadGame", {235, 30})) {
+        actualView = ViewEnum::mainMenu;
+    }
+    ImGui::End();
+}
+
+void View::displayNewGame() {
+    if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+        ImGui::End();
+        return;
+    }
+    if (ImGui::Button("Hot seat", {235, 30})) {
+        model->loadSave();
+    }
+    ImGui::Dummy({0, 20});
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    if (ImGui::Button("LAN", {235, 30})) { ;
+    }
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, false);
+    ImGui::Dummy({0, 20});
+    if (ImGui::Button("Back###newGame", {235, 30})) {
+        actualView = ViewEnum::mainMenu;
+    }
+    ImGui::End();
+
+}
+
+void View::displayMenuLogo() {
+    sf::Text text;
+
+    text.setPosition(220.f, 20.f);
+    text.setFont(font);
+    text.setString("Almost Agricola");
+
+    text.setCharacterSize(50);
+
+    text.setFillColor({132, 144, 137});
+    text.setStyle(sf::Text::Bold);
+
+    window->draw(text);
+
 }
