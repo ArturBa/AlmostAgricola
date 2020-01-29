@@ -29,6 +29,7 @@ set(CMAKE_CXX_STANDARD 20)
 ################################
 
 add_library(AlmostAgricola_lib ${SRC_FILES})
+target_link_libraries(AlmostAgricola_lib ImGui-SFML::ImGui-SFML)
 add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
 SET(LIBRARIES
         AlmostAgricola_lib
