@@ -32,4 +32,8 @@ public:
     void getSaves() {};
 
     void loadSave() {};
+
+    void getWarehouse() {};
+
+    void newGame() {};
 };

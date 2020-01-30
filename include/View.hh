@@ -13,6 +13,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
+#include "ViewGame.hh"
+
 enum class ViewEnum {
     mainMenu,
     newGame,
@@ -20,13 +22,6 @@ enum class ViewEnum {
     settings,
     credits,
     game
-};
-
-enum class GameViewEnum {
-    actions,
-    week,
-    farm,
-    ranking
 };
 
 class View {
@@ -39,7 +34,7 @@ private:
     sf::Color bgColor;
     sf::Font font;
     ViewEnum actualView;
-    GameViewEnum gameView;
+    ViewGame *viewGame;
 
     Model *model;
 
@@ -49,7 +44,7 @@ private:
 
     void displayMenuLogo();
 
-    void displayMenu();
+    void displayMainMenu();
 
     void displayCredits();
 
@@ -60,6 +55,10 @@ private:
     void displaySettings();
 
     void displayGame();
+
+    void displayGameWarehouse();
+
+    void displayGameMenuBar();
 
     void displayGameActions();
 

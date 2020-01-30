@@ -9,11 +9,11 @@
 
 View::View(Model *m) :
         actualView(ViewEnum::mainMenu),
-        gameView(GameViewEnum::actions),
         bgColor({206, 186, 162}) {
     model = m;
 
     window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Almost Agricola", sf::Style::Close);
+    viewGame = new ViewGame(model, window);
     window->setVerticalSyncEnabled(true);
     ImGui::SFML::Init(*window);
     ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
@@ -52,7 +52,7 @@ void View::display() {
 
     switch (actualView) {
         case ViewEnum::mainMenu:
-            displayMenu();
+            displayMainMenu();
             break;
         case ViewEnum::credits:
             displayCredits();
@@ -67,7 +67,7 @@ void View::display() {
             displaySettings();
             break;
         case ViewEnum::game:
-            displayGame();
+            viewGame->display();
             break;
     }
     ImGui::SFML::Render(*window);
@@ -75,7 +75,7 @@ void View::display() {
 }
 
 
-void View::displayMenu() {
+void View::displayMainMenu() {
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -106,42 +106,23 @@ void View::displayMenu() {
     ImGui::End();
 }
 
-
-void View::displayGame() {
-    switch (gameView) {
-        case GameViewEnum::actions:
-            displayGameActions();
-            break;
-        case GameViewEnum::week:
-            break;
-        case GameViewEnum::farm:
-            break;
-        case GameViewEnum::ranking:
-            break;
-    }
-}
-
-
-void View::displayGameActions() {
-
-}
-
-
 void View::displayCredits() {
-    if (!ImGui::Begin("Main Menu", nullptr,
-                      ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse |
-                      ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
     ImGui::PushItemWidth(235);
+
+    ImGui::BeginChild("Credits##scroll", {235, 300});
     ImGui::TextWrapped("All credits go here. Lorem ipsum. What if there is even more text?");
     ImGui::TextWrapped(
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
     ImGui::TextWrapped(
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
 
+    ImGui::EndChild();
     ImGui::Dummy(ImVec2(0.0f, 20.0f));
+
 
     if (ImGui::Button("Back###credits", {235, 30})) {
         actualView = ViewEnum::mainMenu;
@@ -150,12 +131,10 @@ void View::displayCredits() {
     ImGui::End();
 }
 
-
 void View::displayMenuPhoto() {
     setSprite(model->getWidth(), model->getHeight(), model->getImage());
     window->draw(sprite);
 }
-
 
 void View::setSprite(unsigned int width, unsigned int height, unsigned char *pixelArray) {
     image.create(width, height, pixelArray);
@@ -168,7 +147,6 @@ void View::setSprite(unsigned int width, unsigned int height, unsigned char *pix
     sprite.setPosition({((float) window->getSize().x - ((float) width * scale) - 250) / 2,
                         ((float) window->getSize().y - ((float) height * scale)) / 2});
 }
-
 
 float View::calculateScale(unsigned int width, unsigned int height) {
     if ((window->getSize().x - 250) / width > (window->getSize().y) / height) {
@@ -199,7 +177,6 @@ void View::displaySettings() {
     }
 
     ImGui::End();
-
 }
 
 void View::displayLoadGame() {
@@ -233,7 +210,8 @@ void View::displayNewGame() {
         return;
     }
     if (ImGui::Button("Hot seat", {235, 30})) {
-        model->loadSave();
+        model->newGame();
+        actualView = ViewEnum::game;
     }
     ImGui::Dummy({0, 20});
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
@@ -245,7 +223,6 @@ void View::displayNewGame() {
         actualView = ViewEnum::mainMenu;
     }
     ImGui::End();
-
 }
 
 void View::displayMenuLogo() {
@@ -261,5 +238,4 @@ void View::displayMenuLogo() {
     text.setStyle(sf::Text::Bold);
 
     window->draw(text);
-
 }
