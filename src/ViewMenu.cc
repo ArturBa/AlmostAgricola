@@ -4,22 +4,17 @@
 
 #include "ViewMenu.hh"
 
-ViewMenu::ViewMenu(Model *_model, sf::RenderWindow *_window) :
-        viewMenu(ViewMenuEnum::mainMenu) {
-    model = _model;
-    window = _window;
+ViewMenu::ViewMenu(ViewController *_viewController) :
+        ViewAbstract(_viewController), viewMenu(ViewMenuEnum::mainMenu) {
 // TODO change button colors
 //    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonActive, {0, 0, 0, 255});
-    font.loadFromFile("../res/font/Lato-Black.ttf");
-    model->loadImage("../res/img/menu_sheep.jpg");
 }
 
 void ViewMenu::display() {
-    if (viewMenu != ViewMenuEnum::hotSeatConfig) {
-        displayMenuPhoto();
-    }
+    ImGui::SFML::Update(*viewController->getShared()->window, viewController->getShared()->deltaClock.restart());
+    viewController->getShared()->window->clear({206, 186, 162});
     switch (viewMenu) {
         case ViewMenuEnum::mainMenu:
             displayMainMenu();
@@ -40,10 +35,11 @@ void ViewMenu::display() {
             displayHotSeatConfig();
             break;
     }
+    ImGui::SFML::Render(*viewController->getShared()->window);
+    viewController->getShared()->window->display();
 }
 
 void ViewMenu::displayMainMenu() {
-    displayText("Almost Agricola");
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -68,14 +64,13 @@ void ViewMenu::displayMainMenu() {
     }
     ImGui::Dummy(buttonSpace);
     if (ImGui::Button("Exit", buttonSize)) {
-        window->close();
+        viewController->getShared()->window->close();
     }
 
     ImGui::End();
 }
 
 void ViewMenu::displayCredits() {
-    displayText("Credits");
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
@@ -100,6 +95,7 @@ void ViewMenu::displayCredits() {
     ImGui::End();
 }
 
+/*
 void ViewMenu::displayMenuPhoto() {
     setSprite(model->getWidth(), model->getHeight(), model->getImage());
     window->draw(sprite);
@@ -124,9 +120,9 @@ float ViewMenu::calculateScale(unsigned int width, unsigned int height) {
         return (float) (window->getSize().x - 250) / (float) width;
     }
 }
+*/
 
 void ViewMenu::displaySettings() {
-    displayText("Settings");
     if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
@@ -139,7 +135,6 @@ void ViewMenu::displaySettings() {
 
     ImGui::Dummy({0, 20});
     if (ImGui::Button("Apply", {235, 30})) {
-        model->setSettings();
     }
     ImGui::Dummy({0, 20});
     if (ImGui::Button("Back###settings", {235, 30})) {
@@ -150,13 +145,10 @@ void ViewMenu::displaySettings() {
 }
 
 void ViewMenu::displayLoadGame() {
-    displayText("Load Game");
     if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
     }
-    model->preLoadSaves();
-    model->getSaves();
     static int selectedSave = 0;
     // TODO replace this char arrays with model data
     const char *saveNames[] = {"save0", "save1", "save2"};
@@ -167,7 +159,6 @@ void ViewMenu::displayLoadGame() {
 
     ImGui::Dummy({0, 20});
     if (ImGui::Button("Load game", {235, 30})) {
-        model->loadSave();
     }
     if (ImGui::Button("Back###loadGame", {235, 30})) {
         viewMenu = ViewMenuEnum::mainMenu;
@@ -176,7 +167,6 @@ void ViewMenu::displayLoadGame() {
 }
 
 void ViewMenu::displayNewGame() {
-    displayText("New Game");
     if (!ImGui::Begin("NewGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
@@ -196,6 +186,7 @@ void ViewMenu::displayNewGame() {
     ImGui::End();
 }
 
+/*
 void ViewMenu::displayText(std::string _text) {
     sf::Text text;
 
@@ -210,8 +201,7 @@ void ViewMenu::displayText(std::string _text) {
 
     window->draw(text);
 }
+ */
 
 void ViewMenu::displayHotSeatConfig() {
-    displayText("Hot Seat");
-
 }

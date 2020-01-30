@@ -11,31 +11,29 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
-#include "Model.hh"
 
+#include "Model.hh"
+#include "ViewAbstract.hh"
+#include "ViewController.hh"
+
+/**
+ * @enum Menu display mode
+ */
 enum class ViewMenuEnum {
-    mainMenu,
-    newGame,
-    loadGame,
-    settings,
-    credits,
-    hotSeatConfig
+    mainMenu,          /**< Display main menu*/
+    newGame,           /**< Display new game menu*/
+    loadGame,          /**< Display load game menu*/
+    settings,          /**< Display settings menu*/
+    credits,           /**< Display credits*/
+    hotSeatConfig      /**< Display new game hot seat config menu*/
 };
 
-class ViewMenu {
-    sf::RenderWindow *window;
-    sf::Font font;
-    sf::Sprite sprite;
-    sf::Image image;
-    sf::Texture texture;
-    Model *model;
+/**
+ * @class ViewMenu
+ * @brief Class containing main menu views
+ */
+class ViewMenu : public ViewAbstract {
     ViewMenuEnum viewMenu;
-
-
-public:
-    void display();
-
-    ViewMenu(Model *_model, sf::RenderWindow *_window);
 
     void displayMainMenu();
 
@@ -49,13 +47,14 @@ public:
 
     void displayCredits();
 
-    void displayText(std::string _text);
+public:
+    /**
+     * @brief Constructor
+     * @param _viewController ViewController pointer
+     */
+    explicit ViewMenu(ViewController *_viewController);
 
-    void displayMenuPhoto();
-
-    void setSprite(unsigned int width, unsigned int height, unsigned char *pixelArray);
-
-    float calculateScale(unsigned int width, unsigned int height);
+    void display() override;
 };
 
 

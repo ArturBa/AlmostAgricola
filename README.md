@@ -15,6 +15,7 @@ This is a game based on Agricola
 1. [Project dependencies](#project-dependencies)
 1. [Project building](#project-building)
 1. [Game show](#game-show)
+1. [Documentation](#documentation)
 
 # Project structure
 - [`docs/`](./docs) is where documentation is
@@ -49,3 +50,15 @@ Will be added later
 # Game show
 ### Main menu
 ![main menu](docs/screenshots/mainMenu.png)
+
+# Documentation
+In project root run:
+```bash
+doxygen Doxyfile
+```
+Then you will find `index.html` file
+```bash
+docs/html/index.html
+```
+Documentation is created using [Doxygen](http://doxygen.nl/)
+
