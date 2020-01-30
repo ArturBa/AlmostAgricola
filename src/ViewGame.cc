@@ -11,10 +11,10 @@ ViewGame::ViewGame(Model *m, sf::RenderWindow *w) :
 }
 
 void ViewGame::display() {
+    displayMenuBar();
     if (gameView != GameViewEnum::ranking) {
         displayWarehouse();
     }
-    displayMenuBar();
     switch (gameView) {
         case GameViewEnum::actions:
             displayActions();

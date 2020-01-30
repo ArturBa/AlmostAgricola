@@ -14,13 +14,10 @@
 #include <SFML/System/Clock.hpp>
 
 #include "ViewGame.hh"
+#include "ViewMenu.hh"
 
 enum class ViewEnum {
-    mainMenu,
-    newGame,
-    loadGame,
-    settings,
-    credits,
+    menu,
     game
 };
 
@@ -28,44 +25,13 @@ class View {
 private:
     sf::RenderWindow *window;
     sf::Clock deltaClock;
-    sf::Sprite sprite;
-    sf::Image image;
-    sf::Texture texture;
     sf::Color bgColor;
-    sf::Font font;
     ViewEnum actualView;
     ViewGame *viewGame;
-
+    ViewMenu *viewMenu;
     Model *model;
 
     void display();
-
-    void displayMenuPhoto();
-
-    void displayMenuLogo();
-
-    void displayMainMenu();
-
-    void displayCredits();
-
-    void displayNewGame();
-
-    void displayLoadGame();
-
-    void displaySettings();
-
-    void displayGame();
-
-    void displayGameWarehouse();
-
-    void displayGameMenuBar();
-
-    void displayGameActions();
-
-    void setSprite(unsigned int width, unsigned int height, unsigned char *pixelArray);
-
-    float calculateScale(unsigned int width, unsigned int height);
-
 public:
     /**
      * View constructor

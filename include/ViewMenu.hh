@@ -4,11 +4,59 @@
 
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include "imgui-SFML.h"
+#include "imgui.h"
+#include <imgui_internal.h>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include "Model.hh"
+
+enum class ViewMenuEnum {
+    mainMenu,
+    newGame,
+    loadGame,
+    settings,
+    credits,
+    hotSeatConfig
+};
 
 class ViewMenu {
+    sf::RenderWindow *window;
+    sf::Font font;
+    sf::Sprite sprite;
+    sf::Image image;
+    sf::Texture texture;
+    Model *model;
+    ViewMenuEnum viewMenu;
+
 
 public:
     void display();
+
+    ViewMenu(Model *m, sf::RenderWindow *w);
+
+    void displayMainMenu();
+
+
+    void displayNewGame();
+
+    void displayHotSeatConfig();
+
+    void displayLoadGame();
+
+    void displaySettings();
+
+    void displayCredits();
+
+    void displayMenuLogo();
+
+    void displayMenuPhoto();
+
+    void setSprite(unsigned int width, unsigned int height, unsigned char *pixelArray);
+
+    float calculateScale(unsigned int width, unsigned int height);
 };
 
 
