@@ -4,10 +4,10 @@
 
 #include "ViewMenu.hh"
 
-ViewMenu::ViewMenu(Model *m, sf::RenderWindow *w) :
+ViewMenu::ViewMenu(Model *_model, sf::RenderWindow *_window) :
         viewMenu(ViewMenuEnum::mainMenu) {
-    model = m;
-    window = w;
+    model = _model;
+    window = _window;
 // TODO change button colors
 //    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
@@ -17,8 +17,9 @@ ViewMenu::ViewMenu(Model *m, sf::RenderWindow *w) :
 }
 
 void ViewMenu::display() {
-    displayMenuPhoto();
-    displayMenuLogo();
+    if (viewMenu != ViewMenuEnum::hotSeatConfig) {
+        displayMenuPhoto();
+    }
     switch (viewMenu) {
         case ViewMenuEnum::mainMenu:
             displayMainMenu();
@@ -42,6 +43,7 @@ void ViewMenu::display() {
 }
 
 void ViewMenu::displayMainMenu() {
+    displayText("Almost Agricola");
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -73,6 +75,7 @@ void ViewMenu::displayMainMenu() {
 }
 
 void ViewMenu::displayCredits() {
+    displayText("Credits");
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
@@ -123,6 +126,7 @@ float ViewMenu::calculateScale(unsigned int width, unsigned int height) {
 }
 
 void ViewMenu::displaySettings() {
+    displayText("Settings");
     if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
@@ -146,6 +150,7 @@ void ViewMenu::displaySettings() {
 }
 
 void ViewMenu::displayLoadGame() {
+    displayText("Load Game");
     if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
@@ -171,7 +176,8 @@ void ViewMenu::displayLoadGame() {
 }
 
 void ViewMenu::displayNewGame() {
-    if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+    displayText("New Game");
+    if (!ImGui::Begin("NewGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
     }
@@ -190,12 +196,12 @@ void ViewMenu::displayNewGame() {
     ImGui::End();
 }
 
-void ViewMenu::displayMenuLogo() {
+void ViewMenu::displayText(std::string _text) {
     sf::Text text;
 
     text.setPosition(220.f, 20.f);
     text.setFont(font);
-    text.setString("Almost Agricola");
+    text.setString(_text);
 
     text.setCharacterSize(50);
 
@@ -206,5 +212,6 @@ void ViewMenu::displayMenuLogo() {
 }
 
 void ViewMenu::displayHotSeatConfig() {
+    displayText("Hot Seat");
 
 }

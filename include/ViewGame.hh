@@ -36,7 +36,7 @@ private:
 public:
     void display();
 
-    explicit ViewGame(Model *m, sf::RenderWindow *w);
+    explicit ViewGame(Model *_model, sf::RenderWindow *_window);
 
 };
 

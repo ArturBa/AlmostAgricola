@@ -35,10 +35,9 @@ class ViewMenu {
 public:
     void display();
 
-    ViewMenu(Model *m, sf::RenderWindow *w);
+    ViewMenu(Model *_model, sf::RenderWindow *_window);
 
     void displayMainMenu();
-
 
     void displayNewGame();
 
@@ -50,7 +49,7 @@ public:
 
     void displayCredits();
 
-    void displayMenuLogo();
+    void displayText(std::string _text);
 
     void displayMenuPhoto();
 

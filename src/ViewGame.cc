@@ -4,10 +4,10 @@
 
 #include "ViewGame.hh"
 
-ViewGame::ViewGame(Model *m, sf::RenderWindow *w) :
+ViewGame::ViewGame(Model *_model, sf::RenderWindow *_window) :
         gameView(GameViewEnum::actions) {
-    model = m;
-    window = w;
+    model = _model;
+    window = _window;
 }
 
 void ViewGame::display() {
