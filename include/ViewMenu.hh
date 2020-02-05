@@ -47,6 +47,8 @@ class ViewMenu : public ViewAbstract {
 
     void displayCredits();
 
+    void displayText(const std::string &_text);
+
 public:
     /**
      * @brief Constructor

@@ -6,6 +6,7 @@
 
 ViewMenu::ViewMenu(ViewController *_viewController) :
         ViewAbstract(_viewController), viewMenu(ViewMenuEnum::mainMenu) {
+    viewController->getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
 // TODO change button colors
 //    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
@@ -40,6 +41,7 @@ void ViewMenu::display() {
 }
 
 void ViewMenu::displayMainMenu() {
+    displayText("Almost Agricola");
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
     if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -71,7 +73,8 @@ void ViewMenu::displayMainMenu() {
 }
 
 void ViewMenu::displayCredits() {
-    if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    displayText("Credits");
+    if (!ImGui::Begin("Credits", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
@@ -123,6 +126,7 @@ float ViewMenu::calculateScale(unsigned int width, unsigned int height) {
 */
 
 void ViewMenu::displaySettings() {
+    displayText("Settings");
     if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
@@ -145,6 +149,7 @@ void ViewMenu::displaySettings() {
 }
 
 void ViewMenu::displayLoadGame() {
+    displayText("Load Game");
     if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
@@ -167,6 +172,7 @@ void ViewMenu::displayLoadGame() {
 }
 
 void ViewMenu::displayNewGame() {
+    displayText("New Game");
     if (!ImGui::Begin("NewGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
         return;
@@ -186,12 +192,12 @@ void ViewMenu::displayNewGame() {
     ImGui::End();
 }
 
-/*
-void ViewMenu::displayText(std::string _text) {
+void ViewMenu::displayText(const std::string &_text) {
     sf::Text text;
 
-    text.setPosition(220.f, 20.f);
-    text.setFont(font);
+    float positionX = (800.f - _text.length() * 25.f) / 2.f;
+    text.setPosition(positionX, 20.f);
+    text.setFont(viewController->getShared()->font);
     text.setString(_text);
 
     text.setCharacterSize(50);
@@ -199,9 +205,58 @@ void ViewMenu::displayText(std::string _text) {
     text.setFillColor({132, 144, 137});
     text.setStyle(sf::Text::Bold);
 
-    window->draw(text);
+    viewController->getShared()->window->draw(text);
 }
- */
 
 void ViewMenu::displayHotSeatConfig() {
+    displayText("Hot seat");
+    static int numberOfPlayers = 1;
+
+    if (!ImGui::Begin("HotSeat###noplayers", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::SliderInt("Number of players###hotseat", &numberOfPlayers, 1, 6);
+    ImGui::End();
+    static char player_names[6][64] = {
+            "Player 1",
+            "Player 2",
+            "Player 3",
+            "Player 4",
+            "Player 5",
+            "Player 6"
+    };
+
+    if (!ImGui::Begin("HotSeat###player1")) {
+        ImGui::End();
+        return;
+    }
+    ImGui::Text("Player 1");
+    ImGui::InputText("", player_names[0], 64);
+    sf::Sprite sprite(viewController->getShared()->texturePlayers);
+    sprite.setTextureRect(sf::Rect(0, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+    if (!ImGui::Begin("HotSeat###player2")) {
+        ImGui::End();
+        return;
+    }
+    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+
+    if (!ImGui::Begin("HotSeat", nullptr, ImGuiWindowFlags_NoDecoration)) {
+        ImGui::End();
+        return;
+    }
+    if (ImGui::Button("Start Game", {235, 30})) {
+        viewController->switchTo(ViewEnum::game);
+    }
+    if (ImGui::Button("Back###hotSeat", {235, 30})) {
+        viewMenu = ViewMenuEnum::newGame;
+    }
+    ImGui::End();
+
 }
