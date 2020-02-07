@@ -7,6 +7,9 @@
 ViewMenu::ViewMenu(ViewController *_viewController) :
         ViewAbstract(_viewController), viewMenu(ViewMenuEnum::mainMenu) {
     viewController->getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    io.IniFilename = "../res/cnf/800_600.ini";
 // TODO change button colors
 //    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
