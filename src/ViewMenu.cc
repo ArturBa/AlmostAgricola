@@ -213,13 +213,13 @@ void ViewMenu::displayText(const std::string &_text) {
 
 void ViewMenu::displayHotSeatConfig() {
     displayText("Hot seat");
-    static int numberOfPlayers = 1;
+    static int numberOfPlayers = 2;
 
-    if (!ImGui::Begin("HotSeat###noplayers", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("HotSeat##noplayers", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
-    ImGui::SliderInt("Number of players###hotseat", &numberOfPlayers, 1, 6);
+    ImGui::SliderInt("Number of players##hotseat", &numberOfPlayers, 2, 6);
     ImGui::End();
     static char player_names[6][64] = {
             "Player 1",
@@ -230,7 +230,7 @@ void ViewMenu::displayHotSeatConfig() {
             "Player 6"
     };
 
-    if (!ImGui::Begin("HotSeat###player1")) {
+    if (!ImGui::Begin("HotSeat###player1", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
@@ -241,10 +241,57 @@ void ViewMenu::displayHotSeatConfig() {
     if (ImGui::ImageButton(sprite)) { ;
     }
     ImGui::End();
-    if (!ImGui::Begin("HotSeat###player2")) {
+
+    if (!ImGui::Begin("HotSeat###player2", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
+    ImGui::Text("Player 2");
+    ImGui::InputText("", player_names[1], 64);
+    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+
+    if (!ImGui::Begin("HotSeat###player3", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::Text("Player 3");
+    ImGui::InputText("", player_names[2], 64);
+    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+
+    if (!ImGui::Begin("HotSeat###player4", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::Text("Player 4");
+    ImGui::InputText("", player_names[3], 64);
+    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+
+    if (!ImGui::Begin("HotSeat###player5", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::Text("Player 5");
+    ImGui::InputText("", player_names[4], 64);
+    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
+    if (ImGui::ImageButton(sprite)) { ;
+    }
+    ImGui::End();
+
+    if (!ImGui::Begin("HotSeat###player6", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    ImGui::Text("Player 6");
+    ImGui::InputText("", player_names[5], 64);
     sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
     if (ImGui::ImageButton(sprite)) { ;
     }
