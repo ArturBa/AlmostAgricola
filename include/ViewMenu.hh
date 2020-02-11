@@ -58,6 +58,9 @@ public:
      */
     explicit ViewMenu(ViewController *_viewController);
 
+    /**
+     * @brief Display GUI for main game menu
+     */
     void display() override;
 };
 

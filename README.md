@@ -4,7 +4,7 @@
 
 
 # Almost Agricola
-available on your Linux 
+available on your Linux and PC
 
 # What is this?
 This is a game based on Agricola 
