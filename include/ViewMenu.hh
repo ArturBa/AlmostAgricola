@@ -49,6 +49,8 @@ class ViewMenu : public ViewAbstract {
 
     void displayText(const std::string &_text);
 
+    void displayPlayer(char *player_name, int &player_icon, int player_no, int active_players);
+
 public:
     /**
      * @brief Constructor

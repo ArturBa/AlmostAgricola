@@ -87,7 +87,7 @@ void ViewMenu::displayCredits() {
     }
     ImGui::PushItemWidth(235);
 
-    ImGui::BeginChild("Credits##scroll", {235, 300});
+    ImGui::BeginChild("Credits##scroll", {235, 250});
     ImGui::TextWrapped("All credits go here. Lorem ipsum. What if there is even more text?");
     ImGui::TextWrapped(
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
@@ -95,8 +95,6 @@ void ViewMenu::displayCredits() {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
 
     ImGui::EndChild();
-    ImGui::Dummy(ImVec2(0.0f, 20.0f));
-
 
     if (ImGui::Button("Back###credits", {235, 30})) {
         viewMenu = ViewMenuEnum::mainMenu;
@@ -198,7 +196,7 @@ void ViewMenu::displayHotSeatConfig() {
     }
     ImGui::SliderInt("Number of players##hotseat", &numberOfPlayers, 2, 6);
     ImGui::End();
-    static char player_names[6][64] = {
+    static char playerNames[6][64] = {
             "Player name",
             "Player name",
             "Player name",
@@ -206,115 +204,15 @@ void ViewMenu::displayHotSeatConfig() {
             "Player name",
             "Player name"
     };
-    static int player_icon[6] = {2};
-    ImGui::ShowMetricsWindow();
+    static int playerIcon[6] = {0};
 
-    if (!ImGui::Begin("HotSeat###player1", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    ImGui::Text("Player 1:");
-    ImGui::InputText("", player_names[0], 64);
     sf::Sprite sprite(viewController->getShared()->texturePlayers);
-    sprite.setTextureRect(sf::Rect(player_icon[0] * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-        ImGui::OpenPopup("Icon Selector##player1");
-    }
-    if (ImGui::BeginPopupModal("Icon Selector##player1", nullptr)) {
-        for (int i = 0; i < ICON_NUMBER; i++) {
-            if (i % 4)
-                ImGui::SameLine();
-
-            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
-            ImGui::PushID(100 + i);
-            if (ImGui::ImageButton(sprite, {64, 64})) {
-                player_icon[0] = i;
-            }
-            ImGui::PopID();
-        }
-        if (ImGui::Button("Select"))
-            ImGui::CloseCurrentPopup();
-        ImGui::EndPopup();
-    }
-    ImGui::End();
-
-    if (!ImGui::Begin("HotSeat###player2", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    ImGui::Text("Player 2:");
-    ImGui::InputText("", player_names[1], 64);
-    sprite.setTextureRect(sf::Rect(player_icon[1] * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-        ImGui::OpenPopup("Icon Selector##player2");
-    }
-    if (ImGui::BeginPopupModal("Icon Selector##player2", nullptr)) {
-        for (int i = 0; i < ICON_NUMBER; i++) {
-            if (i % 4)
-                ImGui::SameLine();
-            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
-            if (ImGui::ImageButton(sprite, {64, 64})) {
-                std::cout << "selected icon: " << i << '\n';
-                player_icon[1] = i;
-            }
-        }
-        if (ImGui::Button("Select"))
-            ImGui::CloseCurrentPopup();
-        ImGui::EndPopup();
-    }
-    ImGui::End();
-
-    if (!ImGui::Begin("HotSeat###player3", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    if (numberOfPlayers < 3)
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    ImGui::Text("Player 3:");
-    ImGui::InputText("", player_names[2], 64);
-    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-    }
-    ImGui::End();
-
-    if (!ImGui::Begin("HotSeat###player4", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    if (numberOfPlayers < 4)
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    ImGui::Text("Player 4:");
-    ImGui::InputText("", player_names[3], 64);
-    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-    }
-    ImGui::End();
-
-    if (!ImGui::Begin("HotSeat###player5", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    if (numberOfPlayers < 5)
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    ImGui::Text("Player 5:");
-    ImGui::InputText("", player_names[4], 64);
-    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-    }
-    ImGui::End();
-
-    if (!ImGui::Begin("HotSeat###player6", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
-        ImGui::End();
-        return;
-    }
-    if (numberOfPlayers < 6)
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    ImGui::Text("Player 6:");
-    ImGui::InputText("", player_names[5], 64);
-    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite, {64, 64})) { ;
-    }
-    ImGui::End();
+    displayPlayer(playerNames[0], playerIcon[0], 0, numberOfPlayers);
+    displayPlayer(playerNames[1], playerIcon[1], 1, numberOfPlayers);
+    displayPlayer(playerNames[2], playerIcon[2], 2, numberOfPlayers);
+    displayPlayer(playerNames[3], playerIcon[3], 3, numberOfPlayers);
+    displayPlayer(playerNames[4], playerIcon[4], 4, numberOfPlayers);
+    displayPlayer(playerNames[5], playerIcon[5], 5, numberOfPlayers);
 
     if (!ImGui::Begin("HotSeat", nullptr, ImGuiWindowFlags_NoDecoration)) {
         ImGui::End();
@@ -325,6 +223,44 @@ void ViewMenu::displayHotSeatConfig() {
     }
     if (ImGui::Button("Back###hotSeat", {235, 30})) {
         viewMenu = ViewMenuEnum::newGame;
+    }
+    ImGui::End();
+
+}
+
+void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no, int active_players) {
+    char nameBuffer[64];
+    sf::Sprite sprite(viewController->getShared()->texturePlayers);
+    sprite.setTextureRect(sf::Rect(player_icon * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
+    sprintf(nameBuffer, "HotSeat###player%d", player_no);
+    if (!ImGui::Begin(nameBuffer, nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+        ImGui::End();
+        return;
+    }
+    if (player_no >= active_players) {
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    }
+    ImGui::Text("Player %i:", player_no + 1);
+    ImGui::InputText("", player_name, 64);
+    sprintf(nameBuffer, "Icon Selector##player%i", player_no);
+    if (ImGui::ImageButton(sprite, {64, 64})) {
+        ImGui::OpenPopup(nameBuffer);
+    }
+    if (ImGui::BeginPopupModal(nameBuffer, nullptr)) {
+        for (int i = 0; i < ICON_NUMBER; i++) {
+            if (i % 4)
+                ImGui::SameLine();
+
+            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
+            ImGui::PushID(100 + i);
+            if (ImGui::ImageButton(sprite, {64, 64})) {
+                player_icon = i;
+            }
+            ImGui::PopID();
+        }
+        if (ImGui::Button("Select"))
+            ImGui::CloseCurrentPopup();
+        ImGui::EndPopup();
     }
     ImGui::End();
 
