@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=imgui)](https://travis-ci.com/ArturBa/AlmostAgricola)
-[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/imgui/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
+[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=develop)](https://travis-ci.com/ArturBa/AlmostAgricola)
+[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/develop/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
 
 
 
