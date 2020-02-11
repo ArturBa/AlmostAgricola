@@ -4,6 +4,10 @@
 
 #include "ViewMenu.hh"
 
+#define ICON_SIZE 32
+#define ICON_NUMBER 3
+
+
 ViewMenu::ViewMenu(ViewController *_viewController) :
         ViewAbstract(_viewController), viewMenu(ViewMenuEnum::mainMenu) {
     viewController->getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
@@ -101,33 +105,6 @@ void ViewMenu::displayCredits() {
     ImGui::End();
 }
 
-/*
-void ViewMenu::displayMenuPhoto() {
-    setSprite(model->getWidth(), model->getHeight(), model->getImage());
-    window->draw(sprite);
-}
-
-void ViewMenu::setSprite(unsigned int width, unsigned int height, unsigned char *pixelArray) {
-    image.create(width, height, pixelArray);
-    texture.loadFromImage(image);
-
-    float scale = calculateScale(width, height);
-    sprite.setTexture(texture);
-    sprite.setScale({scale, scale});
-
-    sprite.setPosition({((float) window->getSize().x - ((float) width * scale) - 250) / 2,
-                        ((float) window->getSize().y - ((float) height * scale)) / 2});
-}
-
-float ViewMenu::calculateScale(unsigned int width, unsigned int height) {
-    if ((window->getSize().x - 250) / width > (window->getSize().y) / height) {
-        return (float) window->getSize().y / (float) height;
-    } else {
-        return (float) (window->getSize().x - 250) / (float) width;
-    }
-}
-*/
-
 void ViewMenu::displaySettings() {
     displayText("Settings");
     if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
@@ -222,23 +199,42 @@ void ViewMenu::displayHotSeatConfig() {
     ImGui::SliderInt("Number of players##hotseat", &numberOfPlayers, 2, 6);
     ImGui::End();
     static char player_names[6][64] = {
-            "Player 1",
-            "Player 2",
-            "Player 3",
-            "Player 4",
-            "Player 5",
-            "Player 6"
+            "Player name",
+            "Player name",
+            "Player name",
+            "Player name",
+            "Player name",
+            "Player name"
     };
+    static int player_icon[6] = {2};
+    ImGui::ShowMetricsWindow();
 
     if (!ImGui::Begin("HotSeat###player1", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 1");
+    ImGui::Text("Player 1:");
     ImGui::InputText("", player_names[0], 64);
     sf::Sprite sprite(viewController->getShared()->texturePlayers);
-    sprite.setTextureRect(sf::Rect(0, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    sprite.setTextureRect(sf::Rect(player_icon[0] * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
+        ImGui::OpenPopup("Icon Selector##player1");
+    }
+    if (ImGui::BeginPopupModal("Icon Selector##player1", nullptr)) {
+        for (int i = 0; i < ICON_NUMBER; i++) {
+            if (i % 4)
+                ImGui::SameLine();
+
+            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
+            ImGui::PushID(100 + i);
+            if (ImGui::ImageButton(sprite, {64, 64})) {
+                player_icon[0] = i;
+            }
+            ImGui::PopID();
+        }
+        if (ImGui::Button("Select"))
+            ImGui::CloseCurrentPopup();
+        ImGui::EndPopup();
     }
     ImGui::End();
 
@@ -246,10 +242,25 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 2");
+    ImGui::Text("Player 2:");
     ImGui::InputText("", player_names[1], 64);
-    sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    sprite.setTextureRect(sf::Rect(player_icon[1] * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
+        ImGui::OpenPopup("Icon Selector##player2");
+    }
+    if (ImGui::BeginPopupModal("Icon Selector##player2", nullptr)) {
+        for (int i = 0; i < ICON_NUMBER; i++) {
+            if (i % 4)
+                ImGui::SameLine();
+            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
+            if (ImGui::ImageButton(sprite, {64, 64})) {
+                std::cout << "selected icon: " << i << '\n';
+                player_icon[1] = i;
+            }
+        }
+        if (ImGui::Button("Select"))
+            ImGui::CloseCurrentPopup();
+        ImGui::EndPopup();
     }
     ImGui::End();
 
@@ -257,10 +268,12 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 3");
+    if (numberOfPlayers < 3)
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    ImGui::Text("Player 3:");
     ImGui::InputText("", player_names[2], 64);
     sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
     }
     ImGui::End();
 
@@ -268,10 +281,12 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 4");
+    if (numberOfPlayers < 4)
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    ImGui::Text("Player 4:");
     ImGui::InputText("", player_names[3], 64);
     sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
     }
     ImGui::End();
 
@@ -279,10 +294,12 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 5");
+    if (numberOfPlayers < 5)
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    ImGui::Text("Player 5:");
     ImGui::InputText("", player_names[4], 64);
     sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
     }
     ImGui::End();
 
@@ -290,10 +307,12 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Player 6");
+    if (numberOfPlayers < 6)
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+    ImGui::Text("Player 6:");
     ImGui::InputText("", player_names[5], 64);
     sprite.setTextureRect(sf::Rect(32, 0, 32, 32));
-    if (ImGui::ImageButton(sprite)) { ;
+    if (ImGui::ImageButton(sprite, {64, 64})) { ;
     }
     ImGui::End();
 
