@@ -9,7 +9,7 @@
 #define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
 #define BUTTON_SPACE    {  0,  25}
 #define BUTTON_SIZE     {235,  30}
-#define TEXT_COLOR      {255, 255, 255, 255}
+#define TITLE_TEXT_COLOR      {226, 226, 226, 255}
 
 
 ViewMenu::ViewMenu(ViewController *_viewController) :
@@ -18,6 +18,7 @@ ViewMenu::ViewMenu(ViewController *_viewController) :
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     io.IniFilename = "../res/cnf/800_600.ini";
+    io.Fonts->AddFontFromFileTTF("../res/font/Lato-Black.ttf", 15.f);
 
     texture.loadFromFile("../res/img/menu_dark_sheep.jpg");
     bgImage.setTexture(texture);
@@ -58,7 +59,7 @@ void ViewMenu::display() {
 
 void ViewMenu::displayMainMenu() {
     displayText("Almost Agricola");
-    if (!ImGui::Begin("Main Menu", nullptr, DEFAULT_WINDOW_FLAGS )) {
+    if (!ImGui::Begin("Main Menu", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -87,7 +88,7 @@ void ViewMenu::displayMainMenu() {
 
 void ViewMenu::displayCredits() {
     displayText("Credits");
-    if (!ImGui::Begin("Credits", nullptr, DEFAULT_WINDOW_FLAGS)) {
+    if (!ImGui::Begin("Credits", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
@@ -114,6 +115,7 @@ void ViewMenu::displaySettings() {
         ImGui::End();
         return;
     }
+    ImGui::PushItemWidth(235.f);
     ImGui::Text("Resolution:");
     const char *res[] = {"800x600", "1366x766", "1920x1080"};
     static int selRes = 0;
@@ -127,7 +129,6 @@ void ViewMenu::displaySettings() {
     ImGui::Dummy(BUTTON_SPACE);
     if (ImGui::Button("Apply", BUTTON_SIZE)) {
     }
-    ImGui::Dummy(BUTTON_SPACE);
     if (ImGui::Button("Back###settings", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
@@ -146,7 +147,8 @@ void ViewMenu::displayLoadGame() {
     const char *saveNames[] = {"save0", "save1", "save2"};
     const char *savePlayer[] = {"John", "Joanna", "Gerald"};
 
-    ImGui::ListBox("Save", &selectedSave, saveNames, IM_ARRAYSIZE(saveNames));
+    ImGui::PushItemWidth(245.f);
+    ImGui::ListBox("", &selectedSave, saveNames, IM_ARRAYSIZE(saveNames));
     ImGui::Text("Player: %s", savePlayer[selectedSave]);
 
     ImGui::Dummy(BUTTON_SPACE);
@@ -193,7 +195,7 @@ void ViewMenu::displayText(const std::string &_text) {
 
     text.setCharacterSize(50);
 
-    text.setFillColor(TEXT_COLOR);
+    text.setFillColor(TITLE_TEXT_COLOR);
     text.setStyle(sf::Text::Bold);
 
     viewController->getShared()->window->draw(text);
@@ -257,7 +259,7 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
     if (ImGui::ImageButton(sprite, {64, 64})) {
         ImGui::OpenPopup(nameBuffer);
     }
-    if (ImGui::BeginPopupModal(nameBuffer, nullptr)) {
+    if (ImGui::BeginPopupModal(nameBuffer, nullptr, ImGuiWindowFlags_NoDecoration)) {
         for (int i = 0; i < ICON_NUMBER; i++) {
             if (i % 4)
                 ImGui::SameLine();
