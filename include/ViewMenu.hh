@@ -34,6 +34,8 @@ enum class ViewMenuEnum {
  */
 class ViewMenu : public ViewAbstract {
     ViewMenuEnum viewMenu;
+    sf::Texture texture;
+    sf::Sprite bgImage;
 
     void displayMainMenu();
 
@@ -46,6 +48,8 @@ class ViewMenu : public ViewAbstract {
     void displaySettings();
 
     void displayCredits();
+
+    void displayBgImage();
 
     void displayText(const std::string &_text);
 

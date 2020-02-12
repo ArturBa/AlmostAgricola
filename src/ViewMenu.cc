@@ -6,6 +6,10 @@
 
 #define ICON_SIZE 32
 #define ICON_NUMBER 3
+#define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
+#define BUTTON_SPACE    {  0,  25}
+#define BUTTON_SIZE     {235,  30}
+#define TEXT_COLOR      {255, 255, 255, 255}
 
 
 ViewMenu::ViewMenu(ViewController *_viewController) :
@@ -14,15 +18,20 @@ ViewMenu::ViewMenu(ViewController *_viewController) :
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     io.IniFilename = "../res/cnf/800_600.ini";
-// TODO change button colors
-//    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
-//    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
-//    ImGui::PushStyleColor(ImGuiCol_ButtonActive, {0, 0, 0, 255});
+
+    texture.loadFromFile("../res/img/menu_dark_sheep.jpg");
+    bgImage.setTexture(texture);
+    sf::Vector2u size = texture.getSize();
+    bgImage.setOrigin({static_cast<float>(size.x / 2), static_cast<float>(size.y / 2)});
+    bgImage.setPosition({800.f / 2, 600.f / 2});
+    float scale = 800. / size.x < 600. / size.y ? 600.f / size.y : 800.f / size.x;
+    bgImage.setScale(scale, scale);
 }
 
 void ViewMenu::display() {
     ImGui::SFML::Update(*viewController->getShared()->window, viewController->getShared()->deltaClock.restart());
     viewController->getShared()->window->clear({206, 186, 162});
+    displayBgImage();
     switch (viewMenu) {
         case ViewMenuEnum::mainMenu:
             displayMainMenu();
@@ -49,30 +58,27 @@ void ViewMenu::display() {
 
 void ViewMenu::displayMainMenu() {
     displayText("Almost Agricola");
-    ImVec2 buttonSpace(0, 25.f);
-    ImVec2 buttonSize(235, 30);
-    if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Main Menu", nullptr, DEFAULT_WINDOW_FLAGS )) {
         ImGui::End();
         return;
     }
-    ImGui::PushItemWidth(235);
-    if (ImGui::Button("New Game", buttonSize)) {
+    if (ImGui::Button("New Game", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
     }
-    ImGui::Dummy(buttonSpace);
-    if (ImGui::Button("Load Game", buttonSize)) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Load Game", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::loadGame;
     }
-    ImGui::Dummy(buttonSpace);
-    if (ImGui::Button("Settings", buttonSize)) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Settings", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::settings;
     }
-    ImGui::Dummy(buttonSpace);
-    if (ImGui::Button("Credits", buttonSize)) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Credits", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::credits;
     }
-    ImGui::Dummy(buttonSpace);
-    if (ImGui::Button("Exit", buttonSize)) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Exit", BUTTON_SIZE)) {
         viewController->getShared()->window->close();
     }
 
@@ -81,13 +87,12 @@ void ViewMenu::displayMainMenu() {
 
 void ViewMenu::displayCredits() {
     displayText("Credits");
-    if (!ImGui::Begin("Credits", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Credits", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    ImGui::PushItemWidth(235);
 
-    ImGui::BeginChild("Credits##scroll", {235, 250});
+    ImGui::BeginChild("Credits##scroll", {235, 350});
     ImGui::TextWrapped("All credits go here. Lorem ipsum. What if there is even more text?");
     ImGui::TextWrapped(
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
@@ -96,7 +101,7 @@ void ViewMenu::displayCredits() {
 
     ImGui::EndChild();
 
-    if (ImGui::Button("Back###credits", {235, 30})) {
+    if (ImGui::Button("Back###credits", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
 
@@ -105,21 +110,25 @@ void ViewMenu::displayCredits() {
 
 void ViewMenu::displaySettings() {
     displayText("Settings");
-    if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Settings", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    ImGui::PushItemWidth(235);
-    ImGui::Text("Resolution");
+    ImGui::Text("Resolution:");
     const char *res[] = {"800x600", "1366x766", "1920x1080"};
     static int selRes = 0;
-    ImGui::Combo("Resolution", &selRes, res, IM_ARRAYSIZE(res));
+    ImGui::Combo("##res", &selRes, res, IM_ARRAYSIZE(res));
 
-    ImGui::Dummy({0, 20});
-    if (ImGui::Button("Apply", {235, 30})) {
+    ImGui::Text("Language:");
+    const char *lang[] = {"English", "Polski"};
+    static int selLang = 0;
+    ImGui::Combo("##lang", &selLang, lang, IM_ARRAYSIZE(lang));
+
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Apply", BUTTON_SIZE)) {
     }
-    ImGui::Dummy({0, 20});
-    if (ImGui::Button("Back###settings", {235, 30})) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Back###settings", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
 
@@ -128,7 +137,7 @@ void ViewMenu::displaySettings() {
 
 void ViewMenu::displayLoadGame() {
     displayText("Load Game");
-    if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("LoadGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -140,10 +149,10 @@ void ViewMenu::displayLoadGame() {
     ImGui::ListBox("Save", &selectedSave, saveNames, IM_ARRAYSIZE(saveNames));
     ImGui::Text("Player: %s", savePlayer[selectedSave]);
 
-    ImGui::Dummy({0, 20});
-    if (ImGui::Button("Load game", {235, 30})) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Load game", BUTTON_SIZE)) {
     }
-    if (ImGui::Button("Back###loadGame", {235, 30})) {
+    if (ImGui::Button("Back###loadGame", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
     ImGui::End();
@@ -151,23 +160,27 @@ void ViewMenu::displayLoadGame() {
 
 void ViewMenu::displayNewGame() {
     displayText("New Game");
-    if (!ImGui::Begin("NewGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("NewGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("Hot seat", {235, 30})) {
+    if (ImGui::Button("Hot seat", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::hotSeatConfig;
     }
-    ImGui::Dummy({0, 20});
+    ImGui::Dummy(BUTTON_SPACE);
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    if (ImGui::Button("LAN", {235, 30})) { ;
+    if (ImGui::Button("LAN", BUTTON_SIZE)) { ;
     }
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, false);
-    ImGui::Dummy({0, 20});
-    if (ImGui::Button("Back###newGame", {235, 30})) {
+    ImGui::Dummy(BUTTON_SPACE);
+    if (ImGui::Button("Back###newGame", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
     ImGui::End();
+}
+
+void ViewMenu::displayBgImage() {
+    viewController->getShared()->window->draw(bgImage);
 }
 
 void ViewMenu::displayText(const std::string &_text) {
@@ -180,7 +193,7 @@ void ViewMenu::displayText(const std::string &_text) {
 
     text.setCharacterSize(50);
 
-    text.setFillColor({132, 144, 137});
+    text.setFillColor(TEXT_COLOR);
     text.setStyle(sf::Text::Bold);
 
     viewController->getShared()->window->draw(text);
@@ -190,7 +203,7 @@ void ViewMenu::displayHotSeatConfig() {
     displayText("Hot seat");
     static int numberOfPlayers = 2;
 
-    if (!ImGui::Begin("HotSeat##noplayers", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("HotSeat##noplayers", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -206,7 +219,6 @@ void ViewMenu::displayHotSeatConfig() {
     };
     static int playerIcon[6] = {0};
 
-    sf::Sprite sprite(viewController->getShared()->texturePlayers);
     displayPlayer(playerNames[0], playerIcon[0], 0, numberOfPlayers);
     displayPlayer(playerNames[1], playerIcon[1], 1, numberOfPlayers);
     displayPlayer(playerNames[2], playerIcon[2], 2, numberOfPlayers);
@@ -214,18 +226,17 @@ void ViewMenu::displayHotSeatConfig() {
     displayPlayer(playerNames[4], playerIcon[4], 4, numberOfPlayers);
     displayPlayer(playerNames[5], playerIcon[5], 5, numberOfPlayers);
 
-    if (!ImGui::Begin("HotSeat", nullptr, ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("HotSeat", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("Start Game", {235, 30})) {
+    if (ImGui::Button("Start Game", BUTTON_SIZE)) {
         viewController->switchTo(ViewEnum::game);
     }
-    if (ImGui::Button("Back###hotSeat", {235, 30})) {
+    if (ImGui::Button("Back###hotSeat", BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
     }
     ImGui::End();
-
 }
 
 void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no, int active_players) {
@@ -233,7 +244,7 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
     sf::Sprite sprite(viewController->getShared()->texturePlayers);
     sprite.setTextureRect(sf::Rect(player_icon * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
     sprintf(nameBuffer, "HotSeat###player%d", player_no);
-    if (!ImGui::Begin(nameBuffer, nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin(nameBuffer, nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -263,5 +274,4 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
         ImGui::EndPopup();
     }
     ImGui::End();
-
 }
