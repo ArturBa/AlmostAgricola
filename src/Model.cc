@@ -11,7 +11,7 @@ bool Model::loadImage(const std::string &fileName) {
     }
     width = img.getSize().x;
     height = img.getSize().y;
-    int size = 4 * width * height;
+    unsigned int size = 4 * width * height;
     image = new unsigned char[size];
 
     const unsigned char *pixptr;

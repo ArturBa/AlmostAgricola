@@ -6,6 +6,7 @@
 
 #include "ViewController.hh"
 #include "ViewMenu.hh"
+#include "ViewGame.hh"
 
 
 ViewController::ViewController(Shared *_shared) :
@@ -28,6 +29,7 @@ void ViewController::switchTo(ViewEnum view) {
             currentView = std::make_unique<ViewMenu>(this);
             break;
         case ViewEnum::game:
+            currentView = std::make_unique<ViewGame>(this);
             break;
     }
 }

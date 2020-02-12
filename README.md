@@ -56,7 +56,7 @@ In project root run:
 ```bash
 doxygen Doxyfile
 ```
-Then you will find `index.html` file
+Then you will find [`index.html`](docs/html/index.html) file
 ```bash
 docs/html/index.html
 ```
