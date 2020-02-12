@@ -16,22 +16,19 @@
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
 
-/**
- * @enum Game display mode
- */
-enum class ViewGameEnum {
-    action,         /**< Display action menu*/
-    ranging,        /**< Display ranking menu*/
-    farm,           /**< Display farm menu*/
-};
-
 class ViewGame : public ViewAbstract {
 private:
-    ViewGameEnum viewGame;
-
     void displayAction();
 
     void displayRanking();
+
+    void displayFarm();
+
+    void displayWeek();
+
+    void displayUpgrades();
+
+    void displayWarehouse();
 
 public:
     /**

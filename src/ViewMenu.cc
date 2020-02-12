@@ -6,6 +6,7 @@
 
 #define ICON_SIZE 32
 #define ICON_NUMBER 3
+#define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
 
 
 ViewMenu::ViewMenu(ViewController *_viewController) :
@@ -13,7 +14,7 @@ ViewMenu::ViewMenu(ViewController *_viewController) :
     viewController->getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    io.IniFilename = "../res/cnf/800_600_mainMenu.ini";
+    io.IniFilename = "../res/cnf/800_600.ini";
 // TODO change button colors
 //    ImGui::PushStyleColor(ImGuiCol_Button, {103, 103, 103, 0});
 //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, {0, 0, 0, 255});
@@ -51,7 +52,7 @@ void ViewMenu::displayMainMenu() {
     displayText("Almost Agricola");
     ImVec2 buttonSpace(0, 25.f);
     ImVec2 buttonSize(235, 30);
-    if (!ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Main Menu", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -81,7 +82,7 @@ void ViewMenu::displayMainMenu() {
 
 void ViewMenu::displayCredits() {
     displayText("Credits");
-    if (!ImGui::Begin("Credits", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Credits", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -105,7 +106,7 @@ void ViewMenu::displayCredits() {
 
 void ViewMenu::displaySettings() {
     displayText("Settings");
-    if (!ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("Settings", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -128,7 +129,7 @@ void ViewMenu::displaySettings() {
 
 void ViewMenu::displayLoadGame() {
     displayText("Load Game");
-    if (!ImGui::Begin("LoadGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("LoadGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -151,7 +152,7 @@ void ViewMenu::displayLoadGame() {
 
 void ViewMenu::displayNewGame() {
     displayText("New Game");
-    if (!ImGui::Begin("NewGame", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("NewGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -190,7 +191,7 @@ void ViewMenu::displayHotSeatConfig() {
     displayText("Hot seat");
     static int numberOfPlayers = 2;
 
-    if (!ImGui::Begin("HotSeat##noplayers", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin("HotSeat##noplayers", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -214,7 +215,7 @@ void ViewMenu::displayHotSeatConfig() {
     displayPlayer(playerNames[4], playerIcon[4], 4, numberOfPlayers);
     displayPlayer(playerNames[5], playerIcon[5], 5, numberOfPlayers);
 
-    if (!ImGui::Begin("HotSeat", nullptr, ImGuiWindowFlags_NoDecoration)) {
+    if (!ImGui::Begin("HotSeat", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
@@ -233,7 +234,7 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
     sf::Sprite sprite(viewController->getShared()->texturePlayers);
     sprite.setTextureRect(sf::Rect(player_icon * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
     sprintf(nameBuffer, "HotSeat###player%d", player_no);
-    if (!ImGui::Begin(nameBuffer, nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
+    if (!ImGui::Begin(nameBuffer, nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
