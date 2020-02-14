@@ -26,10 +26,12 @@ Shared *ViewController::getShared() const {
 void ViewController::switchTo(ViewEnum view) {
     switch (view) {
         case ViewEnum::menu:
-            currentView = std::make_unique<ViewMenu>(this);
+            delete currentView;
+            currentView = new ViewMenu(this);
             break;
         case ViewEnum::game:
-            currentView = std::make_unique<ViewGame>(this);
+            delete currentView;
+            currentView = new ViewGame(this);
             break;
     }
 }

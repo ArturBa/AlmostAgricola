@@ -47,7 +47,7 @@ public:
 
 private:
     Shared *shared;
-    std::unique_ptr<ViewAbstract> currentView;
+    ViewAbstract *currentView;
 };
 
 
