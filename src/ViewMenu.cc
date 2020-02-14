@@ -63,7 +63,7 @@ void ViewMenu::displayMainMenu() {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("New Game", BUTTON_SIZE)) {
+    if (ImGui::Button(viewController->getShared()->lang->value("new_game", "null").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
     }
     ImGui::Dummy(BUTTON_SPACE);
