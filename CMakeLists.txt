@@ -50,9 +50,6 @@ target_link_libraries(AlmostAgricola ${LIBRARIES})
 option(BUILD_TESTS "Build all tests." OFF) # Makes boolean 'test' available.
 
 if (BUILD_TESTS)
-  # This adds another subdirectory, which has 'project(gtest)'.
-  add_subdirectory(ext/googletest)
-
   enable_testing()
 
   # Include the gtest library. gtest_SOURCE_DIR is available due to

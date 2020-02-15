@@ -6,7 +6,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
-#include <nlohmann/json.hpp>
 #include "ViewController.hh"
 #include "Json.hh"
 
