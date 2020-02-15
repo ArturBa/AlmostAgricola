@@ -29,11 +29,12 @@ set(CMAKE_CXX_STANDARD 20)
 ################################
 
 add_library(AlmostAgricola_lib ${SRC_FILES})
-target_link_libraries(AlmostAgricola_lib ImGui-SFML::ImGui-SFML)
+target_link_libraries(AlmostAgricola_lib ImGui-SFML::ImGui-SFML nlohmann_json::nlohmann_json)
 add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
 SET(LIBRARIES
         AlmostAgricola_lib
         ImGui-SFML::ImGui-SFML
+        nlohmann_json::nlohmann_json
         )
 target_link_libraries(AlmostAgricola ${LIBRARIES})
 # Key idea: SEPARATE OUT your main() function into its own file so it can be its

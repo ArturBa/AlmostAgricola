@@ -14,8 +14,9 @@ message(STATUS "Fetching third party libraries")
 #======================================
 
 set(SFML_VERSION 2.5.1)
-set(IMGUI_VERSION 1.68)
-set(IMGUI_SFML_VERSION 2.0)
+set(IMGUI_VERSION 1.74)
+set(IMGUI_SFML_VERSION 2.1)
+set(JSON_VERSION 3.7.3)
 
 # It's nice to get stripped-down release zips instead of cloning
 # a repo and checking out a tag
@@ -40,9 +41,15 @@ FetchContent_Declare(
         # tags like 'vX.X' corresponding to releases
 )
 
+FetchContent_Declare(
+        json
+        URL "https://github.com/nlohmann/json/archive/v${JSON_VERSION}.zip"
+)
+
 add_subdirectory(sfml)
 add_subdirectory(imgui)
 add_subdirectory(imgui-sfml)
+add_subdirectory(json)
 
 #======================================
 message(STATUS "Fetching thirdparty libraries done")

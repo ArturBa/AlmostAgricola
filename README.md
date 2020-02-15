@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=imgui)](https://travis-ci.com/ArturBa/AlmostAgricola)
-[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/imgui/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
+[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=mainMenuGui)](https://travis-ci.com/ArturBa/AlmostAgricola)
+[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/mainMenuGui/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
 
 
 
 # Almost Agricola
-available on your Linux 
+available on your Linux and PC
 
 # What is this?
 This is a game based on Agricola 
@@ -15,6 +15,7 @@ This is a game based on Agricola
 1. [Project dependencies](#project-dependencies)
 1. [Project building](#project-building)
 1. [Game show](#game-show)
+1. [Documentation](#documentation)
 
 # Project structure
 - [`docs/`](./docs) is where documentation is
@@ -49,3 +50,19 @@ Will be added later
 # Game show
 ### Main menu
 ![main menu](docs/screenshots/mainMenu.png)
+
+# Documentation
+## Doxygen
+To create [Doxygen](http://doxygen.nl/) documentation run in project root:
+```bash
+doxygen Doxyfile
+```
+Then you will find `index.html` file
+```bash
+docs/html/index.html
+```
+## UML
+UML diagram available in:
+[`docs/UML`](docs/UML/README.md)
+
+

@@ -5,7 +5,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Save.hh"
 
 
 class Model {
@@ -32,4 +31,8 @@ public:
     void getSaves() {};
 
     void loadSave() {};
+
+    void getWarehouse() {};
+
+    void newGame() {};
 };

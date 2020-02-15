@@ -1,7 +1,6 @@
-#include "View.hh"
+#include "Application.hh"
 
 int main() {
-    Model model;
-    View view(&model);
-    view.processEvents();
+    Application app;
+    app.start();
 }

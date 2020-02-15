@@ -10,3 +10,6 @@
 
 #Ignore changes in ext directory
 ext/
+
+#Ignore doxygen output
+docs/html
