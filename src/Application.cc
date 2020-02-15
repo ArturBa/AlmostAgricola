@@ -20,6 +20,12 @@ void Application::start() {
     ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, ImVec4(ImColor(109, 116, 116)));
     ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(ImColor(109, 116, 116)));
     ImGui::PushStyleColor(ImGuiCol_TextSelectedBg, ImVec4(ImColor(109, 116, 116)));
+
+    viewController.getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    io.IniFilename = "../res/cnf/800_600.ini";
+    io.Fonts->AddFontFromFileTTF("../res/font/Lato-Black.ttf", 10.f, nullptr, io.Fonts->GetGlyphRangesDefault());
     sf::Event event{};
     while (shared.window->isOpen()) {
         while (shared.window->pollEvent(event)) {
