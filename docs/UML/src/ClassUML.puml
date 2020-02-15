@@ -1,0 +1,54 @@
+@startuml
+
+class Application{
+    - shared: Shared
+    - viewController: ViewController
+    - window
+    + start()
+}
+
+class Shared{
+    + viewController: ViewController
+}
+
+class ViewController{
+    - shared: Shared
+    - currentView: ViewAbstract
+    + display()
+    + switchTo()
+    + getShared()
+}
+
+class ViewMenu{
+    - viewController: ViewController
+    + display()
+}
+
+class ViewAbstract <<interface >>{
+    # viewController: ViewController
+    + display()
+}
+
+enum ViewEnum {
+    menu
+    game
+}
+
+enum ViewMenuEnum {
+    mainMenu
+    newGame
+    loadGame
+    settings
+    credits
+    hotSeatConfig
+}
+
+Application *-- ViewController
+Application *-- Shared
+
+ViewController o-o Shared
+
+ViewAbstract <|.. ViewMenu
+ViewController o-- ViewAbstract
+
+@enduml
