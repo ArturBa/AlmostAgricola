@@ -52,7 +52,8 @@ Will be added later
 ![main menu](docs/screenshots/mainMenu.png)
 
 # Documentation
-In project root run:
+## Doxygen
+To create [Doxygen](http://doxygen.nl/) documentation run in project root:
 ```bash
 doxygen Doxyfile
 ```
@@ -60,5 +61,8 @@ Then you will find `index.html` file
 ```bash
 docs/html/index.html
 ```
-Documentation is created using [Doxygen](http://doxygen.nl/)
+## UML
+UML diagram available in:
+[`docs/UML`](docs/UML/README.md)
+
 
