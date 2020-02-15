@@ -14,11 +14,6 @@
 
 ViewMenu::ViewMenu(ViewController *_viewController) :
         ViewAbstract(_viewController), viewMenu(ViewMenuEnum::mainMenu) {
-    viewController->getShared()->font.loadFromFile("../res/font/Lato-Black.ttf");
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    io.IniFilename = "../res/cnf/800_600.ini";
-    io.Fonts->AddFontFromFileTTF("../res/font/Lato-Black.ttf", 15.f);
 
     texture.loadFromFile("../res/img/menu_dark_sheep.jpg");
     bgImage.setTexture(texture);
@@ -57,29 +52,33 @@ void ViewMenu::display() {
     viewController->getShared()->window->display();
 }
 
+std::string ViewMenu::getJsonLangValue(const std::string &key, const std::string &default_value = "null") {
+    return viewController->getShared()->lang->value(key, default_value);
+}
+
 void ViewMenu::displayMainMenu() {
     displayText("Almost Agricola");
     if (!ImGui::Begin("Main Menu", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("New Game", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("new_game").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
     }
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Load Game", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("load_game").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::loadGame;
     }
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Settings", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("settings").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::settings;
     }
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Credits", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("credits").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::credits;
     }
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Exit", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("exit").c_str(), BUTTON_SIZE)) {
         viewController->getShared()->window->close();
     }
 
@@ -87,22 +86,18 @@ void ViewMenu::displayMainMenu() {
 }
 
 void ViewMenu::displayCredits() {
-    displayText("Credits");
+    displayText(getJsonLangValue("credits"));
     if (!ImGui::Begin("Credits", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove)) {
         ImGui::End();
         return;
     }
 
     ImGui::BeginChild("Credits##scroll", {235, 350});
-    ImGui::TextWrapped("All credits go here. Lorem ipsum. What if there is even more text?");
-    ImGui::TextWrapped(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
-    ImGui::TextWrapped(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien sem, sagittis non dapibus id, tincidunt lacinia nulla. Morbi lobortis rhoncus dui, sit amet fringilla sapien pulvinar sit amet. Nullam neque eros, egestas quis pulvinar nec, vulputate non tellus. Praesent et elit ipsum. Aenean venenatis rhoncus quam sed iaculis. Cras pellentesque tristique nibh in hendrerit. Nullam ut efficitur diam. Donec imperdiet sapien id condimentum gravida. Praesent hendrerit pretium ipsum nec interdum. Sed tempus justo quam, vel blandit dolor porttitor non. Morbi rutrum, arcu in semper ullamcorper, diam urna feugiat turpis, vestibulum pharetra augue felis et mauris. ");
+    ImGui::TextWrapped("%s", getJsonLangValue("credits_text").c_str());
 
     ImGui::EndChild();
 
-    if (ImGui::Button("Back###credits", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
 
@@ -110,26 +105,26 @@ void ViewMenu::displayCredits() {
 }
 
 void ViewMenu::displaySettings() {
-    displayText("Settings");
+    displayText(getJsonLangValue("settings"));
     if (!ImGui::Begin("Settings", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
     ImGui::PushItemWidth(235.f);
-    ImGui::Text("Resolution:");
+    ImGui::Text("%s:", getJsonLangValue("resolution").c_str());
     const char *res[] = {"800x600", "1366x766", "1920x1080"};
     static int selRes = 0;
     ImGui::Combo("##res", &selRes, res, IM_ARRAYSIZE(res));
 
-    ImGui::Text("Language:");
+    ImGui::Text("%s:", getJsonLangValue("language").c_str());
     const char *lang[] = {"English", "Polski"};
     static int selLang = 0;
     ImGui::Combo("##lang", &selLang, lang, IM_ARRAYSIZE(lang));
 
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Apply", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("apply").c_str(), BUTTON_SIZE)) {
     }
-    if (ImGui::Button("Back###settings", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
 
@@ -137,7 +132,7 @@ void ViewMenu::displaySettings() {
 }
 
 void ViewMenu::displayLoadGame() {
-    displayText("Load Game");
+    displayText(getJsonLangValue("load_game"));
     if (!ImGui::Begin("LoadGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
@@ -149,33 +144,33 @@ void ViewMenu::displayLoadGame() {
 
     ImGui::PushItemWidth(245.f);
     ImGui::ListBox("", &selectedSave, saveNames, IM_ARRAYSIZE(saveNames));
-    ImGui::Text("Player: %s", savePlayer[selectedSave]);
+    ImGui::Text("%s: %s", getJsonLangValue("player").c_str(), savePlayer[selectedSave]);
 
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Load game", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("load_game").c_str(), BUTTON_SIZE)) {
     }
-    if (ImGui::Button("Back###loadGame", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
     ImGui::End();
 }
 
 void ViewMenu::displayNewGame() {
-    displayText("New Game");
+    displayText(getJsonLangValue("new_game"));
     if (!ImGui::Begin("NewGame", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("Hot seat", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("hot_seat").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::hotSeatConfig;
     }
     ImGui::Dummy(BUTTON_SPACE);
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-    if (ImGui::Button("LAN", BUTTON_SIZE)) { ;
+    if (ImGui::Button(getJsonLangValue("LAN").c_str(), BUTTON_SIZE)) { ;
     }
     ImGui::PushItemFlag(ImGuiItemFlags_Disabled, false);
     ImGui::Dummy(BUTTON_SPACE);
-    if (ImGui::Button("Back###newGame", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }
     ImGui::End();
@@ -202,14 +197,14 @@ void ViewMenu::displayText(const std::string &_text) {
 }
 
 void ViewMenu::displayHotSeatConfig() {
-    displayText("Hot seat");
+    displayText(getJsonLangValue("hot_seat"));
     static int numberOfPlayers = 2;
 
     if (!ImGui::Begin("HotSeat##noplayers", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
     }
-    ImGui::SliderInt("Number of players##hotseat", &numberOfPlayers, 2, 6);
+    ImGui::SliderInt(getJsonLangValue("number_of_players").c_str(), &numberOfPlayers, 2, 6);
     ImGui::End();
     static char playerNames[6][64] = {
             "Player name",
@@ -232,10 +227,10 @@ void ViewMenu::displayHotSeatConfig() {
         ImGui::End();
         return;
     }
-    if (ImGui::Button("Start Game", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("start_game").c_str(), BUTTON_SIZE)) {
         viewController->switchTo(ViewEnum::game);
     }
-    if (ImGui::Button("Back###hotSeat", BUTTON_SIZE)) {
+    if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
     }
     ImGui::End();
@@ -253,7 +248,7 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
     if (player_no >= active_players) {
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
     }
-    ImGui::Text("Player %i:", player_no + 1);
+    ImGui::Text("%s %i:", getJsonLangValue("player").c_str(), player_no + 1);
     ImGui::InputText("", player_name, 64);
     sprintf(nameBuffer, "Icon Selector##player%i", player_no);
     if (ImGui::ImageButton(sprite, {64, 64})) {
@@ -271,7 +266,7 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
             }
             ImGui::PopID();
         }
-        if (ImGui::Button("Select"))
+        if (ImGui::Button(getJsonLangValue("select").c_str()))
             ImGui::CloseCurrentPopup();
         ImGui::EndPopup();
     }

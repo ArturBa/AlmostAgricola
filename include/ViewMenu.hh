@@ -66,6 +66,8 @@ public:
      * @brief Display GUI for main game menu
      */
     void display() override;
+
+    std::string getJsonLangValue(const std::string &key, const std::string &default_value);
 };
 
 
