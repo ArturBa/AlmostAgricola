@@ -12,6 +12,7 @@
 #include <map>
 
 #include "Json.hh"
+#include "Actions.hh"
 
 #define BUTTON_WIDTH 64
 #define BUTTON_HEIGHT 128
@@ -40,7 +41,7 @@ private:
     sf::Texture texture;
     std::string text;
 
-    explicit ActionButton(const std::string &actionName);
+    explicit ActionButton(Actions action);
 
     friend ActionButtonFactory;
 
@@ -49,9 +50,9 @@ private:
 
 class ActionButtonFactory {
 public:
-    static ActionButton *getActionButton(const std::string &actionName);
+    static ActionButton *getActionButton(const Actions action);
 
 private:
-    static std::map<std::string, ActionButton *> mapOfActionButtons;
+    static std::map<Actions, ActionButton *> mapOfActionButtons;
 
 };

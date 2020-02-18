@@ -49,23 +49,26 @@ void ViewGame::display() {
 
 void ViewGame::displayAction() {
     ImGui::BeginChild("##Actions", {650, 550});
-    //TODO get this from model
-    std::map<std::string, bool> actions = {{"0_1", true}};
-    for (const auto &i: actions) {
-        if (i.second) {
-            if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first)->getTexture(),
-                                   {BUTTON_WIDTH, BUTTON_HEIGHT})) {
-
-            }
-            if (ImGui::IsItemHovered()) {
-                ImGui::BeginTooltip();
-                ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-                ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first)->getText().c_str());
-                ImGui::PopTextWrapPos();
-                ImGui::EndTooltip();
-            }
+    auto actions = viewController->getShared()->model.getMapOfActions();
+    int line = 0;
+    for (const auto &i: *actions) {
+        if (line % 6) {
+            ImGui::SameLine();
+        }
+        line++;
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second);
+        if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first)->getTexture(),
+                               {BUTTON_WIDTH, BUTTON_HEIGHT})) {
 
         }
+        if (ImGui::IsItemHovered()) {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first)->getText().c_str());
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, false);
     }
     ImGui::EndChild();
 }

@@ -5,34 +5,18 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Actions.hh"
 
 
 class Model {
 private:
-    unsigned char *image;
-    unsigned int width{}, height{};
+    std::map<Actions, bool> mapOfActions;
 
+    void resetActions();
 
 public:
     Model();
 
-    bool loadImage(const std::string &fileName);
+    const std::map<Actions, bool> *getMapOfActions() const;
 
-    unsigned char *getImage();
-
-    unsigned int getWidth();
-
-    unsigned int getHeight();
-
-    void setSettings() {};
-
-    void preLoadSaves() {};
-
-    void getSaves() {};
-
-    void loadSave() {};
-
-    void getWarehouse() {};
-
-    void newGame() {};
 };

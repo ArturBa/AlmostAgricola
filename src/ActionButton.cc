@@ -16,22 +16,22 @@ std::string ActionButtonJson::getText(const std::string &key, const std::string 
     return textJson->value(key, default_value);
 }
 
-std::map<std::string, ActionButton *> ActionButtonFactory::mapOfActionButtons;
+std::map<Actions, ActionButton *> ActionButtonFactory::mapOfActionButtons;
 
-ActionButton *ActionButtonFactory::getActionButton(const std::string &actionName) {
-    auto searchActionButton = mapOfActionButtons.find(actionName);
+ActionButton *ActionButtonFactory::getActionButton(const Actions action) {
+    auto searchActionButton = mapOfActionButtons.find(action);
     if (searchActionButton != mapOfActionButtons.end()) {
         return searchActionButton->second;
     } else {
-        mapOfActionButtons.insert(std::pair<std::string, ActionButton *>{actionName, new ActionButton(actionName)});
-        return mapOfActionButtons.at(actionName);
+        mapOfActionButtons.insert(std::pair<Actions, ActionButton *>{action, new ActionButton(action)});
+        return mapOfActionButtons.at(action);
     }
 }
 
-ActionButton::ActionButton(const std::string &actionName) :
-        text(ActionButtonJson::getText(actionName)) {
+ActionButton::ActionButton(const Actions action) :
+        text(ActionButtonJson::getText(getActionFileName(action))) {
     char fileNameBuffer[64];
-    sprintf(fileNameBuffer, "../res/img/action_button/%s.png", actionName.c_str());
+    sprintf(fileNameBuffer, "../res/img/action_button/%s.png", getActionFileName(action).c_str());
     texture.loadFromFile(fileNameBuffer);
 }
 
