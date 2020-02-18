@@ -8,13 +8,13 @@
 #include "imgui-SFML.h"
 #include "imgui.h"
 #include <imgui_internal.h>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
 #include "Model.hh"
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
+#include "Json.hh"
 
 /**
  * @enum Menu display mode
@@ -34,6 +34,9 @@ enum class ViewMenuEnum {
  */
 class ViewMenu : public ViewAbstract {
     ViewMenuEnum viewMenu;
+    sf::Texture texture;
+    sf::Sprite bgImage;
+    nlohmann::json *langJson;
 
     void displayMainMenu();
 
@@ -46,6 +49,8 @@ class ViewMenu : public ViewAbstract {
     void displaySettings();
 
     void displayCredits();
+
+    void displayBgImage();
 
     void displayText(const std::string &_text);
 
@@ -62,6 +67,8 @@ public:
      * @brief Display GUI for main game menu
      */
     void display() override;
+
+    std::string getJsonLangValue(const std::string &key, const std::string &default_value);
 };
 
 

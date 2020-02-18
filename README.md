@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=develop)](https://travis-ci.com/ArturBa/AlmostAgricola)
-[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/develop/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
+[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=mainMenuGui)](https://travis-ci.com/ArturBa/AlmostAgricola)
+[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/mainMenuGui/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
 
 
 
@@ -52,7 +52,8 @@ Will be added later
 ![main menu](docs/screenshots/mainMenu.png)
 
 # Documentation
-In project root run:
+## Doxygen
+To create [Doxygen](http://doxygen.nl/) documentation run in project root:
 ```bash
 doxygen Doxyfile
 ```
@@ -60,5 +61,8 @@ Then you will find [`index.html`](docs/html/index.html) file
 ```bash
 docs/html/index.html
 ```
-Documentation is created using [Doxygen](http://doxygen.nl/)
+## UML
+UML diagram available in:
+[`docs/UML`](docs/UML/README.md)
+
 

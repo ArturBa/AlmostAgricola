@@ -3,6 +3,19 @@
 //
 #include "ActionButton.hh"
 
+nlohmann::json *ActionButtonJson::textJson;
+
+ActionButtonJson::ActionButtonJson() {
+    textJson = LoadJsonFromFile("../res/lang/eng/actions.json");
+}
+
+std::string ActionButtonJson::getText(const std::string &key, const std::string &default_value = "null") {
+    if (textJson == nullptr) {
+        ActionButtonJson();
+    }
+    return textJson->value(key, default_value);
+}
+
 std::map<std::string, ActionButton *> ActionButtonFactory::mapOfActionButtons;
 
 ActionButton *ActionButtonFactory::getActionButton(const std::string &actionName) {
@@ -16,7 +29,7 @@ ActionButton *ActionButtonFactory::getActionButton(const std::string &actionName
 }
 
 ActionButton::ActionButton(const std::string &actionName) :
-        text(actionName) {
+        text(ActionButtonJson::getText(actionName)) {
     char fileNameBuffer[64];
     sprintf(fileNameBuffer, "../res/img/action_button/%s.png", actionName.c_str());
     texture.loadFromFile(fileNameBuffer);

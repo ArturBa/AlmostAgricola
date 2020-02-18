@@ -8,14 +8,27 @@
 #include "imgui-SFML.h"
 #include "imgui.h"
 #include <imgui_internal.h>
-
 #include <string>
 #include <map>
+
+#include "Json.hh"
 
 #define BUTTON_WIDTH 64
 #define BUTTON_HEIGHT 128
 
 class ActionButtonFactory;
+
+class ActionButtonJson {
+public:
+    static std::string getText(const std::string &key, const std::string &default_value);
+
+    ~ActionButtonJson() = default;
+
+private:
+    ActionButtonJson();
+
+    static nlohmann::json *textJson;
+};
 
 class ActionButton {
 public:

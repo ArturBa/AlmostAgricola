@@ -1,3 +1,4 @@
+
 include(FetchContent)
 
 option(USE_SYSTEM_DEPS CACHE OFF)
@@ -16,6 +17,7 @@ message(STATUS "Fetching third party libraries")
 set(SFML_VERSION 2.5.1)
 set(IMGUI_VERSION 1.74)
 set(IMGUI_SFML_VERSION 2.1)
+set(JSON_VERSION 3.7.3)
 set(GTEST_VERSION 1.10.0)
 
 # It's nice to get stripped-down release zips instead of cloning
@@ -42,6 +44,11 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
+        json
+        URL "https://github.com/nlohmann/json/archive/v${JSON_VERSION}.zip"
+)
+
+FetchContent_Declare(
         googletest
         URL "https://github.com/google/googletest/archive/release-${GTEST_VERSION}.zip"
 )
@@ -49,6 +56,7 @@ FetchContent_Declare(
 add_subdirectory(sfml)
 add_subdirectory(imgui)
 add_subdirectory(imgui-sfml)
+add_subdirectory(json)
 add_subdirectory(googletest)
 
 #======================================

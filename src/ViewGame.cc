@@ -49,12 +49,24 @@ void ViewGame::display() {
 
 void ViewGame::displayAction() {
     ImGui::BeginChild("##Actions", {650, 550});
-    if (ImGui::ImageButton(ActionButtonFactory::getActionButton("0_1")->getTexture(), {BUTTON_WIDTH, BUTTON_HEIGHT})) {
+    //TODO get this from model
+    std::map<std::string, bool> actions = {{"0_1", true}};
+    for (const auto &i: actions) {
+        if (i.second) {
+            if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first)->getTexture(),
+                                   {BUTTON_WIDTH, BUTTON_HEIGHT})) {
 
-    }
-    if (ImGui::Button("some button seat", {235, 30})) {
-    }
+            }
+            if (ImGui::IsItemHovered()) {
+                ImGui::BeginTooltip();
+                ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+                ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first)->getText().c_str());
+                ImGui::PopTextWrapPos();
+                ImGui::EndTooltip();
+            }
 
+        }
+    }
     ImGui::EndChild();
 }
 
@@ -91,3 +103,4 @@ void ViewGame::displayWarehouse() {
     ImGui::Text("Family memb.");
     ImGui::End();
 }
+

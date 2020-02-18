@@ -16,6 +16,8 @@
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
 #include "ActionButton.hh"
+#include <map>
+#include <string>
 
 class ViewGame : public ViewAbstract {
 private:

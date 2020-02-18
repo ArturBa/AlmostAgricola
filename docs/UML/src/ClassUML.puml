@@ -1,0 +1,94 @@
+@startuml
+
+class Application{
+    - shared: Shared
+    - viewController: ViewController
+    - window
+    + start()
+}
+
+class Shared{
+    + viewController: ViewController
+}
+
+class ViewController{
+    - shared: Shared
+    - currentView: ViewAbstract
+    + display()
+    + switchTo()
+    + getShared()
+}
+
+class ViewMenu{
+    - viewController: ViewController
+    + display()
+}
+
+class ViewAbstract <<interface >>{
+    # viewController: ViewController
+    + {abstract} display()
+}
+
+enum ViewEnum {
+    menu
+    game
+}
+
+enum ViewMenuEnum {
+    mainMenu
+    newGame
+    loadGame
+    settings
+    credits
+    hotSeatConfig
+}
+
+class ViewGame{
+    - viewController: ViewController
+    + display()
+}
+
+class ActionButtonFactory {
+    - mapOfActionButtons: map<string, ActionButton*>
+    + getActionButton(): ActionButton*
+}
+
+class ActionButton{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class ActionButton1{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class ActionButtonJson{
+    + ~ActionButtonJson()
+    - ActionButtonJson()
+    + {static} getText(): string
+    - {static} textJson: json*
+}
+
+
+
+Application *-- ViewController
+Application *-- Shared
+
+ViewController o-o Shared
+
+ViewAbstract <|.. ViewMenu
+ViewAbstract <|.. ViewGame
+ViewController o-- ViewAbstract: state
+
+ActionButton <|-- ActionButton1
+ActionButton <-- ActionButtonJson
+ViewGame --> ActionButtonFactory
+ViewGame --> ActionButton: flyweight
+ActionButtonFactory ..> ActionButton1: <<create & share>>
+
+@enduml

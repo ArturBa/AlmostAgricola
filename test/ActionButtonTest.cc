@@ -35,3 +35,8 @@ TEST_F(AActionButton, IsSameButtonAddedTwice_False) {
     auto actionButton1 = ActionButtonFactory::getActionButton("test");
     ASSERT_EQ(actionButton0, actionButton1);
 }
+
+TEST_F(AActionButton, IsTextJsonCorrect) {
+    ASSERT_EQ(ActionButtonJson::getText("test", "null"), "test");
+    ASSERT_EQ(ActionButtonJson::getText("NoTest", "null"), "null");
+}
