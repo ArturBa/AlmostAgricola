@@ -15,6 +15,7 @@
 #include "Model.hh"
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
+#include "ActionButton.hh"
 
 class ViewGame : public ViewAbstract {
 private:

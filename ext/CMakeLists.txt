@@ -16,6 +16,7 @@ message(STATUS "Fetching third party libraries")
 set(SFML_VERSION 2.5.1)
 set(IMGUI_VERSION 1.74)
 set(IMGUI_SFML_VERSION 2.1)
+set(GTEST_VERSION 1.10.0)
 
 # It's nice to get stripped-down release zips instead of cloning
 # a repo and checking out a tag
@@ -40,9 +41,15 @@ FetchContent_Declare(
         # tags like 'vX.X' corresponding to releases
 )
 
+FetchContent_Declare(
+        googletest
+        URL "https://github.com/google/googletest/archive/release-${GTEST_VERSION}.zip"
+)
+
 add_subdirectory(sfml)
 add_subdirectory(imgui)
 add_subdirectory(imgui-sfml)
+add_subdirectory(googletest)
 
 #======================================
 message(STATUS "Fetching thirdparty libraries done")
