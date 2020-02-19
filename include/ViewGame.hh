@@ -33,9 +33,8 @@ private:
 
     void displayWarehouse();
 
-    std::string getTextFromKey(const std::string &key, const std::string &default_value);
+    std::string getTextFromKey(const std::string &key, const std::string &default_value = "null");
 
-    nlohmann::json *langJson;
 public:
     /**
      * @brief Constructor

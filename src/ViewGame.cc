@@ -8,13 +8,10 @@
 
 ViewGame::ViewGame(ViewController *_viewController) :
         ViewAbstract(_viewController) {
-    char fileNameBuffer[64];
-    sprintf(fileNameBuffer, "../res/lang/%s/game.json", viewController->getShared()->lang);
-    langJson = LoadJsonFromFile(fileNameBuffer);
 }
 
-std::string ViewGame::getTextFromKey(const std::string &key, const std::string &default_value = "null") {
-    return langJson->value(key, default_value);
+std::string ViewGame::getTextFromKey(const std::string &key, const std::string &default_value) {
+    return viewController->getShared()->lang.getText(key, default_value);
 }
 
 void ViewGame::display() {
@@ -64,14 +61,14 @@ void ViewGame::displayAction() {
         }
         line++;
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second);
-        if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first)->getTexture(),
+        if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getTexture(),
                                {BUTTON_WIDTH, BUTTON_HEIGHT})) {
             viewController->getShared()->model.selectAction(i.first);
         }
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
             ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-            ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first)->getText().c_str());
+            ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getText().c_str());
             ImGui::PopTextWrapPos();
             ImGui::EndTooltip();
         }
