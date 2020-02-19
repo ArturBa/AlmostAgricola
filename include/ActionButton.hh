@@ -11,38 +11,13 @@
 #include <string>
 #include <map>
 
-#include "Json.hh"
+#include "JsonLang.hh"
 #include "Actions.hh"
 
 #define BUTTON_WIDTH 64
 #define BUTTON_HEIGHT 128
 
 class ActionButtonFactory;
-
-/**
- * @class ActionButtonJson
- * @brief Class containing action descriptions
- */
-class ActionButtonJson {
-public:
-    /**
-     * @brief Get text of selected action
-     * @param action Selected action
-     * @param default_value Default value in case not founded by action key
-     * @return Description of action
-     */
-    static std::string getText(const Actions &action, const std::string &default_value);
-
-    /**
-     *@brief Default deconstructor
-     */
-    ~ActionButtonJson() = default;
-
-private:
-    ActionButtonJson();
-
-    static nlohmann::json *textJson;
-};
 
 class ActionButton {
 public:
@@ -62,10 +37,11 @@ private:
     sf::Texture texture;
     std::string text;
 
-    explicit ActionButton(Actions action);
+    explicit ActionButton(Actions action, JsonLang &langJson);
 
     friend ActionButtonFactory;
 
+    std::string getJsonText(JsonLang &langJson, const Actions &action);
 };
 
 
@@ -76,7 +52,7 @@ public:
      * @param action Action which does action button
      * @return action button pointer
      */
-    static ActionButton *getActionButton(const Actions action);
+    static ActionButton *getActionButton(Actions action, JsonLang &langJson);
 
 private:
     static std::map<Actions, ActionButton *> mapOfActionButtons;

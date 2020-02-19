@@ -9,6 +9,7 @@
 #include "ViewController.hh"
 #include "Settings.hh"
 #include "JsonLang.hh"
+#include "Model.hh"
 
 /**
  * @struct Shared
@@ -29,4 +30,5 @@ typedef struct Shared {
     sf::Texture texturePlayers;
     Settings *settings;
     JsonLang lang;
+    Model model;
 } Shared;

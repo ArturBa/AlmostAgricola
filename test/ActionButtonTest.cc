@@ -3,16 +3,20 @@
 //
 #include <gmock/gmock.h>
 #include <ActionButton.hh>
+#include <JsonLang.hh>
+
 
 using namespace ::testing;
 using namespace std;
 
 class AActionButton : public Test {
-
+public:
+    AActionButton() : langJson(nullptr) {};
+    JsonLang langJson;
+    ActionButton *actionButton = ActionButtonFactory::getActionButton(Actions::TEST, langJson);
 };
 
 TEST_F(AActionButton, IsImageLoadedCorrectly) {
-    auto actionButton = ActionButtonFactory::getActionButton(Actions::TEST);
     const auto &actTexture = actionButton->getTexture().copyToImage();
     auto expTexture = sf::Texture().copyToImage();
     expTexture.loadFromFile("../test/res/img/test.png");
@@ -25,17 +29,11 @@ TEST_F(AActionButton, IsImageLoadedCorrectly) {
 }
 
 TEST_F(AActionButton, IsTextLoadedCorrectly) {
-    auto actionButton = ActionButtonFactory::getActionButton(Actions::TEST);
     const auto &text = actionButton->getText();
     ASSERT_EQ("test", text);
 }
 
 TEST_F(AActionButton, IsSameButtonAddedTwice_False) {
-    auto actionButton0 = ActionButtonFactory::getActionButton(Actions::TEST);
-    auto actionButton1 = ActionButtonFactory::getActionButton(Actions::TEST);
-    ASSERT_EQ(actionButton0, actionButton1);
-}
-
-TEST_F(AActionButton, IsTextJsonCorrect) {
-    ASSERT_EQ(ActionButtonJson::getText(Actions::TEST, "null"), "test");
+    auto actionButton0 = ActionButtonFactory::getActionButton(Actions::TEST, langJson);
+    ASSERT_EQ(actionButton, actionButton0);
 }

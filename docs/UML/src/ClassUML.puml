@@ -92,8 +92,6 @@ class ActionButtonJson{
 
 
 
-Application *-- ViewController
-Application *-- Shared
 Window *-- ViewController
 Window *-- Shared
 
