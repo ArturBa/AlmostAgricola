@@ -4,12 +4,8 @@
 
 #pragma once
 
-#include "ViewController.hh"
-#include "Shared.hh"
-#include <SFML/Graphics.hpp>
-#include "imgui-SFML.h"
-#include "imgui.h"
-#include <imgui_internal.h>
+#include "Settings.hh"
+#include "Window.hh"
 
 /**
  * @class Application
@@ -17,9 +13,8 @@
  */
 class Application {
 private:
-    Shared shared;
-    ViewController viewController;
-    sf::RenderWindow window;
+    Settings settings;
+    Window window;
 
 public:
     /**

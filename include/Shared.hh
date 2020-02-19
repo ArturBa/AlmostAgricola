@@ -7,14 +7,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 #include "ViewController.hh"
-#include "Model.hh"
+#include "Settings.hh"
+#include "JsonLang.hh"
 
 /**
  * @struct Shared
  * @brief Contain all shared data between different controllers
  */
 typedef struct Shared {
-    Shared(sf::RenderWindow *_w, ViewController *_vc) : window(_w), viewController(_vc), lang("eng"), model() {
+    Shared(sf::RenderWindow *_w, ViewController *_vc, Settings *_st) : window(_w), viewController(_vc), settings(_st),
+                                                                       lang(_st) {
         texturePlayers.loadFromFile("../res/img/players_icon.png");
     }
 
@@ -25,6 +27,6 @@ typedef struct Shared {
     sf::Sprite sprite;
     sf::Image image;
     sf::Texture texturePlayers;
-    Model model;
-    char lang[8];
+    Settings *settings;
+    JsonLang lang;
 } Shared;
