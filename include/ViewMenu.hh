@@ -68,7 +68,7 @@ public:
      */
     void display() override;
 
-    std::string getJsonLangValue(const std::string &key, const std::string &default_value);
+    std::string getTextFromKey(const std::string &key, const std::string &default_value);
 };
 
 

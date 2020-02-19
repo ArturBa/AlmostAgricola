@@ -9,11 +9,11 @@ ActionButtonJson::ActionButtonJson() {
     textJson = LoadJsonFromFile("../res/lang/eng/actions.json");
 }
 
-std::string ActionButtonJson::getText(const std::string &key, const std::string &default_value = "null") {
+std::string ActionButtonJson::getText(const Actions &action, const std::string &default_value = "null") {
     if (textJson == nullptr) {
         ActionButtonJson();
     }
-    return textJson->value(key, default_value);
+    return textJson->value(getActionFileName(action), default_value);
 }
 
 std::map<Actions, ActionButton *> ActionButtonFactory::mapOfActionButtons;
@@ -29,7 +29,7 @@ ActionButton *ActionButtonFactory::getActionButton(const Actions action) {
 }
 
 ActionButton::ActionButton(const Actions action) :
-        text(ActionButtonJson::getText(getActionFileName(action))) {
+        text(ActionButtonJson::getText(action)) {
     char fileNameBuffer[64];
     sprintf(fileNameBuffer, "../res/img/action_button/%s.png", getActionFileName(action).c_str());
     texture.loadFromFile(fileNameBuffer);

@@ -20,3 +20,19 @@ void Model::resetActions() {
 const std::map<Actions, bool> *Model::getMapOfActions() const {
     return &mapOfActions;
 }
+
+void Model::newGame() {
+    ;
+}
+
+void Model::updateSettings() {
+
+}
+
+int Model::getCurrentPlayer() {
+    return 0;
+}
+
+void Model::selectAction(Actions action) {
+
+}

@@ -17,6 +17,14 @@ private:
 public:
     Model();
 
+    void newGame();
+
+    void updateSettings();
+
+    int getCurrentPlayer();
+
+    void selectAction(Actions action);
+
     const std::map<Actions, bool> *getMapOfActions() const;
 
 };

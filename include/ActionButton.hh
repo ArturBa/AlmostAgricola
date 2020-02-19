@@ -19,10 +19,23 @@
 
 class ActionButtonFactory;
 
+/**
+ * @class ActionButtonJson
+ * @brief Class containing action descriptions
+ */
 class ActionButtonJson {
 public:
-    static std::string getText(const std::string &key, const std::string &default_value);
+    /**
+     * @brief Get text of selected action
+     * @param action Selected action
+     * @param default_value Default value in case not founded by action key
+     * @return Description of action
+     */
+    static std::string getText(const Actions &action, const std::string &default_value);
 
+    /**
+     *@brief Default deconstructor
+     */
     ~ActionButtonJson() = default;
 
 private:
@@ -33,8 +46,16 @@ private:
 
 class ActionButton {
 public:
+    /**
+     * Get texture of a button
+     * @return button texture
+     */
     const sf::Texture &getTexture() const;
 
+    /**
+     * Get action text description
+     * @return Text description
+     */
     const std::string &getText() const;
 
 private:
@@ -50,6 +71,11 @@ private:
 
 class ActionButtonFactory {
 public:
+    /**
+     * Get action button
+     * @param action Action which does action button
+     * @return action button pointer
+     */
     static ActionButton *getActionButton(const Actions action);
 
 private:

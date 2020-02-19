@@ -8,6 +8,13 @@
 
 ViewGame::ViewGame(ViewController *_viewController) :
         ViewAbstract(_viewController) {
+    char fileNameBuffer[64];
+    sprintf(fileNameBuffer, "../res/lang/%s/game.json", viewController->getShared()->lang);
+    langJson = LoadJsonFromFile(fileNameBuffer);
+}
+
+std::string ViewGame::getTextFromKey(const std::string &key, const std::string &default_value = "null") {
+    return langJson->value(key, default_value);
 }
 
 void ViewGame::display() {
@@ -18,23 +25,23 @@ void ViewGame::display() {
         return;
     }
     if (ImGui::BeginTabBar("##Tabs", ImGuiTabBarFlags_None)) {
-        if (ImGui::BeginTabItem("Actions")) {
+        if (ImGui::BeginTabItem(getTextFromKey("actions").c_str())) {
             displayAction();
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Farm")) {
+        if (ImGui::BeginTabItem(getTextFromKey("farm").c_str())) {
             displayFarm();
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Week")) {
+        if (ImGui::BeginTabItem(getTextFromKey("week").c_str())) {
             displayWeek();
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Upgrades")) {
+        if (ImGui::BeginTabItem(getTextFromKey("upgrades").c_str())) {
             displayUpgrades();
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("Ranking")) {
+        if (ImGui::BeginTabItem(getTextFromKey("ranking").c_str())) {
             displayRanking();
             ImGui::EndTabItem();
         }
@@ -59,7 +66,7 @@ void ViewGame::displayAction() {
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second);
         if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first)->getTexture(),
                                {BUTTON_WIDTH, BUTTON_HEIGHT})) {
-
+            viewController->getShared()->model.selectAction(i.first);
         }
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
@@ -94,16 +101,20 @@ void ViewGame::displayWarehouse() {
         ImGui::End();
         return;
     }
-    ImGui::Text("Warehouse");
+    auto player = viewController->getShared()->model.getCurrentPlayer();
+    ImGui::Text("%s", getTextFromKey("warehouse").c_str());
     ImGui::Separator();
-    ImGui::Text("Food");
-    ImGui::Text("Wheat");
-    ImGui::Text("Vegetable");
-    ImGui::Text("Wood");
-    ImGui::Text("Stone");
-    ImGui::Text("Clay");
-    ImGui::Text("Reed");
-    ImGui::Text("Family memb.");
+    ImGui::Text("%s: ", getTextFromKey("player").c_str());
+    ImGui::Text("Kris");
+    ImGui::Separator();
+    ImGui::Text("%s", getTextFromKey("food").c_str());
+    ImGui::Text("%s", getTextFromKey("wheat").c_str());
+    ImGui::Text("%s", getTextFromKey("vegetable").c_str());
+    ImGui::Text("%s", getTextFromKey("wood").c_str());
+    ImGui::Text("%s", getTextFromKey("stone").c_str());
+    ImGui::Text("%s", getTextFromKey("clay").c_str());
+    ImGui::Text("%s", getTextFromKey("reed").c_str());
+    ImGui::Text("%s", getTextFromKey("family_memb").c_str());
     ImGui::End();
 }
 
