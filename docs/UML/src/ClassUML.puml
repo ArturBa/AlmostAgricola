@@ -1,6 +1,6 @@
 @startuml
 
-class Application{
+class Window{
     - shared: Shared
     - viewController: ViewController
     - window
@@ -8,7 +8,8 @@ class Application{
 }
 
 class Shared{
-    + viewController: ViewController
+    + viewController: ViewController*
+    + settings: Settings*
 }
 
 class ViewController{
@@ -29,26 +30,51 @@ class ViewAbstract <<interface >>{
     + display()
 }
 
-enum ViewEnum {
-    menu
-    game
+class Settings {
+    - resHor: int
+    - lang: string
+    + getLang()
+    + setLang()
+    + getResolution(): Vector2u
+    + getResHor()
+    + setResHor()
 }
 
-enum ViewMenuEnum {
-    mainMenu
-    newGame
-    loadGame
-    settings
-    credits
-    hotSeatConfig
+class Observer {
+    - sender: Sender*
+    + {abstract}update()
+    + Observer(Sender*)
 }
 
-Application *-- ViewController
-Application *-- Shared
+class Sender {
+    - observers: vector<Observer*>
+    + attach(Observer)
+    + detach(Observer)
+    + notify()
+}
+
+class Application{
+    - settings: Settings
+    - window: Window
+    + start()
+}
+
+Window *-- ViewController
+Window *-- Shared
 
 ViewController o-o Shared
 
 ViewAbstract <|.. ViewMenu
 ViewController o-- ViewAbstract
+
+Sender <|.. Settings
+Sender o->Observer
+Observer <|.. Window
+Settings --> Window
+
+Application *-- Window
+Application *-- Settings
+
+Settings o-- Shared
 
 @enduml

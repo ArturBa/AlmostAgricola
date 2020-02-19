@@ -104,6 +104,44 @@ void ViewMenu::displayCredits() {
     ImGui::End();
 }
 
+int ViewMenu::getResFromIndex(int index) {
+    switch (index) {
+        case 0:
+            return 800;
+        case 1:
+            return 1280;
+        case 2:
+            return 1920;
+    }
+}
+
+int ViewMenu::getIndexFromRes(int res) {
+    switch (res) {
+        case 800:
+            return 0;
+        case 1280:
+            return 1;
+        case 1920:
+            return 2;
+    }
+}
+
+std::string ViewMenu::getLangFromIndex(int index) {
+    switch (index) {
+        case 0:
+            return "eng";
+        case 1:
+            return "pl";
+    }
+}
+
+int ViewMenu::getIndexFromLang(std::string lang) {
+    if (lang == "eng")
+        return 0;
+    if (lang == "pl")
+        return 1;
+}
+
 void ViewMenu::displaySettings() {
     displayText(getJsonLangValue("settings"));
     if (!ImGui::Begin("Settings", nullptr, DEFAULT_WINDOW_FLAGS)) {
@@ -112,17 +150,19 @@ void ViewMenu::displaySettings() {
     }
     ImGui::PushItemWidth(235.f);
     ImGui::Text("%s:", getJsonLangValue("resolution").c_str());
-    const char *res[] = {"800x600", "1366x766", "1920x1080"};
-    static int selRes = 0;
+    const char *res[] = {"800x600", "1280x720", "1920x1080"};
+    static int selRes = getIndexFromRes(viewController->getShared()->settings->getResHor());
     ImGui::Combo("##res", &selRes, res, IM_ARRAYSIZE(res));
 
     ImGui::Text("%s:", getJsonLangValue("language").c_str());
     const char *lang[] = {"English", "Polski"};
-    static int selLang = 0;
+    static int selLang = getIndexFromLang(viewController->getShared()->settings->getLang());
     ImGui::Combo("##lang", &selLang, lang, IM_ARRAYSIZE(lang));
 
     ImGui::Dummy(BUTTON_SPACE);
     if (ImGui::Button(getJsonLangValue("apply").c_str(), BUTTON_SIZE)) {
+        viewController->getShared()->settings->setResHor(getResFromIndex(selRes));
+        viewController->getShared()->settings->setLang(getLangFromIndex(selLang));
     }
     if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;

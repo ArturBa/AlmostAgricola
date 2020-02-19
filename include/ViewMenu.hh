@@ -45,6 +45,14 @@ class ViewMenu : public ViewAbstract {
 
     void displayLoadGame();
 
+    int getResFromIndex(int index);
+
+    std::string getLangFromIndex(int index);
+
+    int getIndexFromRes(int res);
+
+    int getIndexFromLang(std::string lang);
+
     void displaySettings();
 
     void displayCredits();
@@ -68,6 +76,7 @@ public:
     void display() override;
 
     std::string getJsonLangValue(const std::string &key, const std::string &default_value);
+
 };
 
 

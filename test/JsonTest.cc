@@ -27,3 +27,10 @@ TEST_F(AJSON, LoadJsonFromFile_Value1_One) {
     nlohmann::json *json_actual = LoadJsonFromFile("../test/res/json/test.json");
     ASSERT_EQ(json_expected.at("1"), json_actual->at("1"));
 }
+
+TEST_F(AJSON, SaveJsonFile) {
+    nlohmann::json json_expected = R"( {"1": "one"} )"_json;
+    SaveJsonToFile(json_expected, "../test/res/json/save.json");
+    nlohmann::json *json_actual = LoadJsonFromFile("../test/res/json/save.json");
+    ASSERT_EQ(json_expected.at("1"), json_actual->at("1"));
+}

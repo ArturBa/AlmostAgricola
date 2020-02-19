@@ -16,3 +16,6 @@ using json = nlohmann::json;
  * @return json pointer from loaded file
  */
 json *LoadJsonFromFile(const std::string &_fileName);
+
+void SaveJsonToFile(const json &_json, const std::string &_fileName);
+
