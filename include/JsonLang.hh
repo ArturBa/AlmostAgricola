@@ -6,16 +6,18 @@
 
 #include "Json.hh"
 #include "Observer.hh"
+#include "Settings.hh"
 
 
 class JsonLang : public Observer {
 private:
     nlohmann::json *textJson;
-
-    JsonLang(Sender *sender);
+    Settings *settings;
 
 public:
-    std::string getText(const std::string &key, const std::string &default_value);
+    explicit JsonLang(Settings *_settings);
+
+    std::string getText(const std::string &key, const std::string &default_value = "null");
 
     void update() override;
 

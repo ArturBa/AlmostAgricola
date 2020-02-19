@@ -6,7 +6,7 @@
 
 void Settings::updateSettings() {
     notify();
-    //TODO save settings to file
+    SaveJsonToFile(*settingsJson, "../res/cnf/settings.json");
 }
 
 sf::Vector2u Settings::getSize() {

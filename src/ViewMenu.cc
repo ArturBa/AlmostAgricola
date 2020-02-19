@@ -52,8 +52,8 @@ void ViewMenu::display() {
     viewController->getShared()->window->display();
 }
 
-std::string ViewMenu::getJsonLangValue(const std::string &key, const std::string &default_value = "null") {
-    return viewController->getShared()->lang->value(key, default_value);
+std::string ViewMenu::getJsonLangValue(const std::string &key) {
+    return viewController->getShared()->lang.getText(key);
 }
 
 void ViewMenu::displayMainMenu() {

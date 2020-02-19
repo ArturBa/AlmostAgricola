@@ -43,8 +43,6 @@ void Window::update() {
     window.setSize(settings->getSize());
     char fileNameBuffer[64];
     sprintf(fileNameBuffer, "../res/cnf/%d.ini", settings->getResHor());
-    ImGuiIO &io = ImGui::GetIO();
-    io.IniFilename = fileNameBuffer;
 }
 
 
