@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 #include <ActionButton.hh>
 #include <JsonLang.hh>
+#include <Settings.hh>
 
 
 using namespace ::testing;
@@ -11,9 +12,12 @@ using namespace std;
 
 class AActionButton : public Test {
 public:
-    AActionButton() : langJson(nullptr) {};
+    AActionButton() : settings(), langJson(&settings) {
+        actionButton = ActionButtonFactory::getActionButton(Actions::TEST, langJson);
+    };
+    Settings settings;
     JsonLang langJson;
-    ActionButton *actionButton = ActionButtonFactory::getActionButton(Actions::TEST, langJson);
+    ActionButton *actionButton;
 };
 
 TEST_F(AActionButton, IsImageLoadedCorrectly) {

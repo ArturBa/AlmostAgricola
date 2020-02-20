@@ -38,6 +38,6 @@ void Settings::setResHor(int _resHor) {
         resHor = _resHor;
     else
         resHor = 800;
-    settingsJson->at("res") = _resHor;
+    settingsJson->at("res") = resHor;
     updateSettings();
 }
