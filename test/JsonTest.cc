@@ -17,6 +17,10 @@ TEST_F(AJSON, LoadJsonFromFile_Correct) {
     ASSERT_EQ(json, *LoadJsonFromFile("../test/res/json/test.json"));
 }
 
+TEST_F(AJSON, LoadJsonFromUnexistenceFile_Nullptr) {
+    ASSERT_EQ(nullptr, LoadJsonFromFile("../test/res/json/no_test.json"));
+}
+
 TEST_F(AJSON, LoadJsonFromFile_WrongPath) {
     nlohmann::json json = R"( {"1": "one"} )"_json;
     ASSERT_EQ(nullptr, LoadJsonFromFile("../test/res/json/no_test.json"));
