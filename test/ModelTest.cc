@@ -10,6 +10,8 @@ using namespace std;
 class AModel : public Test {
 public:
     Model model;
+
+    AModel() : model() {};
 };
 
 TEST_F(AModel, ActionsMap_AllTrue) {
