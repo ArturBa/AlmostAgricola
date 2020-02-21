@@ -66,7 +66,7 @@ script:
   - cd build
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
   - make
-  - xvfb-run --server-args="-screen 0 1024x768x24" make AlmostAgricola_coverage
+  - sudo xvfb-run -e /dev/stdout -a make AlmostAgricola_coverage
   - ctest
 
 
