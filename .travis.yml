@@ -32,6 +32,7 @@ addons:
       - xorg-dev
       - freeglut3-dev
       - libudev-dev
+      - mesa-utils libgl1-mesa-swx11 libgl1-mesa-swx11-dev xvfb
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.7
@@ -55,6 +56,10 @@ install:
   - make
   - sudo make install
   - cd ..
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
 script:
   ############################################################################

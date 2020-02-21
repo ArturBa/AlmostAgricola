@@ -11,11 +11,11 @@ class AFarm : public Test {
 
 };
 
-//TEST(Test, Texture){
-//    sf::Texture texture;
-//    texture.loadFromFile("../test/res/img/test.png");
-//    ASSERT_EQ(sf::Vector2u(2, 2), texture.getSize());
-//}
+TEST(Test, Texture) {
+    sf::Texture texture;
+    texture.loadFromFile("../test/res/img/test.png");
+    ASSERT_EQ(sf::Vector2u(2, 2), texture.getSize());
+}
 
 TEST_F(AFarm, DISABLED_CheckTexture) {
     sf::Texture expTexture;
