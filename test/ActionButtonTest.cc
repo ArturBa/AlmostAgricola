@@ -20,7 +20,7 @@ public:
     ActionButton *actionButton;
 };
 
-TEST_F(AActionButton, DISABLED_IsImageLoadedCorrectly) {
+TEST_F(AActionButton, IsImageLoadedCorrectly) {
     const auto &actTexture = actionButton->getTexture().copyToImage();
     auto expTexture = sf::Texture().copyToImage();
     expTexture.loadFromFile("../test/res/img/test.png");
@@ -32,12 +32,12 @@ TEST_F(AActionButton, DISABLED_IsImageLoadedCorrectly) {
     }
 }
 
-TEST_F(AActionButton, DISABLED_IsTextLoadedCorrectly) {
+TEST_F(AActionButton, IsTextLoadedCorrectly) {
     const auto &text = actionButton->getText();
     ASSERT_EQ("test", text);
 }
 
-TEST_F(AActionButton, DISABLED_IsSameButtonAddedTwice_False) {
+TEST_F(AActionButton, IsSameButtonAddedTwice_False) {
     auto actionButton0 = ActionButtonFactory::getActionButton(Actions::TEST, langJson);
     ASSERT_EQ(actionButton, actionButton0);
 }

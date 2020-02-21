@@ -16,6 +16,8 @@ jobs:
     - os: linux
       dist: bionic
       compiler: gcc
+      services:
+        - xvfb
 
 addons:
   apt:
@@ -64,7 +66,7 @@ script:
   - cd build
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
   - make
-  - make AlmostAgricola_coverage
+  - xvfb-run -a make AlmostAgricola_coverage
   - ctest
 
 
