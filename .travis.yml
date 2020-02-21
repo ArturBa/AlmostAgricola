@@ -16,6 +16,8 @@ jobs:
     - os: linux
       dist: bionic
       compiler: gcc
+      services:
+        - xvfb
 
 addons:
   apt:
@@ -32,7 +34,6 @@ addons:
       - xorg-dev
       - freeglut3-dev
       - libudev-dev
-      - mesa-utils libgl1-mesa-swx11 libgl1-mesa-swx11-dev xvfb
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.7
@@ -57,10 +58,6 @@ install:
   - sudo make install
   - cd ..
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
 script:
   ############################################################################
   # Build main and tests
@@ -69,7 +66,7 @@ script:
   - cd build
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
   - make
-  - make AlmostAgricola_coverage
+  - xvfb-run make AlmostAgricola_coverage
   - ctest
 
 
