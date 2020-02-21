@@ -8,16 +8,16 @@
 #include "imgui-SFML.h"
 #include "imgui.h"
 #include <imgui_internal.h>
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
+#include <map>
+#include <string>
 
 #include "Model.hh"
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
 #include "ActionButton.hh"
-#include <map>
-#include <string>
+#include "Farm.hh"
 
 class ViewGame : public ViewAbstract {
 private:

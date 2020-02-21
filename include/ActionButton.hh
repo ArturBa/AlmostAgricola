@@ -14,8 +14,8 @@
 #include "JsonLang.hh"
 #include "Actions.hh"
 
-#define BUTTON_WIDTH 64
-#define BUTTON_HEIGHT 128
+#define ACTION_BUTTON_WIDTH 64
+#define ACTION_BUTTON_HEIGHT 128
 
 class ActionButtonFactory;
 

@@ -61,14 +61,16 @@ void ViewGame::displayAction() {
         }
         line++;
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second);
-        if (ImGui::ImageButton(ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getTexture(),
-                               {BUTTON_WIDTH, BUTTON_HEIGHT})) {
+        if (ImGui::ImageButton(
+                ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getTexture(),
+                {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) {
             viewController->getShared()->model.selectAction(i.first);
         }
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
             ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-            ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getText().c_str());
+            ImGui::TextUnformatted(ActionButtonFactory::getActionButton(i.first,
+                                                                        viewController->getShared()->lang)->getText().c_str());
             ImGui::PopTextWrapPos();
             ImGui::EndTooltip();
         }
@@ -82,7 +84,9 @@ void ViewGame::displayRanking() {
 }
 
 void ViewGame::displayFarm() {
-
+    for (auto farmAction: FarmEnum()) {
+        ImGui::Image(FarmFactory::getFarm(farmAction)->getImage(), {52, 52});
+    }
 }
 
 void ViewGame::displayWeek() {
