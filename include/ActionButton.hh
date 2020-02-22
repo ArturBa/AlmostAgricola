@@ -5,9 +5,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "imgui-SFML.h"
-#include "imgui.h"
-#include <imgui_internal.h>
 #include <string>
 #include <map>
 

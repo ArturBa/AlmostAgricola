@@ -115,7 +115,20 @@ void ViewGame::displayWeek() {
 }
 
 void ViewGame::displayUpgrades() {
-
+    for(auto upgrade : UpgradeEnum()){
+        if (ImGui::ImageButton(
+                UpgradeFactory::getUpgrade(upgrade, viewController->getShared()->lang)->getTexture(),
+                {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) {
+            ;
+        }
+        if (ImGui::IsItemHovered()) {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(UpgradeFactory::getUpgrade(upgrade, viewController->getShared()->lang)->getText().c_str());
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+    }
 }
 
 void ViewGame::displayWarehouse() {

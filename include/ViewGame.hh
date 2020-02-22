@@ -18,6 +18,7 @@
 #include "ViewController.hh"
 #include "ActionButton.hh"
 #include "Farm.hh"
+#include "Upgrade.hh"
 
 class ViewGame : public ViewAbstract {
 private:
