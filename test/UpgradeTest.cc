@@ -10,9 +10,9 @@
 using namespace ::testing;
 using namespace std;
 
-class AUpgrades : public Test {
+class AUpgrade : public Test {
 public:
-    AUpgrades() : settings(), langJson(&settings) {
+    AUpgrade() : settings(), langJson(&settings) {
         upgrade = UpgradeFactory::getUpgrade(UpgradeEnum::TEST, langJson);
     };
     Settings settings;
@@ -20,7 +20,7 @@ public:
     Upgrade *upgrade;
 };
 
-TEST_F(AUpgrades, IsImageLoadedCorrectly) {
+TEST_F(AUpgrade, IsImageLoadedCorrectly) {
     const auto &actTexture = upgrade->getTexture().copyToImage();
     auto expTexture = sf::Texture().copyToImage();
     expTexture.loadFromFile("../test/res/img/test.png");
@@ -32,13 +32,21 @@ TEST_F(AUpgrades, IsImageLoadedCorrectly) {
     }
 }
 
-TEST_F(AUpgrades, IsTextLoadedCorrectly) {
+TEST_F(AUpgrade, IsTextLoadedCorrectly) {
     const auto &text = upgrade->getText();
     ASSERT_EQ("test", text);
 }
 
-TEST_F(AUpgrades, IsSameUpgradeTwice) {
+TEST_F(AUpgrade, IsSameUpgradeTwice) {
     auto upgrade0 = UpgradeFactory::getUpgrade(UpgradeEnum::TEST, langJson);
     ASSERT_EQ(upgrade, upgrade0);
 }
 
+TEST_F(AUpgrade, UpgradeEnumCheck){
+    vector<UpgradeEnum> vector;
+    for(auto upgrade: UpgradeEnum()){
+        vector.push_back(upgrade);
+    }
+    ASSERT_EQ(UpgradeEnum::First, vector.front());
+    ASSERT_EQ(UpgradeEnum::Last, vector.back());
+}
