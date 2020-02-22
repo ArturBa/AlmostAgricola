@@ -10,6 +10,7 @@ class Window{
 class Shared{
     + viewController: ViewController*
     + settings: Settings*
+    + lang: JsonLang
 }
 
 class ViewController{
@@ -40,13 +41,13 @@ class Settings {
     + setResHor()
 }
 
-class Observer {
+class Observer << interface >> {
     - sender: Sender*
     + {abstract}update()
     + Observer(Sender*)
 }
 
-class Sender {
+class Sender << interface >> {
     - observers: vector<Observer*>
     + attach(Observer)
     + detach(Observer)
@@ -65,7 +66,7 @@ class ViewGame{
 }
 
 class ActionButtonFactory {
-    - mapOfActionButtons: map<string, ActionButton*>
+    - mapOfActionButtons: map<Actions, ActionButton*>
     + getActionButton(): ActionButton*
 }
 
@@ -83,32 +84,75 @@ class ActionButton1{
     + getText()
 }
 
-class ActionButtonJson{
-    + ~ActionButtonJson()
-    - ActionButtonJson()
-    + {static} getText(): string
-    - {static} textJson: json*
+class FarmFactory{
+    - mapOfFarms: map<FarmEnum, Farm*>
+    + getFarm(): Farm*
 }
 
+class Farm{
+    - texture
+    + getTexture()
+}
+class Farm1{
+    - texture
+    + getTexture()
+}
+
+class UpgradeFactory{
+    - mapOfFarms: map<UpgradeEnum, Upgrade*>
+    + getUpgrade(): Upgrade*
+}
+class Upgrade{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+class Upgrade1{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class JsonLang{
+    - textJson: Json
+    - settings: Settings*
+    + getText(): string
+    + update()
+}
 
 
 Window *-- ViewController
 Window *-- Shared
 
 ViewController o-o Shared
+Settings o-- JsonLang
+Shared *-- JsonLang
+Shared --|> Observer
+JsonLang --|> Observer
 
 ViewAbstract <|.. ViewMenu
 ViewAbstract <|.. ViewGame
 ViewController o-- ViewAbstract: state
 
 ActionButton <|-- ActionButton1
-ActionButton <-- ActionButtonJson
 ViewGame --> ActionButtonFactory
 ViewGame --> ActionButton: flyweight
 ActionButtonFactory ..> ActionButton1: <<create & share>>
 
-Sender <|.. Settings
-Sender o->Observer
+Farm <|-- Farm1
+ViewGame --> FarmFactory
+ViewGame --> Farm: flyweight
+FarmFactory ..> Farm1: <<create & share>>
+
+Upgrade <|-- Upgrade1
+ViewGame --> UpgradeFactory
+ViewGame --> Upgrade: flyweight
+UpgradeFactory ..> Upgrade1: <<create & share>>
+
+Sender <|-- Settings
+Sender o-- Observer
 Observer <|.. Window
 Settings --> Window
 
