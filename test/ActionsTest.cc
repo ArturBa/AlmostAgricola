@@ -23,3 +23,12 @@ TEST_F(AActions, GetActionFileName_GET_SHEEP_sheep) {
 TEST_F(AActions, GetActionFileName_GET_2_FOOD_2_food) {
     ASSERT_EQ("2_food", getActionFileName(Actions::GET_2_FOOD));
 }
+
+TEST_F(AActions, CheckIterateOverEnum) {
+    vector<Actions> vector;
+    for (auto action : Actions()) {
+        vector.push_back(action);
+    }
+    ASSERT_EQ(vector.front(), Actions::First);
+    ASSERT_EQ(vector.back(), Actions::Last);
+}

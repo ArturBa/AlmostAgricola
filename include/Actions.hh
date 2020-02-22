@@ -5,13 +5,15 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 enum class Actions {
     GET_2_FOOD,
     GET_SHEEP,
+    WEEK_1_0,
     TEST,
     First = GET_2_FOOD,
-    Last = GET_SHEEP
+    Last = WEEK_1_0
 };
 
 static Actions operator++(Actions &x) { return x = (Actions) (((int) (x) + 1)); }
@@ -23,13 +25,17 @@ static Actions begin(Actions r) { return Actions::First; }
 static Actions end(Actions r) { return Actions(int(Actions::Last) + 1); }
 
 
+static const std::map<Actions, std::string> mapOfActionFileNames = {
+        {Actions::GET_2_FOOD, "2_food"},
+        {Actions::GET_SHEEP,  "sheep"},
+        {Actions::WEEK_1_0,   "week_1_0"},
+};
+
 static std::string getActionFileName(Actions action) {
-    switch (action) {
-        case Actions::GET_2_FOOD:
-            return "2_food";
-        case Actions::GET_SHEEP:
-            return "sheep";
-        case Actions::TEST:
-            return "test";
+    auto search = mapOfActionFileNames.find(action);
+    if (search != mapOfActionFileNames.end()) {
+        return search->second;
+    } else {
+        return "test";
     }
 }

@@ -109,7 +109,9 @@ void ViewGame::displayFarm() {
 }
 
 void ViewGame::displayWeek() {
-
+    for (auto action = Actions::WEEK_1_0; action <= Actions::Last; ++action) {
+        ImGui::Image(ActionButtonFactory::getActionButton(action, viewController->getShared()->lang)->getTexture());
+    }
 }
 
 void ViewGame::displayUpgrades() {
@@ -122,10 +124,12 @@ void ViewGame::displayWarehouse() {
         return;
     }
     auto player = viewController->getShared()->model.getCurrentPlayer();
-    ImGui::Text("%s", getTextFromKey("warehouse").c_str());
-    ImGui::Separator();
     ImGui::Text("%s: ", getTextFromKey("player").c_str());
     ImGui::Text("Kris");
+    ImGui::Separator();
+    ImGui::Text("%s: %d", getTextFromKey("till_harvest").c_str(), 2);
+    ImGui::Separator();
+    ImGui::Text("%s", getTextFromKey("warehouse").c_str());
     ImGui::Separator();
     ImGui::Text("%s", getTextFromKey("food").c_str());
     ImGui::Text("%s", getTextFromKey("wheat").c_str());

@@ -21,6 +21,7 @@
   "upgrades": "Upgrades",
   "ranking": "Ranking",
   "warehouse": "Warehouse",
+  "till_harvest": "Weeks to harvest",
   "food": "Food",
   "wheat": "Wheat",
   "vegetable": "Vegetable",
@@ -31,5 +32,6 @@
   "family_memb": "Family members",
   "test": "test",
   "2_food": "Get 2 food",
-  "sheep": "Get sheep"
+  "sheep": "Get sheep",
+  "week_1_0": "Week 1 action"
 }
