@@ -35,6 +35,8 @@ private:
 
     std::string getTextFromKey(const std::string &key, const std::string &default_value = "null");
 
+    void displayRank();
+
 public:
     /**
      * @brief Constructor

@@ -79,8 +79,27 @@ void ViewGame::displayAction() {
     ImGui::EndChild();
 }
 
-void ViewGame::displayRanking() {
+void ViewGame::displayRank() {
+    std::vector<sf::Color> playerColors = {sf::Color::Blue, sf::Color::Green, sf::Color::Red, sf::Color::Yellow};
+    ImGui::BeginChild("Plot");
+    ImGui::Dummy({10, 0});
+    ImGui::SameLine(300.f);
+    ImGui::TextColored(sf::Color::Black, "Ranking");
+    ImGui::DrawLine({140, 0}, {140, (float) playerColors.size() * 20 + 5}, sf::Color::Black, 2.0f);
+    ImGui::DrawLine({140, (float) playerColors.size() * 20 + 5}, {540, (float) playerColors.size() * 20 + 5},
+                    sf::Color::Black, 2.0f);
+    int i = 0;
+    for (auto color: playerColors) {
+        ImGui::TextColored(color, "Player:");
+        ImGui::DrawRectFilled({240, -15, 100, 20}, color);
+    }
+    ImGui::Dummy({0, 30.f});
+    ImGui::EndChild();
+}
 
+void ViewGame::displayRanking() {
+    displayRank();
+    displayRank();
 }
 
 void ViewGame::displayFarm() {
