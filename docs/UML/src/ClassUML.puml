@@ -11,6 +11,7 @@ class Shared{
     + viewController: ViewController*
     + settings: Settings*
     + lang: JsonLang
+    + model: Model
 }
 
 class ViewController{
@@ -66,8 +67,8 @@ class ViewGame{
 }
 
 class ActionButtonFactory {
-    - mapOfActionButtons: map<Actions, ActionButton*>
-    + getActionButton(): ActionButton*
+    - {static} mapOfActionButtons: map<Actions, ActionButton*>
+    + {static} getActionButton(): ActionButton*
 }
 
 class ActionButton{
@@ -78,15 +79,11 @@ class ActionButton{
 }
 
 class ActionButton1{
-    - text
-    - texture
-    + getTexture()
-    + getText()
 }
 
 class FarmFactory{
-    - mapOfFarms: map<FarmEnum, Farm*>
-    + getFarm(): Farm*
+    - {static} mapOfFarms: map<FarmEnum, Farm*>
+    + {static} getFarm(): Farm*
 }
 
 class Farm{
@@ -94,25 +91,36 @@ class Farm{
     + getTexture()
 }
 class Farm1{
-    - texture
-    + getTexture()
 }
 
 class UpgradeFactory{
-    - mapOfFarms: map<UpgradeEnum, Upgrade*>
-    + getUpgrade(): Upgrade*
+    - {static} mapOfFarms: map<UpgradeEnum, Upgrade*>
+    + {static} getUpgrade(): Upgrade*
 }
+
 class Upgrade{
     - text
     - texture
     + getTexture()
     + getText()
 }
+
 class Upgrade1{
-    - text
-    - texture
-    + getTexture()
-    + getText()
+}
+
+class PlayerTextureFactory{
+    - mapOfPlayerTextures: map<int, PlayerTexture*>
+    + getPlayerTexture: PlayerTexture*
+}
+
+class PlayerTexture{
+    - texture: Texture
+    - color: Color
+    + getTexture(): Texture
+    + getColor(): Color
+}
+
+class PlayerTexture1{
 }
 
 class JsonLang{
@@ -122,6 +130,20 @@ class JsonLang{
     + update()
 }
 
+class Model{
+'    - game: Game*
+}
+
+class Player {
+    - name: string
+    - textureId: int
+    + getName()
+    + getTexture()
+}
+
+'class Game{
+'    - players: vector<Player>
+'}
 
 Window *-- ViewController
 Window *-- Shared
@@ -135,6 +157,11 @@ JsonLang --|> Observer
 ViewAbstract <|.. ViewMenu
 ViewAbstract <|.. ViewGame
 ViewController o-- ViewAbstract: state
+
+PlayerTexture <|-- PlayerTexture1
+ViewMenu --> PlayerTextureFactory
+ViewMenu --> PlayerTexture: flyweight
+PlayerTextureFactory ..> PlayerTexture1: <<create & share>>
 
 ActionButton <|-- ActionButton1
 ViewGame --> ActionButtonFactory
@@ -160,5 +187,13 @@ Application *-- Window
 Application *-- Settings
 
 Settings o-- Shared
+
+Shared *-- Model
+'Model o-- Game
+'Game *-- Player
+
+ViewMenu --- Player
+Player --> PlayerTextureFactory
+Player --> PlayerTexture: flyweight
 
 @enduml

@@ -15,6 +15,7 @@
 #include "Model.hh"
 #include "ViewAbstract.hh"
 #include "ViewController.hh"
+#include "PlayerTexture.hh"
 
 /**
  * @enum Menu display mode
@@ -45,13 +46,13 @@ class ViewMenu : public ViewAbstract {
 
     void displayLoadGame();
 
-    int getResFromIndex(int index);
+    static int getResFromIndex(int index);
 
-    std::string getLangFromIndex(int index);
+    static std::string getLangFromIndex(int index);
 
-    int getIndexFromRes(int res);
+    static int getIndexFromRes(int res);
 
-    int getIndexFromLang(std::string lang);
+    static int getIndexFromLang(const std::string &lang);
 
     void displaySettings();
 
