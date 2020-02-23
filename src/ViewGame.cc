@@ -5,6 +5,7 @@
 #include "ViewGame.hh"
 
 #define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
+#define BG_COLOR {0x2f, 0x30, 0x32}
 
 ViewGame::ViewGame(ViewController *_viewController) :
         ViewAbstract(_viewController) {
@@ -16,7 +17,7 @@ std::string ViewGame::getTextFromKey(const std::string &key, const std::string &
 
 void ViewGame::display() {
     ImGui::SFML::Update(*viewController->getShared()->window, viewController->getShared()->deltaClock.restart());
-    viewController->getShared()->window->clear({206, 186, 162});
+    viewController->getShared()->window->clear(BG_COLOR);
     if (!ImGui::Begin("Game", nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
         return;
@@ -84,15 +85,19 @@ void ViewGame::displayRank() {
     ImGui::BeginChild("Plot");
     ImGui::Dummy({10, 0});
     ImGui::SameLine(300.f);
-    ImGui::TextColored(sf::Color::Black, "Ranking");
+    ImGui::Text("Ranking");
     ImGui::DrawLine({140, 0}, {140, (float) playerColors.size() * 20 + 5}, sf::Color::Black, 2.0f);
     ImGui::DrawLine({140, (float) playerColors.size() * 20 + 5}, {540, (float) playerColors.size() * 20 + 5},
                     sf::Color::Black, 2.0f);
     int i = 0;
     for (auto color: playerColors) {
         ImGui::TextColored(color, "Player:");
-        ImGui::DrawRectFilled({240, -15, 100, 20}, color);
+        ImGui::DrawRectFilled({240, -14, 100, 16}, color);
     }
+    ImGui::Dummy({0, 20.f});
+    ImGui::Dummy({0, 10.f});
+    ImGui::SameLine(234.f);
+    ImGui::Text("0");
     ImGui::Dummy({0, 30.f});
     ImGui::EndChild();
 }
