@@ -18,7 +18,6 @@
 typedef struct Shared {
     Shared(sf::RenderWindow *_w, ViewController *_vc, Settings *_st) : window(_w), viewController(_vc), settings(_st),
                                                                        lang(_st) {
-        texturePlayers.loadFromFile("../res/img/players_icon.png");
     }
 
     sf::RenderWindow *window;           /**< Main window data*/
@@ -27,7 +26,6 @@ typedef struct Shared {
     sf::Font font;
     sf::Sprite sprite;
     sf::Image image;
-    sf::Texture texturePlayers;
     Settings *settings;
     JsonLang lang;
     Model model;

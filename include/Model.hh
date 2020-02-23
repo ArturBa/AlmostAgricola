@@ -6,18 +6,23 @@
 
 #include <SFML/Graphics.hpp>
 #include "Actions.hh"
+#include "Player.hh"
+#include "Game.hh"
+
+class Game;
 
 
 class Model {
 private:
     std::map<Actions, bool> mapOfActions;
+    Game *game;
 
     void resetActions();
 
 public:
     Model();
 
-    void newGame();
+    void newGame(std::vector<Player> players);
 
     void updateSettings();
 
@@ -25,6 +30,6 @@ public:
 
     void selectAction(Actions action);
 
-    const std::map<Actions, bool> *getMapOfActions() const;
+    [[nodiscard]] const std::map<Actions, bool> *getMapOfActions() const;
 
 };

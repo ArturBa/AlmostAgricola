@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <SFML/Graphics.hpp>
 
 /**
  * @class Player
@@ -14,6 +15,7 @@ class Player {
 private:
     const int imageId;
     const std::string name;
+    const sf::Color color;
 
 public:
     /**
@@ -33,7 +35,6 @@ public:
      * Get player name
      * @return player name
      */
-    std::string getName();
-
+    [[nodiscard]] std::string getName() const;
 };
 

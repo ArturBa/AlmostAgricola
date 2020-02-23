@@ -4,8 +4,6 @@
 
 #include "ViewMenu.hh"
 
-#define ICON_SIZE 32
-#define ICON_NUMBER 3
 #define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
 #define BUTTON_SPACE            {  0,  25}
 #define BUTTON_SIZE             {235,  30}
@@ -18,7 +16,7 @@ ViewMenu::ViewMenu(ViewController *_viewController) :
     texture.loadFromFile("../res/img/menu_dark_sheep.jpg");
     bgImage.setTexture(texture);
     sf::Vector2u size = texture.getSize();
-    bgImage.setOrigin({static_cast<float>(size.x / 2), static_cast<float>(size.y / 2)});
+    bgImage.setOrigin({static_cast<float>(size.x) / 2, static_cast<float>(size.y) / 2});
     bgImage.setPosition({800.f / 2, 600.f / 2});
     float scale = 800. / size.x < 600. / size.y ? 600.f / size.y : 800.f / size.x;
     bgImage.setScale(scale, scale);
@@ -112,6 +110,8 @@ int ViewMenu::getResFromIndex(int index) {
             return 1280;
         case 2:
             return 1920;
+        default:
+            return 800;
     }
 }
 
@@ -123,6 +123,8 @@ int ViewMenu::getIndexFromRes(int res) {
             return 1;
         case 1920:
             return 2;
+        default:
+            return 0;
     }
 }
 
@@ -132,14 +134,15 @@ std::string ViewMenu::getLangFromIndex(int index) {
             return "eng";
         case 1:
             return "pl";
+        default:
+            return "eng";
     }
 }
 
-int ViewMenu::getIndexFromLang(std::string lang) {
-    if (lang == "eng")
-        return 0;
+int ViewMenu::getIndexFromLang(const std::string &lang) {
     if (lang == "pl")
         return 1;
+    return 0;
 }
 
 void ViewMenu::displaySettings() {
@@ -269,7 +272,11 @@ void ViewMenu::displayHotSeatConfig() {
     }
     if (ImGui::Button(getJsonLangValue("start_game").c_str(), BUTTON_SIZE)) {
         viewController->switchTo(ViewEnum::game);
-        viewController->getShared()->model.newGame();
+        std::vector<Player> players;
+        for (int i = 0; i < numberOfPlayers; ++i) {
+            players.emplace_back(playerNames[i], playerIcon[i]);
+        }
+        viewController->getShared()->model.newGame(players);
     }
     if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::newGame;
@@ -279,8 +286,6 @@ void ViewMenu::displayHotSeatConfig() {
 
 void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no, int active_players) {
     char nameBuffer[64];
-    sf::Sprite sprite(viewController->getShared()->texturePlayers);
-    sprite.setTextureRect(sf::Rect(player_icon * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE));
     sprintf(nameBuffer, "HotSeat###player%d", player_no);
     if (!ImGui::Begin(nameBuffer, nullptr, DEFAULT_WINDOW_FLAGS)) {
         ImGui::End();
@@ -292,17 +297,16 @@ void ViewMenu::displayPlayer(char *player_name, int &player_icon, int player_no,
     ImGui::Text("%s %i:", getJsonLangValue("player").c_str(), player_no + 1);
     ImGui::InputText("", player_name, 64);
     sprintf(nameBuffer, "Icon Selector##player%i", player_no);
-    if (ImGui::ImageButton(sprite, {64, 64})) {
+    if (ImGui::ImageButton(PlayerTextureFactory::getPlayerTexture(player_icon)->getTexture(), {64, 64})) {
         ImGui::OpenPopup(nameBuffer);
     }
     if (ImGui::BeginPopupModal(nameBuffer, nullptr, ImGuiWindowFlags_NoDecoration)) {
-        for (int i = 0; i < ICON_NUMBER; i++) {
+        for (int i = 0; i < PLAYER_TEXTURE_ICON_NUMBER; i++) {
             if (i % 4)
                 ImGui::SameLine();
 
-            sprite.setTextureRect({i * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE});
             ImGui::PushID(100 + i);
-            if (ImGui::ImageButton(sprite, {64, 64})) {
+            if (ImGui::ImageButton(PlayerTextureFactory::getPlayerTexture(i)->getTexture(), {64, 64})) {
                 player_icon = i;
             }
             ImGui::PopID();
