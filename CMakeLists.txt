@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 
 # Make PROJECT_SOURCE_DIR, PROJECT_BINARY_DIR, and PROJECT_NAME available.
 set(PROJECT_NAME AlmostAgricola)
-project(${PROJECT_NAME})
+project(${PROJECT_NAME}
+        VERSION 0.10)
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
@@ -11,6 +12,7 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 # include_directories(${COMMON_INCLUDES}) in other CMakeLists.txt files.
 # set(COMMON_INCLUDES ${PROJECT_SOURCE_DIR}/include)
 
+add_subdirectory(ext)
 #----------------------------------------------------------------------------
 # Define project sources and includes
 #----------------------------------------------------------------------------
@@ -25,9 +27,16 @@ set(CMAKE_CXX_STANDARD 20)
 ################################
 # Normal Libraries & Executables
 ################################
+
 add_library(AlmostAgricola_lib ${SRC_FILES})
+target_link_libraries(AlmostAgricola_lib ImGui-SFML::ImGui-SFML nlohmann_json::nlohmann_json)
 add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
-target_link_libraries(AlmostAgricola AlmostAgricola_lib)
+SET(LIBRARIES
+        AlmostAgricola_lib
+        ImGui-SFML::ImGui-SFML
+        nlohmann_json::nlohmann_json
+        )
+target_link_libraries(AlmostAgricola ${LIBRARIES})
 # Key idea: SEPARATE OUT your main() function into its own file so it can be its
 # own executable. Separating out main() means you can add this library to be
 # used elsewhere (e.g linking to the test executable).
@@ -41,9 +50,6 @@ target_link_libraries(AlmostAgricola AlmostAgricola_lib)
 option(BUILD_TESTS "Build all tests." OFF) # Makes boolean 'test' available.
 
 if (BUILD_TESTS)
-  # This adds another subdirectory, which has 'project(gtest)'.
-  add_subdirectory(ext/googletest)
-
   enable_testing()
 
   # Include the gtest library. gtest_SOURCE_DIR is available due to
@@ -60,7 +66,7 @@ if (BUILD_TESTS)
   target_link_libraries(runUnitTests gtest gtest_main)
 
   # Extra linking for the project.
-  target_link_libraries(runUnitTests AlmostAgricola_lib)
+  target_link_libraries(runUnitTests ${LIBRARIES})
 
   # This is so you can do 'make test' to see all your tests run, instead of
   # manually running the executable runUnitTests to see those specific tests.

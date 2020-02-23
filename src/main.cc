@@ -1,3 +1,6 @@
-int main(int argc, char **argv) {
-    return 0;
+#include "Application.hh"
+
+int main() {
+    Application app;
+    app.start();
 }

@@ -1,0 +1,164 @@
+@startuml
+
+class Window{
+    - shared: Shared
+    - viewController: ViewController
+    - window
+    + start()
+}
+
+class Shared{
+    + viewController: ViewController*
+    + settings: Settings*
+    + lang: JsonLang
+}
+
+class ViewController{
+    - shared: Shared
+    - currentView: ViewAbstract
+    + display()
+    + switchTo()
+    + getShared()
+}
+
+class ViewMenu{
+    - viewController: ViewController
+    + display()
+}
+
+class ViewAbstract <<interface >>{
+    # viewController: ViewController
+    + {abstract} display()
+}
+
+class Settings {
+    - resHor: int
+    - lang: string
+    + getLang()
+    + setLang()
+    + getResolution(): Vector2u
+    + getResHor()
+    + setResHor()
+}
+
+class Observer << interface >> {
+    - sender: Sender*
+    + {abstract}update()
+    + Observer(Sender*)
+}
+
+class Sender << interface >> {
+    - observers: vector<Observer*>
+    + attach(Observer)
+    + detach(Observer)
+    + notify()
+}
+
+class Application{
+    - settings: Settings
+    - window: Window
+    + start()
+}
+
+class ViewGame{
+    - viewController: ViewController
+    + display()
+}
+
+class ActionButtonFactory {
+    - mapOfActionButtons: map<Actions, ActionButton*>
+    + getActionButton(): ActionButton*
+}
+
+class ActionButton{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class ActionButton1{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class FarmFactory{
+    - mapOfFarms: map<FarmEnum, Farm*>
+    + getFarm(): Farm*
+}
+
+class Farm{
+    - texture
+    + getTexture()
+}
+class Farm1{
+    - texture
+    + getTexture()
+}
+
+class UpgradeFactory{
+    - mapOfFarms: map<UpgradeEnum, Upgrade*>
+    + getUpgrade(): Upgrade*
+}
+class Upgrade{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+class Upgrade1{
+    - text
+    - texture
+    + getTexture()
+    + getText()
+}
+
+class JsonLang{
+    - textJson: Json
+    - settings: Settings*
+    + getText(): string
+    + update()
+}
+
+
+Window *-- ViewController
+Window *-- Shared
+
+ViewController o-o Shared
+Settings o-- JsonLang
+Shared *-- JsonLang
+Shared --|> Observer
+JsonLang --|> Observer
+
+ViewAbstract <|.. ViewMenu
+ViewAbstract <|.. ViewGame
+ViewController o-- ViewAbstract: state
+
+ActionButton <|-- ActionButton1
+ViewGame --> ActionButtonFactory
+ViewGame --> ActionButton: flyweight
+ActionButtonFactory ..> ActionButton1: <<create & share>>
+
+Farm <|-- Farm1
+ViewGame --> FarmFactory
+ViewGame --> Farm: flyweight
+FarmFactory ..> Farm1: <<create & share>>
+
+Upgrade <|-- Upgrade1
+ViewGame --> UpgradeFactory
+ViewGame --> Upgrade: flyweight
+UpgradeFactory ..> Upgrade1: <<create & share>>
+
+Sender <|-- Settings
+Sender o-- Observer
+Observer <|.. Window
+Settings --> Window
+
+Application *-- Window
+Application *-- Settings
+
+Settings o-- Shared
+
+@enduml

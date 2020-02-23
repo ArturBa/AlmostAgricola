@@ -9,27 +9,34 @@ env:
     - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
     # Misc
     - RUN_TESTS=true
-    - COVERAGE=false
+    - COVERAGE=true
 
 jobs:
   include:
     - os: linux
       dist: bionic
       compiler: gcc
-      addons:
-        apt:
-          packages:
-            - gcc-4.8
-            - g++-4.8
-            - clang-3.7
-            - valgrind
-            # Misc
-            - python-yaml
-            - lcov
-            - libopencv-dev
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
+      services:
+        - xvfb
+
+addons:
+  apt:
+    packages:
+      - gcc-4.8
+      - g++-4.8
+      - clang-3.7
+      - valgrind
+      # Misc
+      - python-yaml
+      - lcov
+      - libopencv-dev
+      - libx11-dev
+      - xorg-dev
+      - freeglut3-dev
+      - libudev-dev
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.7
 
 before_install:
   # Combine global build options with OS/compiler-dependent options
@@ -42,17 +49,14 @@ install:
   - echo ${CXX}
   - ${CXX} --version
   - ${CXX} -v
-  - sudo pip install --upgrade pip
-  - sudo pip install codecov
 
   # Download and install recent cmake
-  - |
-    if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
-      CMAKE_URL="https://cmake.org/files/v3.15/cmake-3.15.0-rc4-Linux-x86_64.tar.gz"
-      mkdir -p ${DEPS_DIR}/cmake
-      travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
-      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    fi
+  - git clone -b v3.16.3 https://cmake.org/cmake.git cmake
+  - cd cmake
+  - ./bootstrap --system-curl
+  - make
+  - sudo make install
+  - cd ..
 
 script:
   ############################################################################
@@ -62,13 +66,12 @@ script:
   - cd build
   - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
   - make
-  - make AlmostAgricola_coverage
+  - xvfb-run -a make AlmostAgricola_coverage
   - ctest
-  - codecov
 
 
 after_success:
   - lcov --directory . --capture --output-file coverage.info
-  - lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+  - lcov --remove coverage.info '/usr/*' "${HOME}" '/.cache/*' './ext/*' --output-file coverage.info
   - lcov --list coverage.info
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info
