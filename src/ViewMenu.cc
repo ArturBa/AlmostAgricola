@@ -190,8 +190,10 @@ void ViewMenu::displayLoadGame() {
     ImGui::Text("%s: %s", getJsonLangValue("player").c_str(), savePlayer[selectedSave]);
 
     ImGui::Dummy(BUTTON_SPACE);
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
     if (ImGui::Button(getJsonLangValue("load_game").c_str(), BUTTON_SIZE)) {
     }
+    ImGui::PushItemFlag(ImGuiItemFlags_Disabled, false);
     if (ImGui::Button(getJsonLangValue("back").c_str(), BUTTON_SIZE)) {
         viewMenu = ViewMenuEnum::mainMenu;
     }

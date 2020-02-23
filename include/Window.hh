@@ -15,6 +15,10 @@
 #include "Shared.hh"
 
 
+/**
+ * @class Window
+ * @brief Class responsible for main game window
+ */
 class Window : public Observer {
 private:
     Shared shared;

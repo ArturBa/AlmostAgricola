@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.8)
 # Make PROJECT_SOURCE_DIR, PROJECT_BINARY_DIR, and PROJECT_NAME available.
 set(PROJECT_NAME AlmostAgricola)
 project(${PROJECT_NAME}
-        VERSION 0.10)
+        VERSION 0.10.6)
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 

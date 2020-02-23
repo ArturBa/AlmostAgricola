@@ -76,6 +76,11 @@ public:
      */
     void display() override;
 
+    /**
+     * @brief Get json Text value for selected lang
+     * @param key key for searching
+     * @return text value in selected lang
+     */
     std::string getJsonLangValue(const std::string &key);
 
 };

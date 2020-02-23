@@ -12,14 +12,27 @@
 
 class PlayerTexture;
 
+/**
+ * @class PlayerTextureFactory
+ * @brief Class for manage and create PlayerTexture classes
+ */
 class PlayerTextureFactory {
 private:
     static std::map<int, PlayerTexture *> mapOfTextures;
 public:
+    /**
+     * @brief get PlayerTexture class pointer
+     * @param id PlayerTextureId
+     * @return Class pointer
+     */
     static PlayerTexture *getPlayerTexture(unsigned int id);
 
 };
 
+/**
+ * @class PlayerTexture
+ * @brief Class containing Player Textures
+ */
 class PlayerTexture {
 private:
     explicit PlayerTexture(unsigned int id);
@@ -35,11 +48,17 @@ private:
     friend class PlayerTextureFactory;
 
 public:
+    /**
+     * Get player texture
+     * @return  player texture
+     */
     const sf::Texture &getTexture() const;
 
+    /**
+     * Get player main color
+     * @return player color
+     */
     const sf::Color &getColor() const;
-
-public:
 };
 
 

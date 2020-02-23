@@ -20,6 +20,10 @@
 #include "Farm.hh"
 #include "Upgrade.hh"
 
+/**
+ * @class ViewGame
+ * @brief Class displaying main game view
+ */
 class ViewGame : public ViewAbstract {
 private:
     void displayAction();

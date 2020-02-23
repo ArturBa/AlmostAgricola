@@ -32,6 +32,10 @@ static FarmEnum begin(FarmEnum r) { return FarmEnum::First; }
 
 static FarmEnum end(FarmEnum r) { return FarmEnum(int(FarmEnum::Last) + 1); }
 
+/**
+ * @class Farm
+ * @brief Class containing farm images
+ */
 class Farm {
 private:
     sf::Texture farmImage;
@@ -42,11 +46,24 @@ private:
 
     friend FarmFactory;
 public:
-    const sf::Texture &getImage() const;
+    /**
+     * @brief Get Texture
+     * @return Texture of farm
+     */
+    const sf::Texture &getTexture() const;
 };
 
+/**
+ * @class FarmFactory
+ * @brief Class creating Farms
+ */
 class FarmFactory {
 public:
+    /**
+     * @brief Get Farm
+     * @param farm farm type enum
+     * @return Farm pointer
+     */
     static Farm *getFarm(FarmEnum farm);
 
 private:
