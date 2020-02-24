@@ -137,8 +137,16 @@ class Model{
 class Player {
     - name: string
     - textureId: int
-    + getName()
-    + getTexture()
+    - food: unsigned int
+    - sheep: unsigned int
+    + getName(): string
+    + getPlayerTexture(): Texture
+    + getFarm(): vector<vector<FarmEnum, ...> ...>
+    + getSheep(): unsigned int
+    + getFood(): unsigned int
+    + addSheep()
+    + transformSheepIntoFood()
+    + addUpgrade()
 }
 
 'class Game{
@@ -193,7 +201,6 @@ Shared *-- Model
 'Game *-- Player
 
 ViewMenu --- Player
-Player --> PlayerTextureFactory
-Player --> PlayerTexture: flyweight
+Player o-- PlayerTexture1
 
 @enduml
