@@ -9,3 +9,7 @@
 Game::Game(std::vector<Player> _players) : players(std::move(_players)) {
     ;
 }
+
+Player *Game::getCurrentPlayer() {
+    return &players[0];
+}

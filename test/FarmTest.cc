@@ -17,7 +17,7 @@ TEST_F(AFarm, CheckTexture) {
     int i = 0;
     for (auto farm: FarmEnum()) {
         expTexture.loadFromFile("../res/img/farm.png", {i * FARM_SIZE, 0, FARM_SIZE, FARM_SIZE});
-        actTexture = FarmFactory::getFarm(farm)->getImage();
+        actTexture = FarmFactory::getFarm(farm)->getTexture();
         ASSERT_EQ(actTexture.getSize(), expTexture.getSize());
         i++;
         for (unsigned int x = 0; x < actTexture.getSize().x; ++x) {

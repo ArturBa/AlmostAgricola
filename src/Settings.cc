@@ -33,7 +33,7 @@ void Settings::setLang(const std::string &_lang) {
     updateSettings();
 }
 
-void Settings::setResHor(int _resHor) {
+void Settings::setResHor(unsigned int _resHor) {
     if (mapOfResolutions.find(_resHor) != mapOfResolutions.end())
         resHor = _resHor;
     else

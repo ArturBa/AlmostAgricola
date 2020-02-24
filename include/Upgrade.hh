@@ -33,6 +33,10 @@ static UpgradeEnum begin(UpgradeEnum r) { return UpgradeEnum::First; }
 
 static UpgradeEnum end(UpgradeEnum r) { return UpgradeEnum(int(UpgradeEnum::Last) + 1); }
 
+/**
+ * @class Upgrade
+ * @brief Class containing upgrades Textures and texts
+ */
 class Upgrade {
 public:
     /**
@@ -56,17 +60,24 @@ private:
     friend UpgradeFactory;
 
     std::string getJsonText(JsonLang &langJson, const UpgradeEnum &upgrade);
+
     std::string getUpgradeFileName(const UpgradeEnum &upgrade);
+
     static std::map <UpgradeEnum, std::string> mapOfUpgradeFileNames;
 };
 
 
+/**
+ * @class UpgradeFactory
+ * @brief Class for creating and managing Upgrade classes
+ */
 class UpgradeFactory {
 public:
     /**
-     * Get action button
-     * @param action Action which does action button
-     * @return action button pointer
+     * Get Upgrade
+     * @param upgrade UpgradeEnum for which get Upgrade
+     * @param langJson json with all text
+     * @return Upgrade pointer
      */
     static Upgrade *getUpgrade(UpgradeEnum upgrade, JsonLang &langJson);
 

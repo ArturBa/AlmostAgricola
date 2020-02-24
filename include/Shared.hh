@@ -23,10 +23,8 @@ typedef struct Shared {
     sf::RenderWindow *window;           /**< Main window data*/
     ViewController *viewController;     /**< ViewController data*/
     sf::Clock deltaClock;               /**< Clock data*/
-    sf::Font font;
-    sf::Sprite sprite;
-    sf::Image image;
-    Settings *settings;
-    JsonLang lang;
-    Model model;
+    sf::Font font;                      /**< Font data*/
+    Settings *settings;                 /**< Settings sender pointer*/
+    JsonLang lang;                      /**< JsonLang observer*/
+    Model model;                        /**< Model data*/
 } Shared;

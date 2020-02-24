@@ -30,6 +30,6 @@ sf::IntRect Farm::getArea(FarmEnum farm) {
     return sf::IntRect(i * FARM_SIZE, 0, FARM_SIZE, FARM_SIZE);
 }
 
-const sf::Texture &Farm::getImage() const {
+const sf::Texture &Farm::getTexture() const {
     return farmImage;
 }

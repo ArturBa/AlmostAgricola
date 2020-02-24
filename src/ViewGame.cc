@@ -109,7 +109,7 @@ void ViewGame::displayRanking() {
 
 void ViewGame::displayFarm() {
     for (auto farmAction: FarmEnum()) {
-        ImGui::Image(FarmFactory::getFarm(farmAction)->getImage(), {52, 52});
+        ImGui::Image(FarmFactory::getFarm(farmAction)->getTexture(), {52, 52});
     }
 }
 

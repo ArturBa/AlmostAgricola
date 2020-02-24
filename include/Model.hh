@@ -12,24 +12,43 @@
 class Game;
 
 
+/**
+ * @class Model
+ * @brief Class connecting Frontend and Backend
+ */
 class Model {
 private:
     std::map<Actions, bool> mapOfActions;
     Game *game;
 
-    void resetActions();
-
 public:
+    /**
+     * @brief Default constructor
+     */
     Model();
 
+    /**
+     * @brief Start a new game
+     * @param players players taking part in the game
+     */
     void newGame(std::vector<Player> players);
 
-    void updateSettings();
+    /**
+     * @brief Get current player
+     * @return current player
+     */
+    Player *getCurrentPlayer();
 
-    int getCurrentPlayer();
-
+    /**
+     * @brief select action
+     * @param action selected action
+     */
     void selectAction(Actions action);
 
+    /**
+     * @brief get map of actions
+     * @return map of actions
+     */
     [[nodiscard]] const std::map<Actions, bool> *getMapOfActions() const;
 
 };

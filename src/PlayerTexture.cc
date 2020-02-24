@@ -27,7 +27,7 @@ sf::IntRect PlayerTexture::getIconRect(const unsigned int id) {
     if (id > PLAYER_TEXTURE_ICON_NUMBER) {
         return {0, 0, PLAYER_TEXTURE_ICON_SIZE, PLAYER_TEXTURE_ICON_SIZE};
     };
-    return {id * PLAYER_TEXTURE_ICON_SIZE, 0, PLAYER_TEXTURE_ICON_SIZE, PLAYER_TEXTURE_ICON_SIZE};
+    return {static_cast<int>(id * PLAYER_TEXTURE_ICON_SIZE), 0, PLAYER_TEXTURE_ICON_SIZE, PLAYER_TEXTURE_ICON_SIZE};
 }
 
 sf::Color PlayerTexture::getColor(const unsigned int id) {

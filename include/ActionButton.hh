@@ -16,16 +16,20 @@
 
 class ActionButtonFactory;
 
+/**
+ * @class ActionButton
+ * @brief Class containing Textures and texts for action buttons
+ */
 class ActionButton {
 public:
     /**
-     * Get texture of a button
+     * @brief Get texture of a button
      * @return button texture
      */
     const sf::Texture &getTexture() const;
 
     /**
-     * Get action text description
+     * @brief Get action text description
      * @return Text description
      */
     const std::string &getText() const;
@@ -42,10 +46,14 @@ private:
 };
 
 
+/**
+ * @class ActionButtonFactory
+ * @brief Class for creating and managing ActionButton
+ */
 class ActionButtonFactory {
 public:
     /**
-     * Get action button
+     * @brief Get action button
      * @param action Action which does action button
      * @return action button pointer
      */

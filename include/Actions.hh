@@ -31,6 +31,11 @@ static const std::map<Actions, std::string> mapOfActionFileNames = {
         {Actions::WEEK_1_0,   "week_1_0"},
 };
 
+/**
+ * @brief Get action file name
+ * @param action
+ * @return file name
+ */
 static std::string getActionFileName(Actions action) {
     auto search = mapOfActionFileNames.find(action);
     if (search != mapOfActionFileNames.end()) {
