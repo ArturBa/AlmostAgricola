@@ -275,8 +275,9 @@ void ViewMenu::displayHotSeatConfig() {
     if (ImGui::Button(getJsonLangValue("start_game").c_str(), BUTTON_SIZE)) {
         viewController->switchTo(ViewEnum::game);
         std::vector<Player> players;
+        players.reserve(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; ++i) {
-            players.emplace_back(playerNames[i], playerIcon[i]);
+            players.emplace_back(playerNames[i], PlayerTextureFactory::getPlayerTexture(playerIcon[i]));
         }
         viewController->getShared()->model.newGame(players);
     }

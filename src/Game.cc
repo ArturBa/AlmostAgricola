@@ -3,7 +3,6 @@
 //
 
 #include <utility>
-
 #include "Game.hh"
 
 Game::Game(std::vector<Player> _players) : players(std::move(_players)) {

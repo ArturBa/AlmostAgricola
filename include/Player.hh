@@ -8,6 +8,7 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 #include "Farm.hh"
+#include "PlayerTexture.hh"
 
 #define FARM_WIDTH 6
 #define FARM_HEIGHT 4
@@ -18,7 +19,7 @@
  */
 class Player {
 private:
-    const int imageId;
+    const PlayerTexture *texture;
     const std::string name;
     const sf::Color color;
     std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> farm = {FarmEnum::Grass};
@@ -27,15 +28,15 @@ public:
     /**
      * @brief Default constructor for player
      * @param _name player name
-     * @param imageId image id
+     * @param playerTexture player texture pointer
      */
-    Player(std::string _name, int imageId);
+    Player(std::string _name, PlayerTexture *playerTexture);
 
     /**
      * @brief Get image id
      * @return image id
      */
-    [[nodiscard]] int getImageId() const;
+    [[nodiscard]] const PlayerTexture *getTexture() const;
 
     /**
      * @brief Get player name
