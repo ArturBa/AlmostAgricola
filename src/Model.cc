@@ -18,8 +18,8 @@ const std::map<Actions, bool> *Model::getMapOfActions() const {
     return &mapOfActions;
 }
 
-void Model::newGame(std::vector<Player> players) {
-    game = new Game(std::move(players));
+void Model::newGame(std::vector<Player> *players) {
+    game = new Game(players);
 }
 
 Player *Model::getCurrentPlayer() {

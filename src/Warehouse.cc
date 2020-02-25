@@ -18,3 +18,7 @@ unsigned int Warehouse::getSheep() const {
 unsigned int Warehouse::getFood() const {
     return food;
 }
+
+void Warehouse::addSheep(unsigned int sheepNo) {
+    sheep += sheepNo;
+}

@@ -31,7 +31,7 @@ public:
      * @brief Start a new game
      * @param players players taking part in the game
      */
-    void newGame(std::vector<Player> players);
+    void newGame(std::vector<Player> *players);
 
     /**
      * @brief Get current player

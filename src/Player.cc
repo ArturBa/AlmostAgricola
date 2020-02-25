@@ -28,18 +28,6 @@ void Player::setFarm(const unsigned int x, const unsigned int y, const FarmEnum 
     }
 }
 
-unsigned int Player::getSheep() const {
-    return sheep;
-}
-
-unsigned int Player::getFood() const {
-    return food;
-}
-
-void Player::addSheep(unsigned int sheepNo) {
-    sheep += sheepNo;
-}
-
 void Player::transformSheepIntoFood(unsigned int sheepNo) {
     sheep--;
     if (std::find(upgrades.begin(), upgrades.end(), UpgradeEnum::Kitchen_2) != upgrades.end() ||

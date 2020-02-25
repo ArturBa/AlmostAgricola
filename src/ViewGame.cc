@@ -89,7 +89,6 @@ void ViewGame::displayRank() {
     ImGui::DrawLine({140, 0}, {140, (float) playerColors.size() * 20 + 5}, sf::Color::Black, 2.0f);
     ImGui::DrawLine({140, (float) playerColors.size() * 20 + 5}, {540, (float) playerColors.size() * 20 + 5},
                     sf::Color::Black, 2.0f);
-    int i = 0;
     for (auto color: playerColors) {
         ImGui::TextColored(color, "Player:");
         ImGui::DrawRectFilled({240, -14, 100, 16}, color);
@@ -108,9 +107,15 @@ void ViewGame::displayRanking() {
 }
 
 void ViewGame::displayFarm() {
-    for (auto farmAction: FarmEnum()) {
-        ImGui::Image(FarmFactory::getFarm(farmAction)->getTexture(), {52, 52});
-    }
+//    auto farm = viewController->getShared()->model.getCurrentPlayer()->getFarm();
+//    for(const auto& y: farm){
+//        for(const auto& x: y){
+//            ImGui::Image(FarmFactory::getFarm(x)->getTexture(), {52, 52});
+//        }
+//    }
+//    for (auto farmAction: FarmEnum()) {
+//        ImGui::Image(FarmFactory::getFarm(farmAction)->getTexture(), {52, 52});
+//    }
 }
 
 void ViewGame::displayWeek() {
@@ -143,7 +148,7 @@ void ViewGame::displayWarehouse() {
     }
     auto player = viewController->getShared()->model.getCurrentPlayer();
     ImGui::Text("%s: ", getTextFromKey("player").c_str());
-    ImGui::Text("Kris");
+    ImGui::Text("%s", player->getName().c_str());
     ImGui::Separator();
     ImGui::Text("%s: %d", getTextFromKey("till_harvest").c_str(), 2);
     ImGui::Separator();

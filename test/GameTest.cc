@@ -9,16 +9,20 @@ using namespace std;
 
 class AGame : public Test {
 public:
+    AGame() {
+        auto players = new std::vector<Player>;
+        players->reserve(2);
+        players->emplace_back("Player0", PlayerTextureFactory::getPlayerTexture(0));
+        players->emplace_back("Player1", PlayerTextureFactory::getPlayerTexture(1));
+        game = new Game(players);
+    }
+
+    Game *game;
 
 };
 
 TEST_F(AGame, getCurrentPlayer_player0) {
-    std::vector players = {
-            Player("Player0", PlayerTextureFactory::getPlayerTexture(0)),
-            Player("Player1", PlayerTextureFactory::getPlayerTexture(0))
-    };
-    auto game = Game(players);
-    string playerName = game.getCurrentPlayer()->getName();
+    string playerName = game->getCurrentPlayer()->getName();
     string player0Name = "Player0";
-    ASSERT_TRUE(player0Name == playerName);
+    ASSERT_EQ(player0Name, playerName);
 }

@@ -61,25 +61,7 @@ public:
      * @param y y location
      * @param fieldType field type to set
      */
-    void setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType);
-
-    /**
-     * @brief Get player number of sheep
-     * @return number of player's sheep
-     */
-    [[nodiscard]] unsigned int getSheep() const;
-
-    /**
-     * @brief Add sheep to player's sheep
-     * @param sheepNo number of sheep to add
-     */
-    void addSheep(unsigned int sheepNo = 1);
-
-    /**
-     * @brief Get player number of food
-     * @return number of player's food units
-     */
-    [[nodiscard]] unsigned int getFood() const;
+    void setFarm(unsigned int x, unsigned int y, FarmEnum fieldType);
 
     /**
      * @brief Transform one of player sheep into food
