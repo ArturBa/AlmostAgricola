@@ -10,6 +10,7 @@
 #include "Farm.hh"
 #include "Upgrade.hh"
 #include "PlayerTexture.hh"
+#include "Warehouse.hh"
 
 #define FARM_WIDTH 6
 #define FARM_HEIGHT 4
@@ -18,15 +19,15 @@
  * @class Player
  * @brief Basic player class
  */
-class Player {
+class Player : public Warehouse {
 private:
     const PlayerTexture *texture;
     const std::string name;
-    std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> farm = {FarmEnum::Grass};
-    unsigned int sheep;
-    unsigned int food;
+    std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> farm{};
+    unsigned int familyMembers;
     std::vector<UpgradeEnum> upgrades;
-public:
+
+    unsigned int getHouseRooms();
 
 public:
     /**
@@ -53,6 +54,14 @@ public:
      * @return Farm array
      */
     [[nodiscard]] std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> getFarm();
+
+    /**
+     * @brief set farm field
+     * @param x x location
+     * @param y y location
+     * @param fieldType field type to set
+     */
+    void setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType);
 
     /**
      * @brief Get player number of sheep
@@ -84,5 +93,21 @@ public:
      * @param upgrade upgrade to add to player
      */
     void addUpgrade(UpgradeEnum upgrade);
+
+    /**
+     * @brief Get Player's family member counter
+     * @return player's family member number
+     */
+    [[nodiscard]] unsigned int getFamilyMembers() const;
+
+    /**
+     * @brief add family member with place check
+     */
+    void addFamilyMember();
+
+    /**
+     * @brief add family member without place check
+     */
+    void addFamilyMemberNoPlace();
 };
 

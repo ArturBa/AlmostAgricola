@@ -6,8 +6,7 @@
 #include "Player.hh"
 
 Player::Player(std::string _name, PlayerTexture *playerTexture) : texture(playerTexture), name{std::move(_name)} {
-    sheep = 0,
-            food = 2;
+    familyMembers = 2;
     farm[0][0] = farm[0][1] = FarmEnum::ClayHouse;
 }
 
@@ -21,6 +20,12 @@ std::string Player::getName() const {
 
 std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> Player::getFarm() {
     return farm;
+}
+
+void Player::setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType) {
+    if (x < FARM_WIDTH && y < FARM_HEIGHT) {
+        farm[y][x] = fieldType;
+    }
 }
 
 unsigned int Player::getSheep() const {
@@ -50,5 +55,34 @@ void Player::transformSheepIntoFood(unsigned int sheepNo) {
 
 void Player::addUpgrade(UpgradeEnum upgrade) {
     upgrades.push_back(upgrade);
+}
+
+unsigned int Player::getHouseRooms() {
+    unsigned int houseRooms = 0;
+    for (const auto &y: farm) {
+        for (const auto &x: y) {
+            if (x == FarmEnum::ClayHouse || x == FarmEnum::WoodHouse || x == FarmEnum::StoneHouse) {
+                houseRooms++;
+            }
+        }
+    }
+    return houseRooms;
+}
+
+void Player::addFamilyMember() {
+    auto houseRooms = getHouseRooms();
+    if (familyMembers < houseRooms && familyMembers < 5) {
+        familyMembers++;
+    }
+}
+
+void Player::addFamilyMemberNoPlace() {
+    if (familyMembers < 5) {
+        familyMembers++;
+    }
+}
+
+unsigned int Player::getFamilyMembers() const {
+    return familyMembers;
 }
 

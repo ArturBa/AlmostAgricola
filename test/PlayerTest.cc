@@ -59,3 +59,29 @@ TEST_F(APlayer, TransformSheepIntoFood_AfterUpgrade_2) {
     player.transformSheepIntoFood();
     ASSERT_EQ(playerFoodBefore + 3 + 4, player.getFood());
 }
+
+TEST_F(APlayer, AddFamilyMember_WithPlace) {
+    for (int i = 0; i < 5; ++i) {
+        player.setFarm(i, 0, FarmEnum::WoodHouse);
+    }
+    player.addFamilyMember();
+    ASSERT_EQ(3, player.getFamilyMembers());
+    player.addFamilyMember();
+    player.addFamilyMember();
+    player.addFamilyMember();
+    ASSERT_EQ(5, player.getFamilyMembers());
+}
+
+TEST_F(APlayer, AddFamilyMemberNoPlace_Success) {
+    player.addFamilyMemberNoPlace();
+    ASSERT_EQ(3, player.getFamilyMembers());
+    player.addFamilyMemberNoPlace();
+    player.addFamilyMemberNoPlace();
+    player.addFamilyMemberNoPlace();
+    ASSERT_EQ(5, player.getFamilyMembers());
+}
+
+TEST_F(APlayer, AddFamilyMember_NoPlace) {
+    player.addFamilyMember();
+    ASSERT_EQ(2, player.getFamilyMembers());
+}
