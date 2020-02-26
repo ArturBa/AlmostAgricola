@@ -37,7 +37,7 @@ public:
      * @brief Get current player
      * @return current player
      */
-    Player *getCurrentPlayer();
+    Player * getCurrentPlayer();
 
     /**
      * @brief select action

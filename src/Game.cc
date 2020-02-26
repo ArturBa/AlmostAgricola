@@ -8,7 +8,7 @@ Game::Game(std::vector<Player> *_players) {
     players = _players;
 }
 
-Player *Game::getCurrentPlayer() {
+Player * Game::getCurrentPlayer() {
     return &players->at(0);
 }
 

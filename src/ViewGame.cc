@@ -107,15 +107,14 @@ void ViewGame::displayRanking() {
 }
 
 void ViewGame::displayFarm() {
-//    auto farm = viewController->getShared()->model.getCurrentPlayer()->getFarm();
-//    for(const auto& y: farm){
-//        for(const auto& x: y){
-//            ImGui::Image(FarmFactory::getFarm(x)->getTexture(), {52, 52});
-//        }
-//    }
-//    for (auto farmAction: FarmEnum()) {
-//        ImGui::Image(FarmFactory::getFarm(farmAction)->getTexture(), {52, 52});
-//    }
+    auto farm = viewController->getShared()->model.getCurrentPlayer()->getFarm();
+    for (const auto &y: farm) {
+        for (const auto &x: y) {
+            ImGui::Image(FarmFactory::getFarm(x)->getTexture(), {80, 80});
+            ImGui::SameLine();
+        }
+        ImGui::NewLine();
+    }
 }
 
 void ViewGame::displayWeek() {
@@ -154,7 +153,7 @@ void ViewGame::displayWarehouse() {
     ImGui::Separator();
     ImGui::Text("%s", getTextFromKey("warehouse").c_str());
     ImGui::Separator();
-    ImGui::Text("%s", getTextFromKey("food").c_str());
+    ImGui::Text("%s: %d", getTextFromKey("food").c_str(), player->getFood());
     ImGui::Text("%s", getTextFromKey("wheat").c_str());
     ImGui::Text("%s", getTextFromKey("vegetable").c_str());
     ImGui::Text("%s", getTextFromKey("wood").c_str());
