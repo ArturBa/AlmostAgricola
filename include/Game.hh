@@ -13,20 +13,25 @@
  */
 class Game {
 private:
-    std::vector<Player> players;
+    std::vector<Player> *players;
 
 public:
     /**
      * @brief Default Game constructor
-     * @param players players taking part in the game
+     * @param _players players taking part in the game
      */
-    explicit Game(std::vector<Player> players);
+    explicit Game(std::vector<Player> *_players);
+
+    /**
+     * @brief Default Game deconstructor
+     */
+    ~Game();
 
     /**
      * @brief get current player
      * @return current player
      */
-    Player *getCurrentPlayer();
+    Player * getCurrentPlayer();
 };
 
 

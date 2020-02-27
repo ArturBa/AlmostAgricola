@@ -14,10 +14,10 @@
 class FarmFactory;
 
 enum class FarmEnum {
+    Grass,
     WoodHouse,
     ClayHouse,
     StoneHouse,
-    Grass,
     Field,
     Pasture,
     First = WoodHouse,

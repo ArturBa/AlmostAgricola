@@ -2,7 +2,7 @@
 // Created by artur on 29/01/2020.
 //
 
-#include <utility>
+#include <iostream>
 
 #include "Model.hh"
 
@@ -18,11 +18,11 @@ const std::map<Actions, bool> *Model::getMapOfActions() const {
     return &mapOfActions;
 }
 
-void Model::newGame(std::vector<Player> players) {
-    game = new Game(std::move(players));
+void Model::newGame(std::vector<Player> *players) {
+    game = new Game(players);
 }
 
-Player *Model::getCurrentPlayer() {
+Player * Model::getCurrentPlayer() {
     return game->getCurrentPlayer();
 }
 

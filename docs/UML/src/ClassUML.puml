@@ -137,13 +137,42 @@ class Model{
 class Player {
     - name: string
     - textureId: int
-    + getName()
-    + getTexture()
+    + getName(): string
+    + getPlayerTexture(): Texture
+    + setFarm()
+    + getFarm(): vector<vector<FarmEnum, ...> ...>
+    + addSheep()
+    + transformSheepIntoFood()
+    + addUpgrade()
 }
 
-'class Game{
-'    - players: vector<Player>
-'}
+class Warehouse {
+    - food: unsigned int
+    - wheat: unsigned int
+    - vegetable: unsigned int
+    - clay: unsigned int
+    - wood: unsigned int
+    - stone: unsigned int
+    - reed: unsigned int
+    - sheep: unsigned int
+    - swine: unsigned int
+    - cow: unsigned int
+    + getFood(): unsigned int
+    + getWheat(): unsigned int
+    + getVegetable(): unsigned int
+    + getClay(): unsigned int
+    + getWood(): unsigned int
+    + getStone(): unsigned int
+    + getReed(): unsigned int
+    + getSheep(): unsigned int
+    + addSheep()
+    + getSwine(): unsigned int
+    + getCow(): unsigned int
+}
+
+class Game{
+    - players: vector<Player>
+}
 
 Window *-- ViewController
 Window *-- Shared
@@ -189,11 +218,12 @@ Application *-- Settings
 Settings o-- Shared
 
 Shared *-- Model
-'Model o-- Game
-'Game *-- Player
+Model o-- Game
+Game *-- Player
 
 ViewMenu --- Player
-Player --> PlayerTextureFactory
-Player --> PlayerTexture: flyweight
+Player o-- PlayerTexture1
+Player o-- Farm1
+Player <|-- Warehouse
 
 @enduml
