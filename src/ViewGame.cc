@@ -153,7 +153,7 @@ void ViewGame::displayWarehouse() {
     ImGui::Separator();
     ImGui::Text("%s", getTextFromKey("warehouse").c_str());
     ImGui::Separator();
-    ImGui::Text("%s: %d", getTextFromKey("food").c_str(), player->getFood());
+    ImGui::Text("%s: %d", getTextFromKey("food").c_str(), player->warehouse->food.getResource());
     ImGui::Text("%s", getTextFromKey("wheat").c_str());
     ImGui::Text("%s", getTextFromKey("vegetable").c_str());
     ImGui::Text("%s", getTextFromKey("wood").c_str());

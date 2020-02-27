@@ -24,40 +24,40 @@ TEST_F(APlayer, GetPlayerName_Initial_PlayerName) {
 }
 
 TEST_F(APlayer, GetSheepNo_Init_0) {
-    ASSERT_EQ(0, player.getSheep());
+    ASSERT_EQ(0, player.warehouse->sheep.getResource());
 }
 
 TEST_F(APlayer, AddSheep_Init_0) {
-    player.addSheep();
-    ASSERT_EQ(1, player.getSheep());
-    player.addSheep(3);
-    ASSERT_EQ(1 + 3, player.getSheep());
+    player.warehouse->sheep.addResource();
+    ASSERT_EQ(1, player.warehouse->sheep.getResource());
+    player.warehouse->sheep.addResource(3);
+    ASSERT_EQ(1 + 3, player.warehouse->sheep.getResource());
 }
 
 TEST_F(APlayer, GetFoodNo_Init_2) {
-    ASSERT_EQ(2, player.getFood());
+    ASSERT_EQ(2, player.warehouse->food.getResource());
 }
 
 TEST_F(APlayer, TransformSheepIntoFood_2) {
-    auto playerFoodBefore = player.getFood();
+    auto playerFoodBefore = player.warehouse->food.getResource();
     player.transformSheepIntoFood();
-    ASSERT_EQ(playerFoodBefore + 2, player.getFood());
+    ASSERT_EQ(playerFoodBefore + 2, player.warehouse->food.getResource());
 }
 
 TEST_F(APlayer, TransformMultipleSheepIntoFood_2) {
-    auto playerFoodBefore = player.getFood();
+    auto playerFoodBefore = player.warehouse->food.getResource();
     player.transformSheepIntoFood(2);
-    ASSERT_EQ(playerFoodBefore + 2 * 2, player.getFood());
+    ASSERT_EQ(playerFoodBefore + 2 * 2, player.warehouse->food.getResource());
 }
 
 TEST_F(APlayer, TransformSheepIntoFood_AfterUpgrade_2) {
-    auto playerFoodBefore = player.getFood();
+    auto playerFoodBefore = player.warehouse->food.getResource();
     player.addUpgrade(UpgradeEnum::Kitchen_0);
     player.transformSheepIntoFood();
-    ASSERT_EQ(playerFoodBefore + 3, player.getFood());
+    ASSERT_EQ(playerFoodBefore + 3, player.warehouse->food.getResource());
     player.addUpgrade(UpgradeEnum::Kitchen_2);
     player.transformSheepIntoFood();
-    ASSERT_EQ(playerFoodBefore + 3 + 4, player.getFood());
+    ASSERT_EQ(playerFoodBefore + 3 + 4, player.warehouse->food.getResource());
 }
 
 TEST_F(APlayer, AddFamilyMember_WithPlace) {

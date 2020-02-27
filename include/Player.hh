@@ -19,7 +19,7 @@
  * @class Player
  * @brief Basic player class
  */
-class Player : public Warehouse {
+class Player {
 private:
     const PlayerTexture *texture;
     const std::string name;
@@ -30,12 +30,19 @@ private:
     unsigned int getHouseRooms();
 
 public:
+    Warehouse *warehouse;
+
     /**
      * @brief Default constructor for player
      * @param _name player name
      * @param playerTexture player texture pointer
      */
     Player(std::string _name, PlayerTexture *playerTexture);
+
+    /**
+     * @brief Default deconstructor
+     */
+    ~Player();
 
     /**
      * @brief Get image id
@@ -68,7 +75,7 @@ public:
      * @details If player has a 1lvl kitchen it gives 3 food per sheep
      *          if 2 lvl kitchen it gives 4 food, else 2
      */
-    void transformSheepIntoFood(unsigned int sheepNo = 1);
+    bool transformSheepIntoFood(unsigned int sheepNo = 1);
 
     /**
      * @brief Add upgrade

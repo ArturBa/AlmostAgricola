@@ -137,6 +137,7 @@ class Model{
 class Player {
     - name: string
     - textureId: int
+    + warehouse: Warehouse
     + getName(): string
     + getPlayerTexture(): Texture
     + setFarm()
@@ -147,27 +148,24 @@ class Player {
 }
 
 class Warehouse {
-    - food: unsigned int
-    - wheat: unsigned int
-    - vegetable: unsigned int
-    - clay: unsigned int
-    - wood: unsigned int
-    - stone: unsigned int
-    - reed: unsigned int
-    - sheep: unsigned int
-    - swine: unsigned int
-    - cow: unsigned int
-    + getFood(): unsigned int
-    + getWheat(): unsigned int
-    + getVegetable(): unsigned int
-    + getClay(): unsigned int
-    + getWood(): unsigned int
-    + getStone(): unsigned int
-    + getReed(): unsigned int
-    + getSheep(): unsigned int
-    + addSheep()
-    + getSwine(): unsigned int
-    + getCow(): unsigned int
+    + food: unsigned int
+    + wheat: unsigned int
+    + vegetable: unsigned int
+    + clay: unsigned int
+    + wood: unsigned int
+    + stone: unsigned int
+    + reed: unsigned int
+    + sheep: unsigned int
+    + swine: unsigned int
+    + cow: unsigned int
+}
+
+class Resource{
+    - value: unsigned int
+    + getResource(): unsigned int
+    + addResource()
+    + decreaseResource(): bool
+
 }
 
 class Game{
@@ -222,8 +220,8 @@ Model o-- Game
 Game *-- Player
 
 ViewMenu --- Player
-Player o-- PlayerTexture1
-Player o-- Farm1
-Player <|-- Warehouse
+Player o-- Warehouse
+Warehouse o-- Resource
+
 
 @enduml
