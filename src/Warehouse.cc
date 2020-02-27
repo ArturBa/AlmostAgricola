@@ -53,18 +53,38 @@ unsigned int Warehouse::getWood() const {
     return wood;
 }
 
+void Warehouse::addWood(unsigned int WoodNo) {
+    wood += WoodNo;
+}
+
 unsigned int Warehouse::getStone() const {
     return stone;
+}
+
+void Warehouse::addStone(unsigned int StoneNo) {
+    stone += StoneNo;
 }
 
 unsigned int Warehouse::getReed() const {
     return reed;
 }
 
+void Warehouse::addReed(unsigned int ReedNo) {
+    reed += ReedNo;
+}
+
 unsigned int Warehouse::getSwine() const {
     return swine;
 }
 
+void Warehouse::addSwine(unsigned int SwineNo) {
+    swine += SwineNo;
+}
+
 unsigned int Warehouse::getCow() const {
     return cow;
+}
+
+void Warehouse::addCow(unsigned int CowNo) {
+    cow += CowNo;
 }

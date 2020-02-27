@@ -65,6 +65,10 @@ public:
      */
     void addVegetable(unsigned int vegetableNo = 1);
 
+    /**
+     * @brief Get warehouse number of clay
+     * @return number of warehouse clay
+     */
     [[nodiscard]] unsigned int getClay() const;
 
     /**
@@ -73,11 +77,42 @@ public:
      */
     void addClay(unsigned int clayNo = 1);
 
+    /**
+     * @brief Get warehouse number of wood
+     * @return number of warehouse wood
+     */
     [[nodiscard]] unsigned int getWood() const;
 
+    /**
+     * @brief Add wood to warehouse wood
+     * @param woodNo number of wood to add
+     */
+    void addWood(unsigned int woodNo = 1);
+
+
+    /**
+     * @brief Get warehouse number of stone
+     * @return number of warehouse stone
+     */
     [[nodiscard]] unsigned int getStone() const;
 
+    /**
+     * @brief Add stone to warehouse stone
+     * @param stoneNo number of stone to add
+     */
+    void addStone(unsigned int stoneNo = 1);
+
+    /**
+     * @brief Get warehouse number of reed
+     * @return number of warehouse reed
+     */
     [[nodiscard]] unsigned int getReed() const;
+
+    /**
+     * @brief Add Reed to warehouse Reed
+     * @param ReedNo number of Reed to add
+     */
+    void addReed(unsigned int ReedNo = 1);
 
     /**
      * @brief Get warehouse number of sheep
@@ -91,9 +126,29 @@ public:
      */
     void addSheep(unsigned int sheepNo = 1);
 
+    /**
+     * @brief Get warehouse number of swine
+     * @return number of warehouse swine
+     */
     [[nodiscard]] unsigned int getSwine() const;
 
+    /**
+     * @brief Add swine to warehouse swine
+     * @param swineNo number of swine to add
+     */
+    void addSwine(unsigned int swineNo = 1);
+
+    /**
+     * @brief Get warehouse number of cow
+     * @return number of warehouse cow
+     */
     [[nodiscard]] unsigned int getCow() const;
+
+    /**
+     * @brief Add Cow to warehouse Cow
+     * @param CowNo number of Cow to add
+     */
+    void addCow(unsigned int CowNo = 1);
 
 };
 
