@@ -18,10 +18,6 @@ jobs:
       compiler: gcc
       services:
         - xvfb
-    - os: windows
-      compiler: gcc
-      services:
-        - xvfb
 
 addons:
   apt:
