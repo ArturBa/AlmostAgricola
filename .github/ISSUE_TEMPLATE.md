@@ -1,13 +1,13 @@
-### Description
+## Description
 
-[Description of the bug or feature]
+<!--- Description of the bug or feature] --->
 
-### Steps to Reproduce
+## Steps to Reproduce
+ 1. <!-- First Step --->
+ 2. <!-- Second Step -->
+ 3. <!-- and so on... -->
 
-1. [First Step]
-2. [Second Step]
-3. [and so on...]
-
-**Expected behavior:** [What you expected to happen]
-
-**Actual behavior:** [What actually happened]
+**Expected behavior:** 
+<!--- hat you expected to happen] --->
+**Actual behavior:** 
+<!--- What actually happened] --->
