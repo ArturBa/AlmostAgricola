@@ -10,3 +10,4 @@
 
 #Ignore doxygen output
 docs/html
+docs/xml

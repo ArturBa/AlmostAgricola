@@ -131,7 +131,12 @@ class JsonLang{
 }
 
 class Model{
-'    - game: Game*
+    - mapOfActions: std::map<Actions, bool>
+    - game: Game*
+    + newGame(): void
+    + getCurrentPlayer(): Player*
+    + selectAction()
+    + getMapOfActions() const: std::map<Actions, bool>*
 }
 
 class Player {

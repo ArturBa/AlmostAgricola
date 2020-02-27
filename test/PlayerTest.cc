@@ -85,3 +85,22 @@ TEST_F(APlayer, AddFamilyMember_NoPlace) {
     player.addFamilyMember();
     ASSERT_EQ(2, player.getFamilyMembers());
 }
+
+TEST_F(APlayer, GetFarmInitial) {
+    std::map<FarmEnum, int> expectedFarmCount = {
+            {FarmEnum::ClayHouse, 2},
+            {FarmEnum::Grass,     22}
+    };
+    auto farm = player.getFarm();
+    std::map<FarmEnum, int> actualFarmCount;
+    for (const auto &y: farm) {
+        for (const auto &x: y) {
+            try {
+                actualFarmCount.at(x)++;
+            } catch (...) {
+                actualFarmCount.insert({x, 1});
+            }
+        }
+    }
+    ASSERT_EQ(expectedFarmCount, actualFarmCount);
+}
