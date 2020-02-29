@@ -42,13 +42,13 @@ class Settings {
     + setResHor()
 }
 
-class Observer << interface >> {
+class Observer {
     - sender: Sender*
     + {abstract}update()
     + Observer(Sender*)
 }
 
-class Sender << interface >> {
+class Sender {
     - observers: vector<Observer*>
     + attach(Observer)
     + detach(Observer)
@@ -78,7 +78,7 @@ class ActionButton{
     + getText()
 }
 
-class ActionButton1{
+class ConcreteActionButton{
 }
 
 class FarmFactory{
@@ -90,7 +90,7 @@ class Farm{
     - texture
     + getTexture()
 }
-class Farm1{
+class ConcreteFarm{
 }
 
 class UpgradeFactory{
@@ -105,7 +105,7 @@ class Upgrade{
     + getText()
 }
 
-class Upgrade1{
+class ConcreteUpgrade{
 }
 
 class PlayerTextureFactory{
@@ -120,7 +120,7 @@ class PlayerTexture{
     + getColor(): Color
 }
 
-class PlayerTexture1{
+class ConcretePlayerTexture{
 }
 
 class JsonLang{
@@ -150,6 +150,8 @@ class Player {
     + addSheep()
     + transformSheepIntoFood()
     + addUpgrade()
+    + feedFamily()
+    + getRequireFeed()
 }
 
 class Warehouse {
@@ -165,68 +167,73 @@ class Warehouse {
     + cow: unsigned int
 }
 
-class Resource{
+class Resource {
     - value: unsigned int
     + getResource(): unsigned int
     + addResource()
     + decreaseResource(): bool
+}
+
+class Game {
+    - players: vector<Player>
+}
+
+class GameStrategy <<interface>> {
 
 }
 
-class Game{
-    - players: vector<Player>
+class ConcreteGameStrategy {
+
 }
 
 Window *-- ViewController
 Window *-- Shared
 
 ViewController o-o Shared
-Settings o-- JsonLang
 Shared *-- JsonLang
-Shared --|> Observer
 JsonLang --|> Observer
 
 ViewAbstract <|.. ViewMenu
 ViewAbstract <|.. ViewGame
 ViewController o-- ViewAbstract: state
 
-PlayerTexture <|-- PlayerTexture1
+PlayerTexture <|-- ConcretePlayerTexture
 ViewMenu --> PlayerTextureFactory
 ViewMenu --> PlayerTexture: flyweight
-PlayerTextureFactory ..> PlayerTexture1: <<create & share>>
+PlayerTextureFactory ..> ConcretePlayerTexture: <<create & share>>
 
-ActionButton <|-- ActionButton1
+ActionButton <|-- ConcreteActionButton
 ViewGame --> ActionButtonFactory
 ViewGame --> ActionButton: flyweight
-ActionButtonFactory ..> ActionButton1: <<create & share>>
+ActionButtonFactory ..> ConcreteActionButton: <<create & share>>
 
-Farm <|-- Farm1
+Farm <|-- ConcreteFarm
 ViewGame --> FarmFactory
 ViewGame --> Farm: flyweight
-FarmFactory ..> Farm1: <<create & share>>
+FarmFactory ..> ConcreteFarm: <<create & share>>
 
-Upgrade <|-- Upgrade1
+Upgrade <|-- ConcreteUpgrade
 ViewGame --> UpgradeFactory
 ViewGame --> Upgrade: flyweight
-UpgradeFactory ..> Upgrade1: <<create & share>>
+UpgradeFactory ..> ConcreteUpgrade: <<create & share>>
 
 Sender <|-- Settings
 Sender o-- Observer
-Observer <|.. Window
-Settings --> Window
+Observer <|-- Window
 
 Application *-- Window
 Application *-- Settings
 
-Settings o-- Shared
+Settings --o Shared
 
 Shared *-- Model
-Model o-- Game
+Model *-- Game
 Game *-- Player
 
-ViewMenu --- Player
 Player o-- Warehouse
 Warehouse o-- Resource
 
+Game *-- GameStrategy
+GameStrategy <|.. ConcreteGameStrategy
 
 @enduml
