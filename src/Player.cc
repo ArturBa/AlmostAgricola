@@ -27,10 +27,43 @@ std::array<std::array<FarmEnum, FARM_WIDTH>, FARM_HEIGHT> Player::getFarm() {
     return farm;
 }
 
-void Player::setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType) {
-    if (x < FARM_WIDTH && y < FARM_HEIGHT) {
-        farm[y][x] = fieldType;
+bool Player::isInFarm(const unsigned int x, const unsigned int y) {
+    return (x < FARM_WIDTH && y < FARM_HEIGHT);
+}
+
+bool Player::isReplaceable(const unsigned int x, const unsigned int y) {
+    return farm[y][x] == FarmEnum::Grass;
+}
+
+bool Player::isHouseType(FarmEnum farm) {
+    return farm == FarmEnum::ClayHouse || farm == FarmEnum::WoodHouse || farm == FarmEnum::StoneHouse;
+}
+
+bool Player::isNextToHouse(const unsigned int x, const unsigned int y) {
+    std::vector<std::pair<int, int>> checkFields = {{-1, 0},
+                                                    {1,  0},
+                                                    {0,  -1},
+                                                    {0,  1}};
+    for (const auto &check : checkFields) {
+        if (isInFarm(x + check.first, y + check.second)) {
+            if (isHouseType(farm[y + check.second][x + check.first])) {
+                return true;
+            }
+        }
     }
+    return false;
+}
+
+bool Player::setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType) {
+    if (!isInFarm(x, y) || !isReplaceable(x, y)) {
+        return false;
+    }
+    if (isHouseType(fieldType) && !isNextToHouse(x, y)) {
+        return false;
+    }
+
+    farm[y][x] = fieldType;
+    return true;
 }
 
 bool Player::transformSheepIntoFood(unsigned int sheepNo) {

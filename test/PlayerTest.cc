@@ -60,6 +60,22 @@ TEST_F(APlayer, TransformSheepIntoFood_AfterUpgrade_2) {
     ASSERT_EQ(playerFoodBefore + 3 + 4, player.warehouse->food.getResource());
 }
 
+TEST_F(APlayer, SetFarm_Correctly) {
+    ASSERT_TRUE(player.setFarm(2, 0, FarmEnum::WoodHouse));
+}
+
+TEST_F(APlayer, SetFarm_AwayFromHouse) {
+    ASSERT_FALSE(player.setFarm(3, 0, FarmEnum::WoodHouse));
+}
+
+TEST_F(APlayer, SetFarm_OverrideHouse) {
+    ASSERT_FALSE(player.setFarm(0, 0, FarmEnum::WoodHouse));
+}
+
+TEST_F(APlayer, SetFarm_OutsideField) {
+    ASSERT_FALSE(player.setFarm(7, 7, FarmEnum::WoodHouse));
+}
+
 TEST_F(APlayer, AddFamilyMember_WithPlace) {
     for (int i = 0; i < 5; ++i) {
         player.setFarm(i, 0, FarmEnum::WoodHouse);

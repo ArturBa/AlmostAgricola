@@ -29,6 +29,14 @@ private:
 
     unsigned int getHouseRooms();
 
+    static bool isInFarm(unsigned int x, unsigned int y);
+
+    bool isReplaceable(unsigned int x, unsigned int y);
+
+    static bool isHouseType(FarmEnum farm);
+
+    bool isNextToHouse(unsigned int x, unsigned int y);
+
 public:
     Warehouse *warehouse;
 
@@ -68,7 +76,7 @@ public:
      * @param y y location
      * @param fieldType field type to set
      */
-    void setFarm(unsigned int x, unsigned int y, FarmEnum fieldType);
+    bool setFarm(const unsigned int x, const unsigned int y, const FarmEnum fieldType);
 
     /**
      * @brief Transform one of player sheep into food

@@ -21,3 +21,24 @@ unsigned int Points::getHouse() {
     }
     return points;
 }
+
+unsigned int Points::getSheep() {
+    unsigned int points = -1;
+    if (player->warehouse->sheep.getResource() >= 1) {
+        points++, points++;
+    }
+    if (player->warehouse->sheep.getResource() >= 4) {
+        points++;
+    }
+    if (player->warehouse->sheep.getResource() >= 6) {
+        points++;
+    }
+    if (player->warehouse->sheep.getResource() >= 8) {
+        points++;
+    }
+    return points;
+}
+
+unsigned int Points::getFamilyMembers() {
+    return 3 * player->getFamilyMembers();
+}
