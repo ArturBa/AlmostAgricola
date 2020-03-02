@@ -98,5 +98,27 @@ public:
      * @brief add family member without place check
      */
     void addFamilyMemberNoPlace();
+
+    /**
+     * @brief get food required for feeding family
+     */
+    unsigned int getFoodRequired();
+
+    /**
+     * @brief feed Family
+     */
+    void feedFamily();
+
+    /**
+     * @brief update house to Clay house
+     * @return
+     */
+    bool upgradeHouseClay();
+
+    /**
+     * @brief update house to Stone house
+     * @return
+     */
+    bool upgradeHouseStone();
 };
 

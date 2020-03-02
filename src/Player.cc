@@ -8,7 +8,7 @@
 Player::Player(std::string _name, PlayerTexture *playerTexture) : texture(playerTexture), name{std::move(_name)} {
     familyMembers = 2;
     warehouse = new Warehouse();
-    farm[0][0] = farm[0][1] = FarmEnum::ClayHouse;
+    farm[0][0] = farm[0][1] = FarmEnum::WoodHouse;
 }
 
 Player::~Player() {
@@ -77,5 +77,59 @@ void Player::addFamilyMemberNoPlace() {
 
 unsigned int Player::getFamilyMembers() const {
     return familyMembers;
+}
+
+unsigned int Player::getFoodRequired() {
+    return familyMembers * 2;
+}
+
+void Player::feedFamily() {
+    while (warehouse->food.getResource() < getFoodRequired()) {
+        warehouse->begCards.addResource();
+        warehouse->food.addResource(2);
+    }
+    warehouse->food.decreaseResource(getFoodRequired());
+}
+
+bool Player::upgradeHouseClay() {
+    if (farm[0][0] != FarmEnum::WoodHouse) {
+        // cannot update to clay house. Already updated
+        return false;
+    } else if (getHouseRooms() * 2 > warehouse->clay.getResource() && warehouse->reed.getResource() < 1) {
+        // cannot update to clay house. Required more materials
+        return false;
+    }
+    warehouse->clay.decreaseResource(getHouseRooms() * 2);
+    warehouse->reed.decreaseResource();
+
+    for (auto &y: farm) {
+        for (auto &x: y) {
+            if (x == FarmEnum::WoodHouse) {
+                x = FarmEnum::ClayHouse;
+            }
+        }
+    }
+    return true;
+}
+
+bool Player::upgradeHouseStone() {
+    if (farm[0][0] != FarmEnum::ClayHouse) {
+        // cannot update to clay house. Require update
+        return false;
+    } else if (getHouseRooms() * 2 > warehouse->stone.getResource() && warehouse->reed.getResource() < 1) {
+        // cannot update to clay house. Required more materials
+        return false;
+    }
+    warehouse->stone.decreaseResource(getHouseRooms() * 2);
+    warehouse->reed.decreaseResource();
+
+    for (auto &y: farm) {
+        for (auto &x: y) {
+            if (x == FarmEnum::ClayHouse) {
+                x = FarmEnum::StoneHouse;
+            }
+        }
+    }
+    return true;
 }
 

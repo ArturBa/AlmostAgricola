@@ -23,6 +23,7 @@ public:
     Resource sheep{};
     Resource swine{};
     Resource cow{};
+    Resource begCards{};
 
     /**
      * @brief Default constructor

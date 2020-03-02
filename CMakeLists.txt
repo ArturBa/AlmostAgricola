@@ -50,36 +50,36 @@ target_link_libraries(AlmostAgricola ${LIBRARIES})
 option(BUILD_TESTS "Build all tests." OFF) # Makes boolean 'test' available.
 
 if (BUILD_TESTS)
-  enable_testing()
+    enable_testing()
 
-  # Include the gtest library. gtest_SOURCE_DIR is available due to
-  # 'project(gtest)' above.
-  include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-  include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+    # Include the gtest library. gtest_SOURCE_DIR is available due to
+    # 'project(gtest)' above.
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 
-  ##############
-  # Unit Tests
-  ##############
-  add_executable(runUnitTests ${TEST_SRC_FILES})
+    ##############
+    # Unit Tests
+    ##############
+    add_executable(runUnitTests ${TEST_SRC_FILES})
 
-  # Standard linking to gtest stuff.
-  target_link_libraries(runUnitTests gtest gtest_main)
+    # Standard linking to gtest stuff.
+    target_link_libraries(runUnitTests gtest gtest_main)
 
-  # Extra linking for the project.
-  target_link_libraries(runUnitTests ${LIBRARIES})
+    # Extra linking for the project.
+    target_link_libraries(runUnitTests ${LIBRARIES})
 
-  # This is so you can do 'make test' to see all your tests run, instead of
-  # manually running the executable runUnitTests to see those specific tests.
-  add_test(UnitTests runUnitTests)
+    # This is so you can do 'make test' to see all your tests run, instead of
+    # manually running the executable runUnitTests to see those specific tests.
+    add_test(UnitTests runUnitTests)
 
-  set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.travis/cmake)
+    set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.travis/cmake)
 
-  if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-    include(CodeCoverage)
-    setup_target_for_coverage(${PROJECT_NAME}_coverage runUnitTests coverage)
+    if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+        include(CodeCoverage)
+        setup_target_for_coverage(${PROJECT_NAME}_coverage runUnitTests coverage)
 
-    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-  endif () #CMAKE_BUILD_TYPE STREQUAL "Coverage"
+        SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+        SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+    endif () #CMAKE_BUILD_TYPE STREQUAL "Coverage"
 
 endif ()

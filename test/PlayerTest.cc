@@ -86,9 +86,55 @@ TEST_F(APlayer, AddFamilyMember_NoPlace) {
     ASSERT_EQ(2, player.getFamilyMembers());
 }
 
+TEST_F(APlayer, UpgradeHouseToClay_NoMaterials) {
+    ASSERT_FALSE(player.upgradeHouseClay());
+}
+
+TEST_F(APlayer, UpgradeHouseToClay_WithMaterials) {
+    player.warehouse->clay.addResource(4);
+    player.warehouse->reed.addResource();
+    ASSERT_TRUE(player.upgradeHouseClay());
+}
+
+TEST_F(APlayer, UpgradeHouseToClay_DoubleUpgrade) {
+    player.warehouse->clay.addResource(8);
+    player.warehouse->reed.addResource(2);
+    player.upgradeHouseClay();
+
+    ASSERT_FALSE(player.upgradeHouseClay());
+}
+
+TEST_F(APlayer, UpgradeHouseToStone_NoMaterials) {
+    ASSERT_FALSE(player.upgradeHouseStone());
+}
+
+TEST_F(APlayer, UpgradeHouseToStone_WithMaterials_NoClayUpgrade) {
+    player.warehouse->stone.addResource(4);
+    player.warehouse->reed.addResource();
+    ASSERT_FALSE(player.upgradeHouseStone());
+}
+
+TEST_F(APlayer, UpgradeHouseToStone_WithMaterials_WithClayUpgrade) {
+    player.warehouse->clay.addResource(4);
+    player.warehouse->stone.addResource(4);
+    player.warehouse->reed.addResource(2);
+    player.upgradeHouseClay();
+    ASSERT_TRUE(player.upgradeHouseStone());
+}
+
+TEST_F(APlayer, UpgradeHouseToStone_DoubleUpgrade) {
+    player.warehouse->clay.addResource(4);
+    player.warehouse->stone.addResource(8);
+    player.warehouse->reed.addResource(3);
+    player.upgradeHouseClay();
+    player.upgradeHouseStone();
+
+    ASSERT_FALSE(player.upgradeHouseStone());
+}
+
 TEST_F(APlayer, GetFarmInitial) {
     std::map<FarmEnum, int> expectedFarmCount = {
-            {FarmEnum::ClayHouse, 2},
+            {FarmEnum::WoodHouse, 2},
             {FarmEnum::Grass,     22}
     };
     auto farm = player.getFarm();
@@ -104,3 +150,80 @@ TEST_F(APlayer, GetFarmInitial) {
     }
     ASSERT_EQ(expectedFarmCount, actualFarmCount);
 }
+
+TEST_F(APlayer, GetFarmClayUpgrade) {
+    std::map<FarmEnum, int> expectedFarmCount = {
+            {FarmEnum::ClayHouse, 2},
+            {FarmEnum::Grass,     22}
+    };
+    player.warehouse->clay.addResource(4);
+    player.warehouse->reed.addResource();
+    player.upgradeHouseClay();
+    auto farm = player.getFarm();
+    std::map<FarmEnum, int> actualFarmCount;
+    for (const auto &y: farm) {
+        for (const auto &x: y) {
+            try {
+                actualFarmCount.at(x)++;
+            } catch (...) {
+                actualFarmCount.insert({x, 1});
+            }
+        }
+    }
+    ASSERT_EQ(expectedFarmCount, actualFarmCount);
+}
+
+TEST_F(APlayer, GetFarmStoneUpgrade) {
+    std::map<FarmEnum, int> expectedFarmCount = {
+            {FarmEnum::StoneHouse, 2},
+            {FarmEnum::Grass,      22}
+    };
+    player.warehouse->stone.addResource(4);
+    player.warehouse->clay.addResource(4);
+    player.warehouse->reed.addResource(2);
+    player.upgradeHouseClay();
+    player.upgradeHouseStone();
+    auto farm = player.getFarm();
+    std::map<FarmEnum, int> actualFarmCount;
+    for (const auto &y: farm) {
+        for (const auto &x: y) {
+            try {
+                actualFarmCount.at(x)++;
+            } catch (...) {
+                actualFarmCount.insert({x, 1});
+            }
+        }
+    }
+    ASSERT_EQ(expectedFarmCount, actualFarmCount);
+}
+
+TEST_F(APlayer, GetRequiredFood_2FamilyMembers) {
+    ASSERT_EQ(4, player.getFoodRequired());
+}
+
+TEST_F(APlayer, GetRequiredFood_3FamilyMembers) {
+    player.addFamilyMemberNoPlace();
+    ASSERT_EQ(6, player.getFoodRequired());
+}
+
+TEST_F(APlayer, FeedFamily_2FamilyMembers) {
+    player.feedFamily();
+    ASSERT_EQ(0, player.warehouse->food.getResource());
+    ASSERT_EQ(1, player.warehouse->begCards.getResource());
+}
+
+TEST_F(APlayer, FeedFamily_3FamilyMembers) {
+    player.addFamilyMemberNoPlace();
+    player.feedFamily();
+    ASSERT_EQ(0, player.warehouse->food.getResource());
+    ASSERT_EQ(2, player.warehouse->begCards.getResource());
+}
+
+TEST_F(APlayer, FeedFamily_3FamilyMembers_EvenFoodNo) {
+    player.warehouse->food.addResource();
+    player.addFamilyMemberNoPlace();
+    player.feedFamily();
+    ASSERT_EQ(1, player.warehouse->food.getResource());
+    ASSERT_EQ(2, player.warehouse->begCards.getResource());
+}
+

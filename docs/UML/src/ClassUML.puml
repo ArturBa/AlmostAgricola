@@ -152,19 +152,22 @@ class Player {
     + addUpgrade()
     + feedFamily()
     + getRequireFeed()
+    + upgradeHouseClay()
+    + upgradeHouseStone()
 }
 
 class Warehouse {
-    + food: unsigned int
-    + wheat: unsigned int
-    + vegetable: unsigned int
-    + clay: unsigned int
-    + wood: unsigned int
-    + stone: unsigned int
-    + reed: unsigned int
-    + sheep: unsigned int
-    + swine: unsigned int
-    + cow: unsigned int
+    + food: Resource
+    + wheat: Resource
+    + vegetable: Resource
+    + clay: Resource
+    + wood: Resource
+    + stone: Resource
+    + reed: Resource
+    + sheep: Resource
+    + swine: Resource
+    + cow: Resource
+    + begCard: Resource
 }
 
 class Resource {
@@ -179,11 +182,19 @@ class Game {
 }
 
 class GameStrategy <<interface>> {
-
+    + nextAction()
+    + generateNextTourAction()
+    + getMapOfActions()
 }
 
 class ConcreteGameStrategy {
 
+}
+
+class Points {
+    + getFamilyMembers()
+    + getSheep()
+    + getHouse()
 }
 
 Window *-- ViewController
@@ -235,5 +246,7 @@ Warehouse o-- Resource
 
 Game *-- GameStrategy
 GameStrategy <|.. ConcreteGameStrategy
+
+Points o-- Player
 
 @enduml

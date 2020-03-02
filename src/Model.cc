@@ -22,7 +22,7 @@ void Model::newGame(std::vector<Player> *players) {
     game = new Game(players);
 }
 
-Player * Model::getCurrentPlayer() {
+Player *Model::getCurrentPlayer() {
     return game->getCurrentPlayer();
 }
 
