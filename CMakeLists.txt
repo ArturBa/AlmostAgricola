@@ -5,7 +5,28 @@ set(PROJECT_NAME AlmostAgricola)
 project(${PROJECT_NAME}
         VERSION 0.10.6)
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+if(MSVC)
+  # StringPooling: true == /GF  false == /GF-
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GF")
+
+  # RuntimeLibrary
+  # 0 (MultiThreaded) == /MT
+  # 1 (MultiThreadedDebug) == /MTd
+  # 2 (MultiThreadedDLL) == /MD
+  # 3 (MultiThreadedDebugDLL) == /MDd
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+
+  # TreatWChar_tAsBuiltInType: true == /Zc:wchar_t  false == /Zc:wchar_t-
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t")
+
+  # WarningLevel: /W<level 0 to 4> or /Wall
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3")
+
+  set( gtest_force_shared_crt ON CACHE BOOL "Always use msvcrt.dll" FORCE)
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+endif()
 
 
 # If you want your own include/ directory, set this, and then you can do
@@ -27,16 +48,15 @@ set(CMAKE_CXX_STANDARD 20)
 ################################
 # Normal Libraries & Executables
 ################################
-
-add_library(AlmostAgricola_lib ${SRC_FILES})
-target_link_libraries(AlmostAgricola_lib ImGui-SFML::ImGui-SFML nlohmann_json::nlohmann_json)
-add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
 SET(LIBRARIES
-        AlmostAgricola_lib
-        ImGui-SFML::ImGui-SFML
+		ImGui-SFML::ImGui-SFML 
         nlohmann_json::nlohmann_json
         )
-target_link_libraries(AlmostAgricola ${LIBRARIES})
+
+add_library(AlmostAgricola_lib ${SRC_FILES})
+target_link_libraries(AlmostAgricola_lib ${LIBRARIES})
+add_executable(AlmostAgricola ${PROJECT_SOURCE_DIR}/src/main.cc)
+target_link_libraries(AlmostAgricola AlmostAgricola_lib)
 # Key idea: SEPARATE OUT your main() function into its own file so it can be its
 # own executable. Separating out main() means you can add this library to be
 # used elsewhere (e.g linking to the test executable).
@@ -66,7 +86,7 @@ if (BUILD_TESTS)
   target_link_libraries(runUnitTests gtest gtest_main)
 
   # Extra linking for the project.
-  target_link_libraries(runUnitTests ${LIBRARIES})
+  target_link_libraries(runUnitTests AlmostAgricola_lib)
 
   # This is so you can do 'make test' to see all your tests run, instead of
   # manually running the executable runUnitTests to see those specific tests.
