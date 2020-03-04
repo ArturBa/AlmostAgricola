@@ -15,6 +15,9 @@ sf::Vector2u Settings::getSize() {
 
 Settings::Settings() {
     settingsJson = LoadJsonFromFile("../res/cnf/settings.json");
+    if (settingsJson == nullptr) {
+        throw SettingsException();
+    }
     lang = settingsJson->value("lang", "eng");
     resHor = settingsJson->value("res", 800);
 }

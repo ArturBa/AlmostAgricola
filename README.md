@@ -46,7 +46,11 @@ Then you can do ./executable for the generated executable:
 ```
     
 ### Windows
-Will be added later
+To run this project in Visual Studio replace file `CMakeSettings.json` with [`docs/CMakeSettings.json`](docs/CMakeSettings.json) in project main folder.
+This file contains main configuration required by Visual Studio for running this project.
+
+#### Run executables
+At this moment I strongly recommend using Visual Studio for running this project
 
 ## Game show
 ### Main menu

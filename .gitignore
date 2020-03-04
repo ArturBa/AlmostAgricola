@@ -8,5 +8,9 @@
 #Ignore CLion files
 .idea
 
+#Ignore Visual Studio files
+.vs
+CMakeSettings.json
+
 #Ignore doxygen output
 docs/html
