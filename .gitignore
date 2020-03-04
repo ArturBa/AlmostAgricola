@@ -4,7 +4,6 @@
 
 #Ignore build files
 *build*/*
-out/*
 
 #Ignore CLion files
 .idea
