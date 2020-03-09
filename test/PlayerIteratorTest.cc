@@ -44,3 +44,36 @@ public:
 TEST_F(APlayerIterator, CheckInitValues) {
     ASSERT_EQ(players.at(0)->getName(), playerIterator->currentItem()->getName());
 }
+
+TEST_F(APlayerIterator, CheckInitSize) {
+    ASSERT_EQ(players.size(), playerList->getCount());
+}
+
+TEST_F(APlayerIterator, Next_Player) {
+    playerIterator->next();
+    ASSERT_EQ(players.at(1)->getName(), playerIterator->currentItem()->getName());
+}
+
+TEST_F(APlayerIterator, Next_Throw) {
+    for (const auto player: players) {
+        playerIterator->next();
+    }
+    ASSERT_THROW(playerIterator->currentItem(), IteratorOutOfBounds);
+}
+
+TEST_F(APlayerIterator, First_Player) {
+    playerIterator->next();
+    playerIterator->first();
+    ASSERT_EQ(players.at(0)->getName(), playerIterator->currentItem()->getName());
+}
+
+TEST_F(APlayerIterator, IsDone_False) {
+    ASSERT_FALSE(playerIterator->isDone());
+}
+
+TEST_F(APlayerIterator, IsDone_True) {
+    for (const auto player: players) {
+        playerIterator->next();
+    }
+    ASSERT_TRUE(playerIterator->isDone());
+}

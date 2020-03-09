@@ -26,12 +26,12 @@ public:
     /**
      * @brief Set iterator to position 0
      */
-    virtual void First() = 0;
+    virtual void first() = 0;
 
     /**
      * @brief Move iterator to the next position
      */
-    virtual void Next() = 0;
+    virtual void next() = 0;
 
     /**
      * @brief Check if this is out of range

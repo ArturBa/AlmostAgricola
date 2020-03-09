@@ -33,9 +33,9 @@ private:
 
 public:
 
-    void First() override;
+    void first() override;
 
-    void Next() override;
+    void next() override;
 
     [[nodiscard]] bool isDone() const override;
 
@@ -49,12 +49,12 @@ PlayerIterator<Item>::PlayerIterator(const PlayerList<Item> *_playerList) : play
 }
 
 template<class Item>
-void PlayerIterator<Item>::First() {
+void PlayerIterator<Item>::first() {
     current = 0;
 }
 
 template<class Item>
-void PlayerIterator<Item>::Next() {
+void PlayerIterator<Item>::next() {
     current++;
 }
 
