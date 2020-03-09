@@ -16,11 +16,11 @@ using namespace std;
 
 class APlayerIterator : public Test {
 public:
-    APlayerIterator() {
-        players = {new Player("a", PlayerTextureFactory::getPlayerTexture(0)),
-                   new Player("b", PlayerTextureFactory::getPlayerTexture(0)),
-                   new Player("c", PlayerTextureFactory::getPlayerTexture(0))
-        };
+    APlayerIterator() :
+            players({new Player("a", PlayerTextureFactory::getPlayerTexture(0)),
+                     new Player("b", PlayerTextureFactory::getPlayerTexture(0)),
+                     new Player("c", PlayerTextureFactory::getPlayerTexture(0))
+                    }) {
         playerList = new PlayerList<Player *>();
         playerList->add(players.at(0));
         playerList->add(players.at(1));
