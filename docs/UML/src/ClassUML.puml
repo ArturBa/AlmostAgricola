@@ -197,14 +197,14 @@ class Points {
     + getHouse()
 }
 
-class AbstractList {
+class AbstractList <Item> <<interface>> {
     + createIterator()
     + count()
     + append()
     + remove()
 }
 
-class Iterator {
+class Iterator <Item> <<interface>> {
     + first()
     + next()
     + isDone()

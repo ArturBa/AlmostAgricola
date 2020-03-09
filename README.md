@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=gameGUI)](https://travis-ci.com/ArturBa/AlmostAgricola)
-[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/gameGUI/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
+[![Build Status](https://travis-ci.com/ArturBa/AlmostAgricola.svg?token=5PNdM7qHNNqDFxDZsBRp&branch=Player)](https://travis-ci.com/ArturBa/AlmostAgricola)
+[![codecov](https://codecov.io/gh/ArturBa/AlmostAgricola/branch/Player/graph/badge.svg?token=gVGDosqV6F)](https://codecov.io/gh/ArturBa/AlmostAgricola)
 
 
 
