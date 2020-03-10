@@ -28,9 +28,10 @@ addons:
       - valgrind
       # Misc
       - python-yaml
-      - freeglut3-dev
       - lcov
       - libx11-dev
+      - freeglut3-dev
+      - libudev-dev
       - xorg-dev
 
 before_install:
