@@ -56,16 +56,14 @@ struct SheepPointsTest : APoints, testing::WithParamInterface<sheepPointsState> 
     virtual ~ SheepPointsTest() = default;
 };
 
-INSTANTIATE_TEST_CASE_P
-
-(Default, SheepPointsTest,
- testing::Values(
-         sheepPointsState{0, -1},
-         sheepPointsState{1, 1},
-         sheepPointsState{4, 2},
-         sheepPointsState{6, 3},
-         sheepPointsState{8, 4}
- ));
+INSTANTIATE_TEST_SUITE_P (APoints, SheepPointsTest,
+                          Values(
+                                  sheepPointsState{0, -1},
+                                  sheepPointsState{1, 1},
+                                  sheepPointsState{4, 2},
+                                  sheepPointsState{6, 3},
+                                  sheepPointsState{8, 4}
+                          ));
 
 TEST_P(SheepPointsTest, getSheep) {
     auto as = GetParam();
@@ -93,15 +91,13 @@ struct FamilyMembersPointsTest : APoints, testing::WithParamInterface<familyMemb
     virtual ~ FamilyMembersPointsTest() = default;
 };
 
-INSTANTIATE_TEST_CASE_P
-
-(Default, FamilyMembersPointsTest,
- testing::Values(
-         familyMembersPointsState{2, 6},
-         familyMembersPointsState{3, 9},
-         familyMembersPointsState{4, 12},
-         familyMembersPointsState{5, 15}
- ));
+INSTANTIATE_TEST_SUITE_P (APoints, FamilyMembersPointsTest,
+                          Values(
+                                  familyMembersPointsState{2, 6},
+                                  familyMembersPointsState{3, 9},
+                                  familyMembersPointsState{4, 12},
+                                  familyMembersPointsState{5, 15}
+                          ));
 
 TEST_P(FamilyMembersPointsTest, getFamilyMembers) {
     auto as = GetParam();
