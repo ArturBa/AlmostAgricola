@@ -5,7 +5,7 @@ set(PROJECT_NAME AlmostAgricola)
 project(${PROJECT_NAME}
         VERSION 0.10.6)
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic-errors -std=c++2a -Wno-variadic-macros -Wno-long-long -Wno-shadow")
 
 
 # If you want your own include/ directory, set this, and then you can do
