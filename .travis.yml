@@ -28,7 +28,7 @@ addons:
       - valgrind
       # Misc
       - python-yaml
-      - libopencv-dev
+      - freeglut3-dev
       - lcov
       - libx11-dev
       - xorg-dev
