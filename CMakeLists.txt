@@ -5,7 +5,7 @@ set(PROJECT_NAME AlmostAgricola)
 project(${PROJECT_NAME}
         VERSION 0.10.6)
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -pedantic-errors -std=c++17 -Wno-variadic-macros -Wno-long-long -Wno-shadow")
 
 
 # If you want your own include/ directory, set this, and then you can do
@@ -22,7 +22,7 @@ file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cc)
 list(REMOVE_ITEM SRC_FILES ${PROJECT_SOURCE_DIR}/src/main.cc)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 ################################
 # Normal Libraries & Executables
