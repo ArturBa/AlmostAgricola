@@ -197,6 +197,21 @@ class Points {
     + getHouse()
 }
 
+class AbstractList <Item> <<interface>> {
+    + createIterator()
+    + count()
+    + append()
+    + remove()
+}
+
+class Iterator <Item> <<interface>> {
+    + first()
+    + next()
+    + isDone()
+    + currentItem()
+}
+
+
 Window *-- ViewController
 Window *-- Shared
 
@@ -248,5 +263,12 @@ Game *-- GameStrategy
 GameStrategy <|.. ConcreteGameStrategy
 
 Points o-- Player
+
+Game --> AbstractList
+Game --> Iterator
+PlayerList --|> AbstractList
+PlayerIterator --|> Iterator
+PlayerList <-- PlayerIterator
+PlayerList ..> PlayerIterator
 
 @enduml
