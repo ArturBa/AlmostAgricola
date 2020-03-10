@@ -38,48 +38,73 @@ TEST_F(APoints, CheckStoneHouse) {
     ASSERT_EQ(4, points->getHouse());
 }
 
-TEST_F(APoints, getSheep_0__1) {
-    ASSERT_EQ(-1, points->getSheep());
+struct sheepPointsState {
+    int sheepNo;
+    int points;
+
+    friend std::ostream &operator<<(std::ostream &os, const sheepPointsState &state) {
+        os << "Number of sheep: " << state.sheepNo << " points: " << state.points;
+        return os;
+    }
+};
+
+struct SheepPointsTest : APoints, testing::WithParamInterface<sheepPointsState> {
+    SheepPointsTest() {
+        player->warehouse->sheep.addResource(GetParam().sheepNo);
+    }
+
+    virtual ~ SheepPointsTest() = default;
+};
+
+INSTANTIATE_TEST_CASE_P
+
+(Default, SheepPointsTest,
+ testing::Values(
+         sheepPointsState{0, -1},
+         sheepPointsState{1, 1},
+         sheepPointsState{4, 2},
+         sheepPointsState{6, 3},
+         sheepPointsState{8, 4}
+ ));
+
+TEST_P(SheepPointsTest, getSheep) {
+    auto as = GetParam();
+    EXPECT_EQ(as.points, points->getSheep());
 }
 
-TEST_F(APoints, getSheep_1_1) {
-    player->warehouse->sheep.addResource(1);
-    ASSERT_EQ(1, points->getSheep());
+
+struct familyMembersPointsState {
+    int familyMembers;
+    int points;
+
+    friend std::ostream &operator<<(std::ostream &os, const familyMembersPointsState &state) {
+        os << "Number of family members: " << state.familyMembers << " points: " << state.points;
+        return os;
+    }
+};
+
+struct FamilyMembersPointsTest : APoints, testing::WithParamInterface<familyMembersPointsState> {
+    FamilyMembersPointsTest() {
+        for (unsigned int i = player->getFamilyMembers(); i < GetParam().familyMembers; ++i) {
+            player->addFamilyMemberNoPlace();
+        }
+    }
+
+    virtual ~ FamilyMembersPointsTest() = default;
+};
+
+INSTANTIATE_TEST_CASE_P
+
+(Default, FamilyMembersPointsTest,
+ testing::Values(
+         familyMembersPointsState{2, 6},
+         familyMembersPointsState{3, 9},
+         familyMembersPointsState{4, 12},
+         familyMembersPointsState{5, 15}
+ ));
+
+TEST_P(FamilyMembersPointsTest, getFamilyMembers) {
+    auto as = GetParam();
+    EXPECT_EQ(as.points, points->getFamilyMembers());
 }
 
-TEST_F(APoints, getSheep_4_2) {
-    player->warehouse->sheep.addResource(4);
-    ASSERT_EQ(2, points->getSheep());
-}
-
-TEST_F(APoints, getSheep_6_3) {
-    player->warehouse->sheep.addResource(6);
-    ASSERT_EQ(3, points->getSheep());
-}
-
-TEST_F(APoints, getSheep_8_4) {
-    player->warehouse->sheep.addResource(8);
-    ASSERT_EQ(4, points->getSheep());
-}
-
-TEST_F(APoints, getFamilyMembers_2_6) {
-    ASSERT_EQ(6, points->getFamilyMembers());
-}
-
-TEST_F(APoints, getFamilyMembers_3_9) {
-    player->addFamilyMemberNoPlace();
-    ASSERT_EQ(9, points->getFamilyMembers());
-}
-
-TEST_F(APoints, getFamilyMembers_4_12) {
-    player->addFamilyMemberNoPlace();
-    player->addFamilyMemberNoPlace();
-    ASSERT_EQ(12, points->getFamilyMembers());
-}
-
-TEST_F(APoints, getFamilyMembers_5_15) {
-    player->addFamilyMemberNoPlace();
-    player->addFamilyMemberNoPlace();
-    player->addFamilyMemberNoPlace();
-    ASSERT_EQ(15, points->getFamilyMembers());
-}
