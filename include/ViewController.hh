@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <map>
 #include "ViewAbstract.hh"
 #include "Shared.hh"
 
@@ -47,7 +48,8 @@ public:
 
 private:
     Shared *shared;
-    ViewAbstract *currentView;
+    ViewEnum currentView;
+    std::map<ViewEnum, std::unique_ptr<ViewAbstract>> mapOfViews;
 };
 
 
