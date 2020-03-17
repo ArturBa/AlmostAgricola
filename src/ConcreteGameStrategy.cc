@@ -19,6 +19,7 @@ std::map<Actions, std::pair<bool, Player *> > ConcreteGameStrategy::getMapOfActi
 
 void ConcreteGameStrategy::selectAction(Actions action, Player *player) {
     mapOfActions.at(action).second = player;
+    player->action(action);
 }
 
 void ConcreteGameStrategy::generateNextTourAction() {

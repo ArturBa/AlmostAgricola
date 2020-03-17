@@ -29,7 +29,9 @@ TEST_F(AGame, getCurrentPlayer_player0) {
 
 TEST_F(AGame, getPlayers) {
     string player0Name = "Player0";
+    string player1Name = "Player1";
     ASSERT_EQ(game->getPlayers()->at(0)->getName(), player0Name);
+    ASSERT_EQ(game->getPlayers()->at(1)->getName(), player1Name);
 }
 
 TEST_F(AGame, selectAction) {

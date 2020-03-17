@@ -166,3 +166,19 @@ bool Player::upgradeHouseStone() {
     return true;
 }
 
+void Player::harvest() {
+    feedFamily();
+    warehouse->sheep.addResource(std::floor(warehouse->sheep.getResource() / 2));
+    warehouse->swine.addResource(std::floor(warehouse->swine.getResource() / 2));
+    warehouse->cow.addResource(std::floor(warehouse->cow.getResource() / 2));
+}
+
+void Player::action(Actions action) {
+    switch (action) {
+        case Actions::GET_SHEEP:
+            warehouse->sheep.addResource();
+            break;
+        case Actions::GET_2_FOOD:
+            warehouse->food.addResource(2);
+    }
+}

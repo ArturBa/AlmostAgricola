@@ -2,6 +2,7 @@
 // Created by bauer on 2/12/20.
 //
 
+#include <Points.hh>
 #include "ViewGame.hh"
 
 #define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
@@ -65,7 +66,11 @@ void ViewGame::displayAction() {
         if (ImGui::ImageButton(
                 ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getTexture(),
                 {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) {
-            viewController->getShared()->model.selectAction(i.first);
+            try {
+                viewController->getShared()->model.selectAction(i.first);
+            } catch (GameException &gameException) {
+                viewController->switchTo(ViewEnum::results);
+            }
         }
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
@@ -81,17 +86,19 @@ void ViewGame::displayAction() {
 }
 
 void ViewGame::displayRank() {
-    std::vector<sf::Color> playerColors = {sf::Color::Blue, sf::Color::Green, sf::Color::Red, sf::Color::Yellow};
+    auto players = *viewController->getShared()->model.getPlayers();
     ImGui::BeginChild("Plot");
     ImGui::Dummy({10, 0});
     ImGui::SameLine(300.f);
-    ImGui::Text("Ranking");
-    ImGui::DrawLine({140, 0}, {140, (float) playerColors.size() * 20 + 5}, sf::Color::Black, 2.0f);
-    ImGui::DrawLine({140, (float) playerColors.size() * 20 + 5}, {540, (float) playerColors.size() * 20 + 5},
+    ImGui::Text("Sheep");
+    ImGui::DrawLine({140, 0}, {140, (float) players.size() * 20 + 5}, sf::Color::Black, 2.0f);
+    ImGui::DrawLine({140, (float) players.size() * 20 + 5}, {540, (float) players.size() * 20 + 5},
                     sf::Color::Black, 2.0f);
-    for (auto color: playerColors) {
-        ImGui::TextColored(color, "Player:");
-        ImGui::DrawRectFilled({240, -14, 100, 16}, color);
+    for (auto player: players) {
+        ImGui::TextColored(player->getPlayerTexture()->getColor(), "%s", player->getName().c_str());
+        Points point(player);
+        ImGui::DrawRectFilled({240, -14, static_cast<float>(100 * point.getSheep()), 16},
+                              player->getPlayerTexture()->getColor());
     }
     ImGui::Dummy({0, 20.f});
     ImGui::Dummy({0, 10.f});
@@ -149,18 +156,26 @@ void ViewGame::displayWarehouse() {
     ImGui::Text("%s: ", getTextFromKey("player").c_str());
     ImGui::Text("%s", player->getName().c_str());
     ImGui::Separator();
-    ImGui::Text("%s: %d", getTextFromKey("till_harvest").c_str(), 2);
+    ImGui::Text("%s: %d", getTextFromKey("food_required").c_str(), player->getFoodRequired());
+    ImGui::Separator();
+    ImGui::Text("%s: %d", getTextFromKey("till_harvest").c_str(), viewController->getShared()->model.weeksToHarvest());
     ImGui::Separator();
     ImGui::Text("%s", getTextFromKey("warehouse").c_str());
     ImGui::Separator();
     ImGui::Text("%s: %d", getTextFromKey("food").c_str(), player->warehouse->food.getResource());
-    ImGui::Text("%s", getTextFromKey("wheat").c_str());
-    ImGui::Text("%s", getTextFromKey("vegetable").c_str());
-    ImGui::Text("%s", getTextFromKey("wood").c_str());
-    ImGui::Text("%s", getTextFromKey("stone").c_str());
-    ImGui::Text("%s", getTextFromKey("clay").c_str());
-    ImGui::Text("%s", getTextFromKey("reed").c_str());
-    ImGui::Text("%s", getTextFromKey("family_memb").c_str());
+    ImGui::Text("%s: %d", getTextFromKey("wheat").c_str(), player->warehouse->wheat.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("vegetable").c_str(), player->warehouse->vegetable.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("wood").c_str(), player->warehouse->wood.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("stone").c_str(), player->warehouse->stone.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("clay").c_str(), player->warehouse->clay.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("reed").c_str(), player->warehouse->reed.getResource());
+    ImGui::Separator();
+    ImGui::Text("%s: %d", getTextFromKey("sheep").c_str(), player->warehouse->sheep.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("swine").c_str(), player->warehouse->swine.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("cow").c_str(), player->warehouse->cow.getResource());
+    ImGui::Separator();
+    ImGui::Text("%s: %d", getTextFromKey("beg_card").c_str(), player->warehouse->begCards.getResource());
+    ImGui::Text("%s: %d", getTextFromKey("family_memb").c_str(), player->getFamilyMembers());
     ImGui::End();
 }
 

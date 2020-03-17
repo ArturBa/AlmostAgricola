@@ -30,5 +30,10 @@ void ViewController::switchTo(ViewEnum view) {
             delete currentView;
             currentView = new ViewGame(this);
             break;
+        case ViewEnum::results:
+            // TODO add viewResults
+            delete currentView;
+            currentView = new ViewMenu(this);
+            break;
     }
 }

@@ -67,7 +67,7 @@ public:
      * Get the message
      * @return error message
      */
-    std::string what() {
-        return errorMsg;
+    [[nodiscard]] const char *what() const noexcept override {
+        return errorMsg.c_str();
     }
 };

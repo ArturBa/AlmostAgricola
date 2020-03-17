@@ -22,6 +22,7 @@
   "ranking": "Ranking",
   "warehouse": "Warehouse",
   "till_harvest": "Weeks to harvest",
+  "food_required": "Required food",
   "food": "Food",
   "wheat": "Wheat",
   "vegetable": "Vegetable",
@@ -29,9 +30,13 @@
   "stone": "Stone",
   "clay": "Clay",
   "reed": "Reed",
+  "sheep": "sheep",
+  "swine": "swine",
+  "cow": "cow",
+  "beg_card": "Beg cards",
   "family_memb": "Family members",
   "test": "test",
-  "2_food": "Get 2 food",
-  "sheep": "Get sheep",
-  "week_1_0": "Week 1 action"
+  "act_2_food": "Get 2 food",
+  "act_sheep": "Get sheep",
+  "act_week_1_0": "Week 1 action"
 }

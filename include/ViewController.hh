@@ -13,7 +13,8 @@
  */
 enum class ViewEnum {
     menu,   /**< Menu mode */
-    game    /**< Game mode */
+    game,   /**< Game mode */
+    results /**< Results mode */
 };
 
 /**

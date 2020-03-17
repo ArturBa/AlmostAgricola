@@ -26,3 +26,11 @@ Player *Model::getCurrentPlayer() {
 void Model::selectAction(Actions action) {
     game->selectAction(action);
 }
+
+int Model::weeksToHarvest() {
+    return game->weeksToHarvest();
+}
+
+const std::vector<Player *> *Model::getPlayers() {
+    return game->getPlayers();
+}

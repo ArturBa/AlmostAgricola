@@ -50,4 +50,15 @@ public:
      */
     [[nodiscard]] std::map<Actions, std::pair<bool, Player *>> getMapOfActions() const;
 
+    /**
+     * Get number of weeks until next harvest
+     * @return number of weeks until next harvest
+     */
+    int weeksToHarvest();
+
+    /**
+     * Get vector of players
+     * @return vector of players
+     */
+    const std::vector<Player *> *getPlayers();
 };

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <exception>
 #include "Model.hh"
 #include "ConcreteGameStrategy.hh"
 #include "PlayerList.hh"
@@ -21,8 +22,13 @@ private:
     Player *firstPlayer;
     PlayerIterator<Player *> *playerIterator;
     PlayerList<Player *> *playerList;
+    int currentWeek = 0;
+    bool weekHarvest[3] = {false, //false, false, true, false, false, true, false, false, true, false, false, true,
+                           false, true};
 
     void playerTourList();
+
+    void nextTour();
 
 public:
     /**
@@ -59,6 +65,28 @@ public:
      * @return vector of players
      */
     const std::vector<Player *> *getPlayers();
+
+    /**
+     * Count weeks until harvest
+     * @return remaining weeks till harvest
+     */
+    [[nodiscard]] int weeksToHarvest() const;
+
 };
 
+/**
+ * @class GameException
+ * @brief Class for throwing exceptions in a game
+ */
+class GameException : public std::exception {
+private:
+    std::string errorMsg;
+public:
+    explicit GameException(std::string _errorMsg) : errorMsg(_errorMsg) {
+        ;
+    };
 
+    [[nodiscard]] const char *what() const noexcept override {
+        return errorMsg.c_str();
+    }
+};

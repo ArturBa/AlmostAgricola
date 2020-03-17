@@ -22,6 +22,7 @@
   "ranking": "Ranking",
   "warehouse": "Magazyn",
   "till_harvest": "Tygodnie do żniw",
+  "food_required": "Wymagana ilość jedzenia",
   "food": "Jedzenie",
   "wheat": "Zboże",
   "vegetable": "Warzywa",
@@ -29,9 +30,13 @@
   "stone": "Kamień",
   "clay": "Glina",
   "reed": "Trzcina",
+  "sheep": "Owce",
+  "swine": "Świnie",
+  "cow": "Krowy",
+  "beg_card": "Karty żebrania",
   "family_memb": "Członkowie rodziny",
   "test": "test",
-  "2_food": "Wez 2 jedzenia",
-  "sheep": "Wez owce",
-  "week_1_0": "Akcja 1 tygodnia"
+  "act_2_food": "Wez 2 jedzenia",
+  "act_sheep": "Wez owce",
+  "act_week_1_0": "Akcja 1 tygodnia"
 }

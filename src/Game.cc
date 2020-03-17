@@ -29,11 +29,22 @@ void Game::selectAction(Actions action) {
     gameStrategy->selectAction(action, getCurrentPlayer());
     playerIterator->next();
     if (playerIterator->isDone()) {
-        for (auto player : *players) {
-            player->feedFamily();
-        }
-        playerTourList();
+        nextTour();
     }
+    if (currentWeek == sizeof(weekHarvest) / sizeof(*weekHarvest)) {
+        throw GameException("End of a game");
+    }
+}
+
+void Game::nextTour() {
+    if (weekHarvest[currentWeek]) {
+        for (auto player : *players) {
+            player->harvest();
+        }
+    }
+    currentWeek++;
+    playerTourList();
+    gameStrategy->generateNextTourAction();
 }
 
 const std::vector<Player *> *Game::getPlayers() {
@@ -60,4 +71,12 @@ void Game::playerTourList() {
             player = 0;
     }
     playerIterator = playerList->createIterator();
+}
+
+int Game::weeksToHarvest() const {
+    int i = 0;
+    while (!weekHarvest[i + currentWeek]) {
+        i++;
+    }
+    return i;
 }

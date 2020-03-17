@@ -11,6 +11,7 @@
 #include "Upgrade.hh"
 #include "PlayerTexture.hh"
 #include "Warehouse.hh"
+#include "Actions.hh"
 
 #define FARM_WIDTH 6
 #define FARM_HEIGHT 4
@@ -36,6 +37,11 @@ private:
     static bool isHouseType(FarmEnum farm);
 
     bool isNextToHouse(unsigned int x, unsigned int y);
+
+    /**
+     * @brief feed Family
+     */
+    void feedFamily();
 
 public:
     Warehouse *warehouse;
@@ -113,20 +119,22 @@ public:
     unsigned int getFoodRequired();
 
     /**
-     * @brief feed Family
-     */
-    void feedFamily();
-
-    /**
-     * @brief update house to Clay house
-     * @return
+     * @brief upgrade house to Clay house
+     * @return status if success at upgrade
      */
     bool upgradeHouseClay();
 
     /**
-     * @brief update house to Stone house
-     * @return
+     * @brief upgrade house to Stone house
+     * @return status if success at upgrade
      */
     bool upgradeHouseStone();
+
+    /**
+     * @brief do all harvest actions on player
+     */
+    void harvest();
+
+    void action(Actions action);
 };
 

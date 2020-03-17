@@ -12,16 +12,28 @@ class AActions : public Test {
 
 };
 
-TEST_F(AActions, GetActionFileName_TEST_test) {
-    ASSERT_EQ("test", getActionFileName(Actions::TEST));
-}
+struct fileNameState {
+    Actions action;
+    string textValue;
+};
 
-TEST_F(AActions, GetActionFileName_GET_SHEEP_sheep) {
-    ASSERT_EQ("sheep", getActionFileName(Actions::GET_SHEEP));
-}
+struct FileNameTest : AActions, testing::WithParamInterface<fileNameState> {
+    FileNameTest() {
+    }
 
-TEST_F(AActions, GetActionFileName_GET_2_FOOD_2_food) {
-    ASSERT_EQ("2_food", getActionFileName(Actions::GET_2_FOOD));
+    virtual ~ FileNameTest() = default;
+};
+
+INSTANTIATE_TEST_SUITE_P (AActions, FileNameTest,
+                          Values(
+                                  fileNameState{Actions::TEST, "test"},
+                                  fileNameState{Actions::GET_2_FOOD, "act_2_food"},
+                                  fileNameState{Actions::GET_SHEEP, "act_sheep"}
+                          ));
+
+TEST_P(FileNameTest, GetActionFileName) {
+    auto as = GetParam();
+    EXPECT_EQ(as.textValue, getActionFileName(as.action));
 }
 
 TEST_F(AActions, CheckIterateOverEnum) {

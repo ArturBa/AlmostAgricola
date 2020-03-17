@@ -223,14 +223,14 @@ TEST_F(APlayer, GetRequiredFood_3FamilyMembers) {
 }
 
 TEST_F(APlayer, FeedFamily_2FamilyMembers) {
-    player.feedFamily();
+    player.harvest();
     ASSERT_EQ(0, player.warehouse->food.getResource());
     ASSERT_EQ(1, player.warehouse->begCards.getResource());
 }
 
 TEST_F(APlayer, FeedFamily_3FamilyMembers) {
     player.addFamilyMemberNoPlace();
-    player.feedFamily();
+    player.harvest();
     ASSERT_EQ(0, player.warehouse->food.getResource());
     ASSERT_EQ(2, player.warehouse->begCards.getResource());
 }
@@ -238,7 +238,7 @@ TEST_F(APlayer, FeedFamily_3FamilyMembers) {
 TEST_F(APlayer, FeedFamily_3FamilyMembers_EvenFoodNo) {
     player.warehouse->food.addResource();
     player.addFamilyMemberNoPlace();
-    player.feedFamily();
+    player.harvest();
     ASSERT_EQ(1, player.warehouse->food.getResource());
     ASSERT_EQ(2, player.warehouse->begCards.getResource());
 }

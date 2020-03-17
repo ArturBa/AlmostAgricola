@@ -3,6 +3,7 @@
 //
 
 #include "JsonLang.hh"
+#include <iostream>
 
 
 JsonLang::JsonLang(Settings *_settings) : Observer(_settings) {
@@ -16,7 +17,11 @@ std::string JsonLang::getText(const std::string &key, const std::string &default
         sprintf(fileNameBuffer, "../res/lang/%s.json", settings->getLang().c_str());
         textJson = LoadJsonFromFile(fileNameBuffer);
     }
-    return textJson->value(key, default_value);
+    std::string result = textJson->value(key, default_value);
+    if (result == "null") {
+        std::cerr << "Cannot find a text value for key: " << key << '\n';
+    }
+    return result;
 }
 
 void JsonLang::update() {

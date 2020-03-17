@@ -26,9 +26,9 @@ static Actions end(Actions r) { return Actions(int(Actions::Last) + 1); }
 
 
 static const std::map<Actions, std::string> mapOfActionFileNames = {
-        {Actions::GET_2_FOOD, "2_food"},
-        {Actions::GET_SHEEP,  "sheep"},
-        {Actions::WEEK_1_0,   "week_1_0"},
+        {Actions::GET_2_FOOD, "act_2_food"},
+        {Actions::GET_SHEEP,  "act_sheep"},
+        {Actions::WEEK_1_0,   "act_week_1_0"},
 };
 
 /**
