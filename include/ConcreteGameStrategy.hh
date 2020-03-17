@@ -8,9 +8,15 @@
 
 class ConcreteGameStrategy : public GameStrategy {
 private:
-    std::map<Actions, Player *> mapOfActions;
+    std::map<Actions, std::pair<bool, Player *>> mapOfActions;
 public:
+    ConcreteGameStrategy();
 
+    std::map<Actions, std::pair<bool, Player *> > getMapOfActions() override;
+
+    void selectAction(Actions action, Player *player) override;
+
+    void generateNextTourAction() override;
 };
 
 

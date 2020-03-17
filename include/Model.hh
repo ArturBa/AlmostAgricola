@@ -18,7 +18,6 @@ class Game;
  */
 class Model {
 private:
-    std::map<Actions, bool> mapOfActions;
     Game *game;
 
 public:
@@ -31,7 +30,7 @@ public:
      * @brief Start a new game
      * @param players players taking part in the game
      */
-    void newGame(std::vector<Player> *players);
+    void newGame(std::vector<Player *> *players);
 
     /**
      * @brief Get current player
@@ -49,6 +48,6 @@ public:
      * @brief get map of actions
      * @return map of actions
      */
-    [[nodiscard]] const std::map<Actions, bool> *getMapOfActions() const;
+    [[nodiscard]] std::map<Actions, std::pair<bool, Player *>> getMapOfActions() const;
 
 };

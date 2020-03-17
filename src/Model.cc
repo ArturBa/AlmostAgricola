@@ -8,17 +8,14 @@
 
 
 Model::Model() {
-    for (auto action : Actions()) {
-        mapOfActions.insert({action, {true}});
-    }
     game = nullptr;
 }
 
-const std::map<Actions, bool> *Model::getMapOfActions() const {
-    return &mapOfActions;
+std::map<Actions, std::pair<bool, Player *>> Model::getMapOfActions() const {
+    return game->getMapOfActions();
 }
 
-void Model::newGame(std::vector<Player> *players) {
+void Model::newGame(std::vector<Player *> *players) {
     game = new Game(players);
 }
 
@@ -27,5 +24,5 @@ Player *Model::getCurrentPlayer() {
 }
 
 void Model::selectAction(Actions action) {
-
+    game->selectAction(action);
 }

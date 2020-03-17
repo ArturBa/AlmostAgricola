@@ -1,9 +1,6 @@
 //
 // Created by artur on 30/01/2020.
 //
-
-#include <memory>
-
 #include "ViewController.hh"
 #include "ViewMenu.hh"
 #include "ViewGame.hh"

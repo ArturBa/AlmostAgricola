@@ -179,11 +179,12 @@ class Resource {
 
 class Game {
     - players: vector<Player>
+    + selectAction()
 }
 
 class GameStrategy <<interface>> {
+    - generateNextTourAction()
     + nextAction()
-    + generateNextTourAction()
     + getMapOfActions()
 }
 
@@ -197,14 +198,14 @@ class Points {
     + getHouse()
 }
 
-class AbstractList <Item> <<interface>> {
+class AbstractList <<interface>> {
     + createIterator()
     + count()
     + append()
     + remove()
 }
 
-class Iterator <Item> <<interface>> {
+class Iterator <<interface>> {
     + first()
     + next()
     + isDone()

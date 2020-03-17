@@ -56,12 +56,12 @@ void ViewGame::displayAction() {
     ImGui::BeginChild("##Actions", {650, 550});
     auto actions = viewController->getShared()->model.getMapOfActions();
     int line = 0;
-    for (const auto &i: *actions) {
+    for (const auto &i: actions) {
         if (line % 6) {
             ImGui::SameLine();
         }
         line++;
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second);
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !i.second.first);
         if (ImGui::ImageButton(
                 ActionButtonFactory::getActionButton(i.first, viewController->getShared()->lang)->getTexture(),
                 {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) {
