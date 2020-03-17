@@ -23,8 +23,8 @@ private:
     PlayerIterator<Player *> *playerIterator;
     PlayerList<Player *> *playerList;
     int currentWeek = 0;
-    bool weekHarvest[3] = {false, //false, false, true, false, false, true, false, false, true, false, false, true,
-                           false, true};
+    bool weekHarvest[15] = {false, false, false, true, false, false, true, false, false, true, false, false, true,
+                            false, true};
 
     void playerTourList();
 
