@@ -11,12 +11,12 @@
 
 ViewController::ViewController(Shared *_shared) :
         shared(_shared),
-        currentView(new ViewMenu(this)) {
-
+        currentView(ViewEnum::menu) {
+    mapOfViews.insert(std::pair<ViewEnum, std::unique_ptr<ViewAbstract>>(ViewEnum::menu, new ViewMenu(this)));
 }
 
 void ViewController::display() {
-    currentView->display();
+    mapOfViews.at(currentView)->display();
 }
 
 Shared *ViewController::getShared() const {
@@ -24,14 +24,16 @@ Shared *ViewController::getShared() const {
 }
 
 void ViewController::switchTo(ViewEnum view) {
-    switch (view) {
-        case ViewEnum::menu:
-            delete currentView;
-            currentView = new ViewMenu(this);
-            break;
-        case ViewEnum::game:
-            delete currentView;
-            currentView = new ViewGame(this);
-            break;
+    auto view_it = mapOfViews.find(view);
+    if(view_it == mapOfViews.end()){
+        switch (view) {
+            case ViewEnum::menu:
+                mapOfViews.insert(std::pair<ViewEnum, std::unique_ptr<ViewAbstract>>(ViewEnum::menu, new ViewMenu(this)));
+                break;
+            case ViewEnum::game:
+                mapOfViews.insert(std::pair<ViewEnum, std::unique_ptr<ViewAbstract>>(ViewEnum::game, new ViewGame(this)));
+                break;
+        }
     }
+    currentView = view;
 }
