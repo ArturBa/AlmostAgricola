@@ -22,8 +22,8 @@ unsigned int Points::getHouse() {
     return points;
 }
 
-unsigned int Points::getSheep() {
-    unsigned int points = -1;
+int Points::getSheep() {
+    int points = -1;
     if (player->warehouse->sheep.getResource() >= 1) {
         points++, points++;
     }

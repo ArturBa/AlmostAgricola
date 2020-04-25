@@ -31,7 +31,7 @@ public:
      * @brief get points from sheep
      * @return points from sheep
      */
-    unsigned int getSheep();
+    int getSheep();
 
     /**
      * @brief get points from house level

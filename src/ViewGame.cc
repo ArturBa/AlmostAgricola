@@ -3,6 +3,7 @@
 //
 
 #include <Points.hh>
+#include <iostream>
 #include "ViewGame.hh"
 
 #define DEFAULT_WINDOW_FLAGS (ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)
