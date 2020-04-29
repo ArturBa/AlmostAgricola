@@ -26,6 +26,12 @@ void ConcreteGameStrategy::generateNextTourAction() {
     for (auto action: Actions()) {
         mapOfActions.at(action).second = nullptr;
     }
-    mapOfActions.at(Actions::WEEK_1_0).first = true;
+//    mapOfActions.at(Actions::WEEK_1_0).first = true;
+    for (auto action: Actions()) {
+        if (!mapOfActions.at(action).first) {
+            mapOfActions.at(action).first = true;
+            break;
+        }
+    }
 }
 
