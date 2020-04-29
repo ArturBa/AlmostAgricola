@@ -22,10 +22,16 @@ public:
     explicit Points(Player *_player);
 
     /**
+     * @brief get total player points
+     * @return number of total player points
+     */
+    int totalPoints();
+
+    /**
      * @brief get points from family members
      * @return points from family members
      */
-    unsigned int getFamilyMembers();
+    int getFamilyMembers();
 
     /**
      * @brief get points from sheep
@@ -37,7 +43,7 @@ public:
      * @brief get points from house level
      * @return points from house level
      */
-    unsigned int getHouse();
+    int getHouse();
 
 };
 

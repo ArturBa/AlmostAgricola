@@ -40,7 +40,11 @@ private:
 
     std::string getTextFromKey(const std::string &key, const std::string &default_value = "null");
 
-    void displayRank();
+    void displayRank(const std::string &name);
+
+    void sheepRank();
+
+    void houseRank();
 
 public:
     /**

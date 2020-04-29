@@ -8,8 +8,12 @@ Points::Points(Player *_player) {
     player = _player;
 }
 
-unsigned int Points::getHouse() {
-    unsigned int points = 0;
+int Points::totalPoints() {
+    return getHouse() + getSheep() + getFamilyMembers();
+}
+
+int Points::getHouse() {
+    int points = 0;
     for (const auto &y : player->getFarm()) {
         for (const auto &x: y) {
             if (x == FarmEnum::ClayHouse) {
@@ -39,6 +43,6 @@ int Points::getSheep() {
     return points;
 }
 
-unsigned int Points::getFamilyMembers() {
+int Points::getFamilyMembers() {
     return 3 * player->getFamilyMembers();
 }

@@ -86,32 +86,48 @@ void ViewGame::displayAction() {
     ImGui::EndChild();
 }
 
-void ViewGame::displayRank() {
+void ViewGame::displayRank(const std::string &name) {
     auto players = *viewController->getShared()->model.getPlayers();
-    ImGui::BeginChild("Plot");
-    ImGui::Dummy({10, 0});
+    ImGui::Dummy({0, 50.f});
     ImGui::SameLine(300.f);
-    ImGui::Text("Sheep");
+    ImGui::Text("%s", name.c_str());
+    ImGui::Dummy({0, -20.f});
+    // draw vertical line
     ImGui::DrawLine({140, 0}, {140, (float) players.size() * 20 + 5}, sf::Color::Black, 2.0f);
+    // draw horizontal line
     ImGui::DrawLine({140, (float) players.size() * 20 + 5}, {540, (float) players.size() * 20 + 5},
                     sf::Color::Black, 2.0f);
+}
+
+void ViewGame::sheepRank() {
+    ImGui::BeginChild("Plot");
+    displayRank("Sheep");
+    auto players = *viewController->getShared()->model.getPlayers();
     for (auto player: players) {
         ImGui::TextColored(player->getPlayerTexture()->getColor(), "%s", player->getName().c_str());
         Points point(player);
         ImGui::DrawRectFilled({240, -14, static_cast<float>(100 * point.getSheep()), 16},
                               player->getPlayerTexture()->getColor());
     }
-    ImGui::Dummy({0, 20.f});
-    ImGui::Dummy({0, 10.f});
-    ImGui::SameLine(234.f);
-    ImGui::Text("0");
-    ImGui::Dummy({0, 30.f});
+    ImGui::EndChild();
+}
+
+void ViewGame::houseRank() {
+    ImGui::BeginChild("Plot");
+    displayRank("House");
+    auto players = *viewController->getShared()->model.getPlayers();
+    for (auto player: players) {
+        ImGui::TextColored(player->getPlayerTexture()->getColor(), "%s", player->getName().c_str());
+        Points point(player);
+        ImGui::DrawRectFilled({240, -14, static_cast<float>(100 * point.getHouse()), 16},
+                              player->getPlayerTexture()->getColor());
+    }
     ImGui::EndChild();
 }
 
 void ViewGame::displayRanking() {
-    displayRank();
-    displayRank();
+    sheepRank();
+    houseRank();
 }
 
 void ViewGame::displayFarm() {
@@ -132,16 +148,16 @@ void ViewGame::displayWeek() {
 }
 
 void ViewGame::displayUpgrades() {
-    for(auto upgrade : UpgradeEnum()){
+    for (auto upgrade : UpgradeEnum()) {
         if (ImGui::ImageButton(
                 UpgradeFactory::getUpgrade(upgrade, viewController->getShared()->lang)->getTexture(),
-                {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) {
-            ;
+                {ACTION_BUTTON_WIDTH, ACTION_BUTTON_HEIGHT})) { ;
         }
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
             ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-            ImGui::TextUnformatted(UpgradeFactory::getUpgrade(upgrade, viewController->getShared()->lang)->getText().c_str());
+            ImGui::TextUnformatted(
+                    UpgradeFactory::getUpgrade(upgrade, viewController->getShared()->lang)->getText().c_str());
             ImGui::PopTextWrapPos();
             ImGui::EndTooltip();
         }
