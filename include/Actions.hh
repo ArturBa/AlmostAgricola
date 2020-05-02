@@ -10,6 +10,7 @@
 enum class Actions {
     GET_2_FOOD,
     GET_SHEEP,
+    GET_WOOD,
     WEEK_1_0,
     TEST,
     First = GET_2_FOOD,
@@ -28,6 +29,7 @@ static Actions end(Actions r) { return Actions(int(Actions::Last) + 1); }
 static const std::map<Actions, std::string> mapOfActionFileNames = {
         {Actions::GET_2_FOOD, "act_2_food"},
         {Actions::GET_SHEEP,  "act_sheep"},
+        {Actions::GET_WOOD,   "act_wood"},
         {Actions::WEEK_1_0,   "act_week_1_0"},
 };
 

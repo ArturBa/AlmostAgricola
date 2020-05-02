@@ -173,12 +173,14 @@ void Player::harvest() {
     warehouse->cow.addResource(std::floor(warehouse->cow.getResource() / 2));
 }
 
-void Player::action(Actions action) {
+void Player::action(Actions action) const {
     switch (action) {
         case Actions::GET_SHEEP:
             warehouse->sheep.addResource();
             break;
         case Actions::GET_2_FOOD:
             warehouse->food.addResource(2);
+        case Actions::GET_WOOD:
+            warehouse->wood.addResource();
     }
 }

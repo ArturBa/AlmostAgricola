@@ -24,7 +24,12 @@ Player *Model::getCurrentPlayer() {
 }
 
 void Model::selectAction(Actions action) {
-    game->selectAction(action);
+    try {
+        game->selectAction(action);
+    } catch (...) {
+        //TODO Add game end screen
+        ;
+    }
 }
 
 int Model::weeksToHarvest() {

@@ -135,6 +135,6 @@ public:
      */
     void harvest();
 
-    void action(Actions action);
+    void action(Actions action) const;
 };
 

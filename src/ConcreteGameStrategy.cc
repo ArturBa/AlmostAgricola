@@ -11,6 +11,7 @@ ConcreteGameStrategy::ConcreteGameStrategy() {
     }
     mapOfActions.at(Actions::GET_2_FOOD).first = true;
     mapOfActions.at(Actions::GET_SHEEP).first = true;
+    mapOfActions.at(Actions::GET_WOOD).first = true;
 }
 
 std::map<Actions, std::pair<bool, Player *> > ConcreteGameStrategy::getMapOfActions() {
@@ -26,7 +27,6 @@ void ConcreteGameStrategy::generateNextTourAction() {
     for (auto action: Actions()) {
         mapOfActions.at(action).second = nullptr;
     }
-//    mapOfActions.at(Actions::WEEK_1_0).first = true;
     for (auto action: Actions()) {
         if (!mapOfActions.at(action).first) {
             mapOfActions.at(action).first = true;

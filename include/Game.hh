@@ -5,6 +5,7 @@
 #pragma once
 
 #include <exception>
+#include <utility>
 #include "Model.hh"
 #include "ConcreteGameStrategy.hh"
 #include "PlayerList.hh"
@@ -55,19 +56,19 @@ public:
     void selectAction(Actions action);
 
     /**
-     * Get map of available actions
+     * @brief Get map of available actions
      * @return map of available actions
      */
     [[nodiscard]] std::map<Actions, std::pair<bool, Player *>> getMapOfActions() const;
 
     /**
-     * Get vector of players
+     * @brief Get vector of players
      * @return vector of players
      */
     const std::vector<Player *> *getPlayers();
 
     /**
-     * Count weeks until harvest
+     * @brief Count weeks until harvest
      * @return remaining weeks till harvest
      */
     [[nodiscard]] int weeksToHarvest() const;
@@ -82,7 +83,7 @@ class GameException : public std::exception {
 private:
     std::string errorMsg;
 public:
-    explicit GameException(std::string _errorMsg) : errorMsg(_errorMsg) {
+    explicit GameException(std::string _errorMsg) : errorMsg(std::move(_errorMsg)) {
         ;
     };
 
